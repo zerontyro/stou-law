@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="th" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>41211 กฎหมายแพ่ง 1 - สรุปเนื้อหา & จำลองสอบเสมือนจริง มสธ.</title>
+  
+  <!-- Google Fonts: Sarabun & Prompt -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;600;700;800&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <!-- Top Navigation Header -->
+  <header class="top-nav">
+    <div class="top-nav-inner">
+      <div class="brand-section">
+        <div class="brand-badge">
+          <i class="fas fa-scroll"></i> 41211
+        </div>
+        <div class="brand-info">
+          <h1>กฎหมายแพ่ง 1 (Civil Law 1)</h1>
+          <p>บุคคล นิติกรรม สัญญา (ป.พ.พ. บรรพ 1 - 2) | มหาวิทยาลัยสุโขทัยธรรมาธิราช (มสธ.)</p>
+        </div>
+      </div>
+
+      <div class="nav-actions">
+        <!-- Course Switcher Dropdown -->
+        <div class="course-switcher-dropdown">
+          <button id="btnCourseSwitcher" class="btn-switcher">
+            <i class="fas fa-university"></i> สลับรายวิชา มสธ. <i class="fas fa-chevron-down" style="font-size: 0.75rem;"></i>
+          </button>
+          <div id="switcherDropdown" class="dropdown-menu">
+            <a href="index.html" class="dropdown-item active">
+              <i class="fas fa-scroll text-primary"></i> 41211 กฎหมายแพ่ง 1 (ปัจจุบัน)
+            </a>
+            <a href="../41516-criminal-law-1/index.html" class="dropdown-item">
+              <i class="fas fa-gavel text-secondary"></i> 41516 กฎหมายอาญา 1
+            </a>
+            <a href="../40101 general law knowledge/index.html" class="dropdown-item">
+              <i class="fas fa-book-reader text-secondary"></i> 40101 ความรู้เบื้องต้นเกี่ยวกับกฎหมายทั่วไป
+            </a>
+            <a href="../10151-thai-studies/index.html" class="dropdown-item">
+              <i class="fas fa-landmark text-secondary"></i> 10151 ไทยศึกษา (Thai Studies)
+            </a>
+          </div>
+        </div>
+
+        <!-- Theme Toggle Button -->
+        <button id="btnThemeToggle" class="btn-icon" title="สลับโหมดมืด/สว่าง">
+          <i class="fas fa-moon"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Navigation Tabs -->
+  <nav class="tab-navigation">
+    <div class="tab-container">
+      <button class="tab-btn active" data-tab="overview">
+        <i class="fas fa-home"></i> ภาพรวมรายวิชา
+      </button>
+      <button class="tab-btn" data-tab="summary">
+        <i class="fas fa-book"></i> สรุปเข้ม 15 หน่วย <span class="badge">15</span>
+      </button>
+      <button class="tab-btn" data-tab="exam">
+        <i class="fas fa-file-alt"></i> จำลองสอบปรนัย <span class="badge">120 ข้อ</span>
+      </button>
+      <button class="tab-btn" data-tab="essay">
+        <i class="fas fa-pen-nib"></i> ข้อสอบอัตนัยตุ๊กตา <span class="badge">3 ข้อ (60 คะแนน)</span>
+      </button>
+      <button class="tab-btn" data-tab="practice">
+        <i class="fas fa-tasks"></i> คลังฝึกทำรายข้อ <span class="badge">เฉลยทันที</span>
+      </button>
+      <button class="tab-btn" data-tab="results">
+        <i class="fas fa-chart-line"></i> ผลการสอบ & วิเคราะห์จุดอ่อน
+      </button>
+    </div>
+  </nav>
+
+  <!-- Main Content Container -->
+  <main class="main-content">
+
+    <!-- TAB 1: OVERVIEW -->
+    <section id="tab-overview" class="tab-panel active">
+      <div class="hero-banner">
+        <div class="hero-text">
+          <h2>เตรียมสอบกฎหมายแพ่ง 1 (41211 / 41511)</h2>
+          <p style="font-size: 1.05rem; color: var(--text-muted); margin-bottom: 1rem;">
+            ระบบติวเข้มแบบ Interactive ครอบคลุมประมวลกฎหมายแพ่งและพาณิชย์ <strong>บุคคล นิติกรรม สัญญา</strong>
+            ครบทั้ง 15 หน่วยการเรียน พร้อมแนวข้อสอบปรนัยเสมือนจริง 120 ข้อ (5 ตัวเลือก) และข้อสอบอัตนัยวิเคราะห์ปัญหาตุ๊กตา 3 ข้อ (ข้อละ 20 คะแนน รวม 60 คะแนน)
+          </p>
+          <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+            <button class="btn-primary" onclick="window.switchTab('exam'); window.startExam();">
+              <i class="fas fa-play"></i> เริ่มทำข้อสอบปรนัย 120 ข้อ (จับเวลา 180 นาที)
+            </button>
+            <button class="btn-secondary" onclick="window.switchTab('essay');">
+              <i class="fas fa-feather-alt"></i> ฝึกเขียนข้อสอบอัตนัย 3 ข้อ
+            </button>
+            <button class="btn-secondary" onclick="window.switchTab('summary');">
+              <i class="fas fa-book-open"></i> อ่านสรุปเนื้อหา 15 หน่วย
+            </button>
+          </div>
+        </div>
+        <div class="hero-stats">
+          <div class="stat-box">
+            <div class="num">15</div>
+            <div class="lbl">หน่วยการเรียน</div>
+          </div>
+          <div class="stat-box">
+            <div class="num">120</div>
+            <div class="lbl">ข้อสอบปรนัย</div>
+          </div>
+          <div class="stat-box">
+            <div class="num">3</div>
+            <div class="lbl">ข้อสอบอัตนัย</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Core Civil Law Tripartite Structure -->
+      <div class="card">
+        <h3 style="margin-bottom: 0.5rem; font-size: 1.3rem; display: flex; align-items: center; gap: 0.5rem;">
+          <i class="fas fa-balance-scale text-primary"></i> เสาหลักกฎหมายแพ่ง 1: บุคคล • นิติกรรม • สัญญา
+        </h3>
+        <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 1.25rem;">
+          โครงสร้างความสัมพันธ์ทางแพ่งตั้งแต่ตัวบุคคลผู้ทรงสิทธิ การเคลื่อนไหวแห่งสิทธิผ่านนิติกรรม และพันธะผูกพันในรูปสัญญา:
+        </p>
+
+        <div class="doctrine-grid">
+          <!-- Pillar 1 -->
+          <div class="doctrine-card layer-1">
+            <h4><i class="fas fa-user text-primary"></i> 1. กฎหมายว่าด้วยบุคคล (Persons)</h4>
+            <ul class="doctrine-list">
+              <li><strong>สภาพบุคคล (ม.15 - 18):</strong> คลอดแล้วอยู่รอดเป็นทารก, การสิ้นสุดสภาพบุคคลโดยธรรมชาติ, การสาบสูญ (ม.61 - 64)</li>
+              <li><strong>ความสามารถ (Capacity):</strong> ผู้เยาว์ (ม.19 - 27), คนไร้ความสามารถ (ม.28 - 30), คนเสมือนไร้ความสามารถ (ม.32 - 34)</li>
+              <li><strong>ภูมิลำเนา (ม.37 - 47):</strong> ภูมิลำเนาทั่วไป, ภูมิลำเนาเฉพาะการ, ภูมิลำเนาตามกฎหมาย</li>
+              <li><strong>นิติบุคคล (ม.65 - 136):</strong> สมาคม (ม.78 - 109) และ มูลนิธิ (ม.110 - 136)</li>
+            </ul>
+          </div>
+
+          <!-- Pillar 2 -->
+          <div class="doctrine-card layer-2">
+            <h4><i class="fas fa-file-signature text-secondary"></i> 2. กฎหมายว่าด้วยนิติกรรม (Juristic Acts)</h4>
+            <ul class="doctrine-list">
+              <li><strong>ความหมายและวัตถุประสงค์ (ม.149 - 151):</strong> ต้องห้ามชัดแจ้ง พ้นวิสัย ขัดต่อความสงบเรียบร้อย = โมฆะ</li>
+              <li><strong>แบบแห่งนิติกรรม (ม.152):</strong> หนังสือและจดทะเบียน, ทำเป็นหนังสือต่อเจ้าหน้าที่</li>
+              <li><strong>การแสดงเจตนา (ม.154 - 155):</strong> เจตนาซ่อนเร้น, เจตนาลวง (โมฆะ), นิติกรรมอำพราง</li>
+              <li><strong>ความชำรุดแห่งเจตนา:</strong> สำคัญผิดในสาระสำคัญ (ม.156 - โมฆะ) vs คุณสมบัติ (ม.157 - โมฆียะ), กลฉ้อฉล (ม.159), การข่มขู่ (ม.164)</li>
+              <li><strong>ความไม่สมบูรณ์และอายุความ:</strong> โมฆะกรรม (ม.172), โมฆียกรรมและการบอกล้าง (ม.175 - 181), อายุความ (ม.193/9 - 193/35)</li>
+            </ul>
+          </div>
+
+          <!-- Pillar 3 -->
+          <div class="doctrine-card layer-3">
+            <h4><i class="fas fa-handshake text-accent"></i> 3. กฎหมายว่าด้วยสัญญา (Contracts)</h4>
+            <ul class="doctrine-list">
+              <li><strong>การก่อให้เกิดสัญญา (ม.354 - 368):</strong> คำเสนอ (ม.354 - 356), คำสนอง (ม.357 - 359), สัญญาเกิดเมื่อคำบอกกล่าวสนองไปถึง (ม.361)</li>
+              <li><strong>ผลแห่งสัญญา (ม.369 - 376):</strong> สัญญาต่างตอบแทนและสิทธิยึดหน่วง (ม.369), สัญญาเพื่อประโยชน์บุคคลภายนอก (ม.374)</li>
+              <li><strong>มัดจำและเบี้ยปรับ (ม.377 - 385):</strong> มัดจำส่งมอบเมื่อทำสัญญา (ม.377), เบี้ยปรับและการลดเบี้ยปรับที่สูงเกินส่วน (ม.379, 383)</li>
+              <li><strong>การเลิกสัญญา (ม.386 - 394):</strong> สิทธิบอกเลิกสัญญาตามกฎหมาย (ม.387 - 389), ผลการกลับคืนสู่ฐานะเดิม (ม.391)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Course Units Curriculum Map -->
+      <div class="card">
+        <h3 style="margin-bottom: 1rem; font-size: 1.25rem;">
+          <i class="fas fa-list-ol text-secondary"></i> สาระสำคัญ 15 หน่วยการเรียน (ชุดวิชา 41211)
+        </h3>
+        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem;">
+          <div style="background-color: var(--bg-subtle); padding: 1rem; border-radius: var(--radius-md);">
+            <strong>หน่วยที่ 1 - 2:</strong> สภาพบุคคล การสิ้นสุดสภาพบุคคล การสาบสูญ และความสามารถของผู้เยาว์ (ม.15 - 27, 61 - 64)
+          </div>
+          <div style="background-color: var(--bg-subtle); padding: 1rem; border-radius: var(--radius-md);">
+            <strong>หน่วยที่ 3 - 5:</strong> คนไร้ความสามารถ คนเสมือนไร้ความสามารถ ภูมิลำเนา และนิติบุคคล (สมาคม, มูลนิธิ) (ม.28 - 136)
+          </div>
+          <div style="background-color: var(--bg-subtle); padding: 1rem; border-radius: var(--radius-md);">
+            <strong>หน่วยที่ 6 - 7:</strong> วัตถุประสงค์ แบบ เจตนาซ่อนเร้น เจตนาลวง และนิติกรรมอำพราง (ม.149 - 155)
+          </div>
+          <div style="background-color: var(--bg-subtle); padding: 1rem; border-radius: var(--radius-md);">
+            <strong>หน่วยที่ 8 - 10:</strong> ความสำคัญผิด กลฉ้อฉล การข่มขู่ โมฆะกรรม และโมฆียกรรม (ม.156 - 181)
+          </div>
+          <div style="background-color: var(--bg-subtle); padding: 1rem; border-radius: var(--radius-md);">
+            <strong>หน่วยที่ 11:</strong> เงื่อนไข เงื่อนเวลา การนับระยะเวลา และอายุความ (ม.182 - 193/35)
+          </div>
+          <div style="background-color: var(--bg-subtle); padding: 1rem; border-radius: var(--radius-md);">
+            <strong>หน่วยที่ 12 - 13:</strong> คำเสนอ-คำสนอง สัญญาต่างตอบแทน และสัญญาเพื่อประโยชน์บุคคลภายนอก (ม.354 - 376)
+          </div>
+          <div style="background-color: var(--bg-subtle); padding: 1rem; border-radius: var(--radius-md);">
+            <strong>หน่วยที่ 14 - 15:</strong> มัดจำ เบี้ยปรับ และการเลิกสัญญาพร้อมผลการกลับคืนสู่ฐานะเดิม (ม.377 - 394)
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 2: UNIT SUMMARIES -->
+    <section id="tab-summary" class="tab-panel">
+      <div class="summary-toolbar">
+        <div class="search-input-wrap">
+          <i class="fas fa-search search-icon"></i>
+          <input type="text" id="summarySearchInput" class="search-input" placeholder="ค้นหาตามมาตรา หัวข้อ หรือคีย์เวิร์ดในสรุป...">
+        </div>
+        <select id="summaryUnitFilter" class="select-filter">
+          <option value="all">ทุกหน่วยการเรียน (หน่วยที่ 1 - 15)</option>
+          <option value="1">หน่วยที่ 1 สภาพบุคคลและการสาบสูญ</option>
+          <option value="2">หน่วยที่ 2 ความสามารถของผู้เยาว์</option>
+          <option value="3">หน่วยที่ 3 คนไร้และเสมือนไร้ความสามารถ</option>
+          <option value="4">หน่วยที่ 4 ภูมิลำเนาและสิทธิแห่งสภาพบุคคล</option>
+          <option value="5">หน่วยที่ 5 นิติบุคคล สมาคม และมูลนิธิ</option>
+          <option value="6">หน่วยที่ 6 วัตถุประสงค์และแบบของนิติกรรม</option>
+          <option value="7">หน่วยที่ 7 เจตนาซ่อนเร้น ลวง อำพราง</option>
+          <option value="8">หน่วยที่ 8 ความสำคัญผิดในการแสดงเจตนา</option>
+          <option value="9">หน่วยที่ 9 กลฉ้อฉลและการข่มขู่</option>
+          <option value="10">หน่วยที่ 10 โมฆะกรรมและโมฆียกรรม</option>
+          <option value="11">หน่วยที่ 11 เงื่อนไข เงื่อนเวลา อายุความ</option>
+          <option value="12">หน่วยที่ 12 คำเสนอและคำสนอง</option>
+          <option value="13">หน่วยที่ 13 ผลแห่งสัญญาและบุคคลภายนอก</option>
+          <option value="14">หน่วยที่ 14 มัดจำและเบี้ยปรับ</option>
+          <option value="15">หน่วยที่ 15 การเลิกสัญญาและผลการเลิกสัญญา</option>
+        </select>
+        <button id="btnExpandAllSummaries" class="btn-secondary" style="font-size: 0.85rem;">
+          <i class="fas fa-expand-alt"></i> ขยายทั้งหมด
+        </button>
+        <button id="btnCollapseAllSummaries" class="btn-secondary" style="font-size: 0.85rem;">
+          <i class="fas fa-compress-alt"></i> ยุบทั้งหมด
+        </button>
+      </div>
+
+      <div id="summariesContainer">
+        <!-- Rendered dynamically by app.js -->
+      </div>
+    </section>
+
+    <!-- TAB 3: EXAM SIMULATION (120 Questions) -->
+    <section id="tab-exam" class="tab-panel">
+      <!-- Exam Welcome / Rules Box -->
+      <div id="examWelcomeBox" class="card" style="text-align: center; padding: 3rem 2rem;">
+        <i class="fas fa-clipboard-check" style="font-size: 3.5rem; color: var(--primary); margin-bottom: 1.25rem;"></i>
+        <h2 style="font-size: 1.8rem; margin-bottom: 0.75rem;">แบบทดสอบจำลองเสมือนจริง 120 ข้อ (มสธ. 41211)</h2>
+        <p style="max-width: 680px; margin: 0 auto 1.5rem; color: var(--text-muted); font-size: 1rem;">
+          ข้อสอบปรนัย 5 ตัวเลือก (ก-จ) จำนวน 120 ข้อ เฉลี่ย 8 ข้อต่อหน่วย ครบทั้ง 15 หน่วยการเรียน<br>
+          เวลาในการสอบจริง: <strong>180 นาที (3 ชั่วโมง)</strong> | เกณฑ์ประเมินผล: <strong>H (≥76%), S (60-75%), U (&lt;60%)</strong>
+        </p>
+        <div style="display: flex; gap: 1rem; justify-content: center;">
+          <button id="btnStartExam" class="btn-primary" style="font-size: 1.1rem; padding: 0.85rem 2rem;">
+            <i class="fas fa-play"></i> เริ่มต้นทำแบบทดสอบ 120 ข้อ
+          </button>
+        </div>
+      </div>
+
+      <!-- Active Exam Interface -->
+      <div id="examActiveBox" class="hidden">
+        <div class="exam-layout">
+          <!-- Left: Question Area -->
+          <div class="exam-main-col">
+            <div id="examQuestionContainer">
+              <!-- Rendered dynamically by app.js -->
+            </div>
+
+            <div class="exam-controls">
+              <button id="btnPrevExamQ" class="btn-secondary">
+                <i class="fas fa-chevron-left"></i> ข้อก่อนหน้า
+              </button>
+              <div style="display: flex; gap: 0.75rem;">
+                <button id="btnFlagExamQ" class="btn-secondary">
+                  <i class="fas fa-flag"></i> ติดธงทบทวน
+                </button>
+                <button id="btnNextExamQ" class="btn-secondary">
+                  ข้อถัดไป <i class="fas fa-chevron-right"></i>
+                </button>
+              </div>
+              <button id="btnSubmitExam" class="btn-danger">
+                <i class="fas fa-paper-plane"></i> ส่งข้อสอบ
+              </button>
+            </div>
+          </div>
+
+          <!-- Right: Navigator & Timer Sidebar -->
+          <aside class="exam-sidebar">
+            <div class="exam-timer-box">
+              <div class="timer-label"><i class="fas fa-clock"></i> เวลาที่เหลือ</div>
+              <div id="examTimerDisplay" class="timer-digits">03:00:00</div>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; font-size: 0.875rem; font-weight: 600;">
+              <span>ความคืบหน้า</span>
+              <span id="examAnsweredCount">0 / 120 ข้อ</span>
+            </div>
+            <div class="exam-progress-bar">
+              <div id="examProgressFill" class="exam-progress-fill"></div>
+            </div>
+
+            <div style="margin: 1rem 0 0.5rem; font-size: 0.85rem; font-weight: 700; color: var(--text-muted);">
+              แผงกระดาษคำตอบ (ข้อ 1 - 120):
+            </div>
+            <div id="examNavGrid" class="question-nav-grid">
+              <!-- Rendered dynamically -->
+            </div>
+
+            <div style="display: flex; gap: 0.75rem; font-size: 0.75rem; color: var(--text-muted); justify-content: center; flex-wrap: wrap;">
+              <span><span style="display:inline-block; width:10px; height:10px; background:var(--primary); border-radius:2px;"></span> ตอบแล้ว</span>
+              <span><span style="display:inline-block; width:10px; height:10px; background:var(--bg-subtle); border:1px solid var(--border-color); border-radius:2px;"></span> ยังไม่ตอบ</span>
+              <span><span style="display:inline-block; width:10px; height:10px; background:var(--secondary-light); border:1px solid var(--secondary); border-radius:2px;"></span> ติดธง</span>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 4: SUBJECTIVE ESSAY WORKSHOP (3 Questions) -->
+    <section id="tab-essay" class="tab-panel">
+      <div class="card" style="margin-bottom: 1.25rem;">
+        <h2 style="font-size: 1.4rem; color: var(--primary); margin-bottom: 0.4rem;">
+          <i class="fas fa-pen-nib"></i> ข้อสอบอัตนัยวิเคราะห์ปัญหาตุ๊กตา (Subjective Exam - 3 ข้อ 60 คะแนน)
+        </h2>
+        <p style="color: var(--text-muted); font-size: 0.95rem;">
+          จำลองสนามสอบอัตนัยของ มสธ. ชุดละ 3 ข้อ (ข้อละ 20 คะแนน รวม 60 คะแนน) โดยต้องตอบตามรูปแบบมาตรฐาน: 
+          <strong>1. หลักกฎหมายที่เกี่ยวข้อง 2. วินิจฉัยปรับบทกับข้อเท็จจริง 3. สรุปผลคำวินิจฉัย</strong>
+        </p>
+      </div>
+
+      <div class="essay-container">
+        <!-- Question Selector Tabs -->
+        <div id="essayQuestionTabs" class="essay-tabs">
+          <!-- Rendered dynamically -->
+        </div>
+
+        <!-- Active Question Split View -->
+        <div id="essayActiveContainer">
+          <!-- Rendered dynamically -->
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 5: PRACTICE REPOSITORY (Immediate Feedback) -->
+    <section id="tab-practice" class="tab-panel">
+      <div class="summary-toolbar">
+        <div class="search-input-wrap">
+          <i class="fas fa-search search-icon"></i>
+          <input type="text" id="practiceSearchInput" class="search-input" placeholder="ค้นหาข้อสอบ คำถาม หรือมาตรา...">
+        </div>
+        <select id="practiceUnitFilter" class="select-filter">
+          <option value="all">ทุกหน่วยการเรียน (120 ข้อ)</option>
+          <option value="1">หน่วยที่ 1 สภาพบุคคลและการสาบสูญ (8 ข้อ)</option>
+          <option value="2">หน่วยที่ 2 ความสามารถของผู้เยาว์ (8 ข้อ)</option>
+          <option value="3">หน่วยที่ 3 คนไร้และเสมือนไร้ความสามารถ (8 ข้อ)</option>
+          <option value="4">หน่วยที่ 4 ภูมิลำเนาและสิทธิแห่งสภาพบุคคล (8 ข้อ)</option>
+          <option value="5">หน่วยที่ 5 นิติบุคคล สมาคม และมูลนิธิ (8 ข้อ)</option>
+          <option value="6">หน่วยที่ 6 วัตถุประสงค์และแบบของนิติกรรม (8 ข้อ)</option>
+          <option value="7">หน่วยที่ 7 เจตนาซ่อนเร้น ลวง อำพราง (8 ข้อ)</option>
+          <option value="8">หน่วยที่ 8 ความสำคัญผิดในการแสดงเจตนา (8 ข้อ)</option>
+          <option value="9">หน่วยที่ 9 กลฉ้อฉลและการข่มขู่ (8 ข้อ)</option>
+          <option value="10">หน่วยที่ 10 โมฆะกรรมและโมฆียกรรม (8 ข้อ)</option>
+          <option value="11">หน่วยที่ 11 เงื่อนไข เงื่อนเวลา อายุความ (8 ข้อ)</option>
+          <option value="12">หน่วยที่ 12 คำเสนอและคำสนอง (8 ข้อ)</option>
+          <option value="13">หน่วยที่ 13 ผลแห่งสัญญาและบุคคลภายนอก (8 ข้อ)</option>
+          <option value="14">หน่วยที่ 14 มัดจำและเบี้ยปรับ (8 ข้อ)</option>
+          <option value="15">หน่วยที่ 15 การเลิกสัญญาและผลการเลิกสัญญา (8 ข้อ)</option>
+        </select>
+        <label style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.9rem; font-weight: 600; cursor: pointer;">
+          <input type="checkbox" id="practiceBookmarkFilter">
+          <i class="fas fa-star" style="color: var(--secondary);"></i> เฉพาะข้อที่บันทึกไว้
+        </label>
+      </div>
+
+      <div id="practiceQuestionsContainer">
+        <!-- Rendered dynamically -->
+      </div>
+    </section>
+
+    <!-- TAB 6: RESULTS & UNIT ANALYTICS -->
+    <section id="tab-results" class="tab-panel">
+      <div id="resultsSummaryBox">
+        <div class="card" style="text-align: center; padding: 3rem;">
+          <i class="fas fa-hourglass-start" style="font-size: 3rem; color: var(--text-subtle); margin-bottom: 1rem;"></i>
+          <h3 style="color: var(--text-muted);">ยังไม่มีผลการสอบจำลอง</h3>
+          <p style="margin: 0.5rem 0 1.5rem; color: var(--text-muted);">
+            กรุณาเข้าสู่แท็บ "จำลองสอบปรนัย" และทำการส่งข้อสอบเพื่อดูผลการประเมินเกรด มสธ. และการวิเคราะห์จุดอ่อนรายหน่วย
+          </p>
+          <button class="btn-primary" onclick="window.switchTab('exam'); window.startExam();">
+            <i class="fas fa-play"></i> เริ่มจำลองสอบ 120 ข้อ
+          </button>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top: 1.5rem;">
+        <h3 style="font-size: 1.25rem; margin-bottom: 0.5rem; color: var(--primary);">
+          <i class="fas fa-chart-pie"></i> ผลการวิเคราะห์แยกรายหน่วยการเรียน (หน่วยที่ 1 - 15)
+        </h3>
+        <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.25rem;">
+          เกณฑ์สี: <span class="text-success font-bold">เขียว (≥75%)</span> จุดแข็ง | <span class="text-secondary font-bold">ส้ม (50-74%)</span> ปานกลาง | <span class="text-danger font-bold">แดง (&lt;50%)</span> จุดอ่อนที่ต้องอ่านทบทวนด่วน
+        </p>
+        <div id="resultsUnitAnalysisGrid" class="unit-analysis-grid">
+          <!-- Rendered dynamically by app.js -->
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div style="max-width: 1440px; margin: 0 auto; display: flex; flex-direction: column; gap: 0.5rem; align-items: center;">
+      <p style="font-weight: 700; color: var(--text-main);">
+        แอปพลิเคชันเพื่อการศึกษาและทบทวนเตรียมสอบ: ชุดวิชา 41211 / 41511 กฎหมายแพ่ง 1 (บุคคล นิติกรรม สัญญา)
+      </p>
+      <p style="font-size: 0.8rem; color: var(--text-muted);">
+        อ้างอิงตามหลักสูตรปริญญาตรีนิติศาสตรบัณฑิต มหาวิทยาลัยสุโขทัยธรรมาธิราช (มสธ.) และประมวลกฎหมายแพ่งและพาณิชย์
+      </p>
+      <div style="margin-top: 0.5rem; display: flex; gap: 1rem; font-size: 0.85rem; flex-wrap: wrap; justify-content: center;">
+        <a href="../41516-criminal-law-1/index.html"><i class="fas fa-gavel"></i> 41516 กฎหมายอาญา 1</a>
+        <span>•</span>
+        <a href="../40101 general law knowledge/index.html"><i class="fas fa-book"></i> 40101 กฎหมายทั่วไป</a>
+        <span>•</span>
+        <a href="../10151-thai-studies/index.html"><i class="fas fa-landmark"></i> 10151 ไทยศึกษา</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Script Files -->
+  <script src="js/summary-data.js"></script>
+  <script src="js/essay-data.js"></script>
+  <script src="js/questions-data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

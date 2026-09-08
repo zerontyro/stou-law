@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="th" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>10151 ไทยศึกษา - สรุปเนื้อหา & จำลองสอบ 120 ข้อ (มสธ.)</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🇹🇭</text></svg>">
+</head>
+<body>
+
+  <!-- Course Switcher Bar -->
+  <div class="course-switcher-bar">
+    <span>📚 คลังเตรียมสอบ มสธ. (นิติศาสตร์ & หมวดศึกษาทั่วไป)</span>
+    <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+      <span>สลับชุดวิชา: </span>
+      <a href="../41211-civil-law-1/index.html" style="font-weight: 700; color: #1e3a8a;">📜 41211 กฎหมายแพ่ง 1 (ใหม่) ➡️</a>
+      <span>|</span>
+      <a href="../41516-criminal-law-1/index.html" style="font-weight: 700; color: #b91c1c;">⚖️ 41516 กฎหมายอาญา 1 ➡️</a>
+      <span>|</span>
+      <a href="../40101 general law knowledge/index.html">⚖️ 40101 ความรู้เบื้องต้นเกี่ยวกับกฎหมายทั่วไป ➡️</a>
+    </div>
+  </div>
+
+  <!-- Top Navigation Header -->
+  <header class="site-header">
+    <div class="header-container">
+      <div class="brand-area">
+        <span class="brand-badge">STOU 10151</span>
+        <div class="brand-title">
+          <span>ไทยศึกษา (Thai Studies)</span>
+          <span class="brand-subtitle">มหาวิทยาลัยสุโขทัยธรรมาธิราช • สรุป 15 หน่วย & คลังข้อสอบจริง 120 ข้อ</span>
+        </div>
+      </div>
+
+      <nav class="main-nav">
+        <button class="nav-btn active" data-view="dashboard">
+          <span>🏠 ภาพรวม</span>
+        </button>
+        <button class="nav-btn" data-view="summary">
+          <span>📖 สรุป 15 หน่วย</span>
+        </button>
+        <button class="nav-btn" data-view="exam">
+          <span>📝 จำลองสอบจริง (120 ข้อ)</span>
+        </button>
+        <button class="nav-btn" data-view="practice">
+          <span>🎯 ฝึกทำรายข้อ</span>
+        </button>
+        <button class="nav-btn" data-view="results">
+          <span>📊 ผลการสอบ</span>
+        </button>
+      </nav>
+
+      <div class="header-actions">
+        <button class="theme-toggle-btn" id="themeToggle" title="สลับธีม สว่าง/มืด">🌙</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="main-content">
+
+    <!-- ===================================================================
+         VIEW 1: Dashboard (ภาพรวม)
+         =================================================================== -->
+    <section class="view-section active" id="dashboardView">
+      <div class="hero-card">
+        <div class="hero-badges">
+          <span class="hero-badge-pill">🇹🇭 หมวดศึกษาทั่วไป มสธ.</span>
+          <span class="hero-badge-pill">⏱️ สอบจริง 3 ชม. (180 นาที)</span>
+          <span class="hero-badge-pill">📋 ปรนัย 5 ตัวเลือก 120 ข้อ</span>
+          <span class="hero-badge-pill">🎓 เกณฑ์ผ่าน 60% (เกรด S / H)</span>
+        </div>
+        <h1 class="hero-title">ระบบเตรียมความพร้อมและคลังข้อสอบเสมือนจริง 10151 ไทยศึกษา</h1>
+        <p class="hero-subtitle">
+          ทำความเข้าใจความเป็นไทยอย่างลึกซึ้งทั้งประวัติศาสตร์ การปกครอง เศรษฐกิจ สังคม เทคโนโลยี ความเชื่อ ศาสนา ศิลปกรรม วรรณกรรม และวิถีไทย พร้อมระบบจำลองข้อสอบเสมือนจริง 120 ข้อ ตามมาตรฐาน มสธ.
+        </p>
+        <div class="hero-cta">
+          <button class="btn btn-accent btn-lg" id="dashStartExamBtn">
+            🚀 เริ่มจำลองสอบจริง 120 ข้อ (180 นาที)
+          </button>
+          <button class="btn btn-outline btn-lg" style="color: #fff; border-color: rgba(255,255,255,0.4);" id="dashStudyBtn">
+            📖 อ่านสรุปเนื้อหา 15 หน่วย
+          </button>
+          <button class="btn btn-secondary btn-lg" id="dashPracticeBtn">
+            🎯 ซ้อมทำโจทย์แบบมีเฉลยทันที
+          </button>
+        </div>
+      </div>
+
+      <!-- Quick Feature Cards -->
+      <div class="grid-features">
+        <div class="card feature-card">
+          <div>
+            <div class="feature-icon">📚</div>
+            <h3 class="feature-title">สรุปเนื้อหาเข้มข้น 15 หน่วย</h3>
+            <p class="feature-desc">
+              ครอบคลุมรัฐโบราณ, การปกครองสุโขทัย-อยุธยา, สนธิสัญญาเบาว์ริง, การเลิกทาส, เหมืองฝาย, ฮีตสิบสอง, โขน-ละคร, วรรณกรรม, ช่างสิบหมู่ และเศรษฐกิจพอเพียง
+            </p>
+          </div>
+          <span class="badge badge-unit">15 หน่วยเรียนรู้</span>
+        </div>
+
+        <div class="card feature-card">
+          <div>
+            <div class="feature-icon">⏱️</div>
+            <h3 class="feature-title">จำลองสอบจริงจับเวลา 180 นาที</h3>
+            <p class="feature-desc">
+              แผ่นกระดาษคำตอบ Matrix Grid 1-120 ปุ่ม, ปักหมุดทบทวนข้อที่ยังไม่แน่ใจ, ระบบบันทึกอัตโนมัติ (Auto-save) ไม่ต้องกลัวข้อมูลหาย
+            </p>
+          </div>
+          <span class="badge badge-unit">120 ข้อ (หน่วยละ 8 ข้อ)</span>
+        </div>
+
+        <div class="card feature-card">
+          <div>
+            <div class="feature-icon">📈</div>
+            <h3 class="feature-title">วิเคราะห์คะแนนและตัดเกรด มสธ.</h3>
+            <p class="feature-desc">
+              ประเมินผลเกรด H (≥ 76%), S (60 - 75%), U (&lt; 60%) พร้อมกราฟแท่งวิเคราะห์คะแนนรายหน่วย เพื่อเน้นทบทวนหน่วยที่ยังอ่อน
+            </p>
+          </div>
+          <div style="display: flex; gap: 0.5rem; align-items: center;">
+            <span style="font-size: 0.85rem; color: var(--text-secondary);">ผลสอบล่าสุด:</span>
+            <span class="badge badge-unit" id="dashLastScoreBadge">ยังไม่ได้สอบ</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- STOU Grading Matrix Guide -->
+      <div class="grading-box">
+        <h3 style="font-size: 1.15rem; margin-bottom: 0.25rem;">📊 เกณฑ์การประเมินผลการสอบ มสธ. (STOU Grading Scale)</h3>
+        <p style="font-size: 0.875rem; color: var(--text-secondary);">
+          การสอบชุดวิชาของ มสธ. จะใช้ระบบตัวอักษร 3 ระดับ ดังนี้:
+        </p>
+
+        <div class="grading-grid">
+          <div class="grade-card grade-card-h">
+            <div class="grade-letter">H</div>
+            <div>
+              <strong style="display: block; font-size: 1rem; color: var(--primary-gold-dark);">เกียรตินิยม (Honor)</strong>
+              <span style="font-size: 0.85rem; color: var(--text-secondary);">ได้คะแนน 76% ขึ้นไป (91 - 120 ข้อ) ผ่านระดับดีเด่น</span>
+            </div>
+          </div>
+
+          <div class="grade-card grade-card-s">
+            <div class="grade-letter">S</div>
+            <div>
+              <strong style="display: block; font-size: 1rem; color: var(--success-green);">ผ่านเกณฑ์ (Satisfactory)</strong>
+              <span style="font-size: 0.85rem; color: var(--text-secondary);">ได้คะแนน 60% - 75% (72 - 90 ข้อ) ผ่านเกณฑ์มาตรฐาน</span>
+            </div>
+          </div>
+
+          <div class="grade-card grade-card-u">
+            <div class="grade-letter">U</div>
+            <div>
+              <strong style="display: block; font-size: 1rem; color: var(--error-red);">ไม่ผ่าน (Unsatisfactory)</strong>
+              <span style="font-size: 0.85rem; color: var(--text-secondary);">ได้คะแนนต่ำกว่า 60% (0 - 71 ข้อ) ต้องลงทะเบียนสอบซ่อม</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Status -->
+      <div class="card" style="display: flex; justify-content: space-around; text-align: center; padding: 1.25rem; flex-wrap: wrap; gap: 1rem;">
+        <div>
+          <div style="font-size: 1.5rem; font-weight: 700; color: var(--primary-gold-dark);" id="dashBookmarksCount">0</div>
+          <div style="font-size: 0.85rem; color: var(--text-secondary);">⭐ ข้อสอบที่ปักดาวไว้ทบทวน</div>
+        </div>
+        <div style="border-left: 1px solid var(--border-color); height: 40px; align-self: center;"></div>
+        <div>
+          <div style="font-size: 1.5rem; font-weight: 700; color: var(--error-red);" id="dashWrongCount">0</div>
+          <div style="font-size: 0.85rem; color: var(--text-secondary);">❌ ข้อที่เคยตอบผิด (บันทึกไว้ซ่อม)</div>
+        </div>
+        <div style="border-left: 1px solid var(--border-color); height: 40px; align-self: center;"></div>
+        <div>
+          <div style="font-size: 1.5rem; font-weight: 700; color: var(--accent-terracotta);">120</div>
+          <div style="font-size: 0.85rem; color: var(--text-secondary);">📝 คลังข้อสอบพร้อมเฉลยละเอียด</div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ===================================================================
+         VIEW 2: Unit Summaries (สรุป 15 หน่วย)
+         =================================================================== -->
+    <section class="view-section" id="summaryView">
+      <div class="section-header">
+        <div>
+          <h2 style="font-size: 1.6rem; color: var(--primary-gold-dark);">📖 สรุปเนื้อหาสาระสำคัญ 15 หน่วยการเรียนรู้</h2>
+          <p style="color: var(--text-secondary); font-size: 0.95rem;">
+            วิชา 10151 ไทยศึกษา (Thai Studies) มหาวิทยาลัยสุโขทัยธรรมาธิราช
+          </p>
+        </div>
+        <div style="min-width: 260px;">
+          <input type="text" id="summarySearchInput" placeholder="🔍 ค้นหาหัวข้อ เช่น ทวารวดี, สนธิสัญญาเบาว์ริง, ฮีตสิบสอง, โขน..." style="width: 100%; padding: 0.6rem 1rem; border-radius: var(--radius-md); border: 1px solid var(--border-color); background: var(--bg-surface); color: var(--text-primary); font-family: var(--font-body); font-size: 0.9rem;">
+        </div>
+      </div>
+
+      <!-- Unit Filter Chips -->
+      <div class="unit-filter-scroll" id="summaryFilterChips">
+        <!-- Rendered by JS -->
+      </div>
+
+      <!-- Cards Container -->
+      <div id="summaryCardsContainer">
+        <!-- Rendered by JS -->
+      </div>
+    </section>
+
+
+    <!-- ===================================================================
+         VIEW 3: Mock Exam Simulator (จำลองสอบ 120 ข้อ)
+         =================================================================== -->
+    <section class="view-section" id="examView">
+
+      <!-- Exam Start Prompt (Before beginning) -->
+      <div id="examStartPrompt" class="card" style="max-width: 760px; margin: 2rem auto; text-align: center; padding: 2.5rem 2rem;">
+        <div style="font-size: 3.5rem; margin-bottom: 0.75rem;">🇹🇭</div>
+        <h2 style="font-size: 1.75rem; margin-bottom: 0.5rem; color: var(--primary-gold-dark);">
+          การสอบจำลองเสมือนจริงชุดวิชา 10151 ไทยศึกษา (120 ข้อ)
+        </h2>
+        <p style="color: var(--text-secondary); font-size: 1rem; line-height: 1.7; margin-bottom: 1.5rem;">
+          แบบทดสอบนี้จัดทำขึ้นตามรูปแบบข้อสอบจริงของ มสธ. จำนวน <strong>120 ข้อ ปรนัย 5 ตัวเลือก (ก, ข, ค, ง, จ)</strong> กระจายครอบคลุมทั้ง 15 หน่วยการเรียนรู้ (หน่วยละ 8 ข้อ) ให้เวลาทำ <strong>180 นาที (3 ชั่วโมง)</strong>
+        </p>
+
+        <div style="background: var(--bg-surface-alt); border-radius: var(--radius-md); padding: 1.25rem; text-align: left; margin-bottom: 2rem; font-size: 0.925rem;">
+          <strong style="display: block; margin-bottom: 0.5rem; font-family: var(--font-heading);">คำแนะนำก่อนเริ่มทำข้อสอบ:</strong>
+          <ul style="padding-left: 1.25rem; line-height: 1.7; color: var(--text-secondary);">
+            <li>กดเลือกข้อสอบเพื่อตอบ หรือคลิกหมายเลขบนแผ่นกระดาษคำตอบด้านขวาเพื่อข้ามไปยังข้อที่ต้องการ</li>
+            <li>สามารถคลิกปุ่ม <strong>"🏳️ ปักหมุดทบทวน"</strong> ในข้อที่ยังไม่แน่ใจ เพื่อกลับมาตรวจทานก่อนส่งได้</li>
+            <li>ระบบจะบันทึกสถานะข้อที่ทำไว้ในเครื่องโดยอัตโนมัติ หากเผลอปิดแท็บสามารถเปิดกลับมาทำต่อได้</li>
+            <li>เมื่อหมดเวลา 180 นาที ระบบจะประมวลผลคำตอบและตัดเกรด H / S / U พร้อมเฉลยละเอียดทันที</li>
+          </ul>
+        </div>
+
+        <button class="btn btn-accent btn-lg" id="btnBeginExam" style="min-width: 250px;">
+          🚀 เริ่มทำข้อสอบทันที (จับเวลา 180 นาที)
+        </button>
+      </div>
+
+      <!-- Exam Active UI -->
+      <div id="examActiveArea" style="display: none;">
+        <!-- Sticky Exam Top Header -->
+        <div class="exam-header-bar">
+          <div style="display: flex; align-items: center; gap: 1rem;">
+            <div class="timer-box" id="examTimer">⏱️ 03:00:00</div>
+            <button class="btn btn-outline btn-sm" id="examPauseBtn">⏸️ พักชั่วคราว</button>
+          </div>
+
+          <div style="flex: 1; max-width: 380px; margin: 0 1rem;">
+            <div style="display: flex; justify-content: space-between; font-size: 0.8rem; margin-bottom: 0.25rem;">
+              <span id="examProgressText">ทำแล้ว 0 จาก 120 ข้อ (0%)</span>
+            </div>
+            <div style="height: 6px; background: var(--bg-surface-alt); border-radius: var(--radius-full); overflow: hidden;">
+              <div id="examProgressBar" style="width: 0%; height: 100%; background: var(--primary-gold); transition: width 0.3s;"></div>
+            </div>
+          </div>
+
+          <button class="btn btn-accent btn-sm" id="examSubmitBtn">
+            📤 ส่งกระดาษคำตอบ
+          </button>
+        </div>
+
+        <!-- Exam Layout: Question Area + Question Grid Drawer -->
+        <div class="exam-layout">
+          <!-- Left: Current Question Card -->
+          <div>
+            <div class="question-container">
+              <div class="question-meta">
+                <div>
+                  <span class="q-number" id="examQNum">ข้อที่ 1 / 120</span>
+                  <span class="badge badge-unit" id="examUnitBadge" style="margin-left: 0.5rem;">หน่วยที่ 1</span>
+                </div>
+                <div class="q-actions">
+                  <button class="btn btn-outline btn-sm" id="examFlagBtn">🏳️ ปักหมุดทบทวน</button>
+                </div>
+              </div>
+
+              <div class="question-text" id="examQText">
+                กำลังโหลดคำถาม...
+              </div>
+
+              <!-- Options A - E -->
+              <div class="options-list" id="examOptionsContainer">
+                <!-- Rendered by JS -->
+              </div>
+
+              <div class="exam-nav-footer">
+                <button class="btn btn-outline" id="examPrevBtn">
+                  ⬅️ ข้อก่อนหน้า
+                </button>
+                <button class="btn btn-primary" id="examNextBtn">
+                  ข้อถัดไป ➡️
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right: 120 Questions Sheet Grid -->
+          <aside class="question-grid-card">
+            <h4 style="font-size: 1rem; margin-bottom: 0.5rem; display: flex; justify-content: space-between; align-items: center;">
+              <span>แผ่นกระดาษคำตอบ (1-120)</span>
+            </h4>
+
+            <div class="grid-legend">
+              <div class="legend-item">
+                <div class="legend-dot dot-unanswered"></div>
+                <span>ยังไม่ทำ</span>
+              </div>
+              <div class="legend-item">
+                <div class="legend-dot dot-answered"></div>
+                <span>ทำแล้ว</span>
+              </div>
+              <div class="legend-item">
+                <div class="legend-dot dot-flagged"></div>
+                <span>ปักหมุด</span>
+              </div>
+            </div>
+
+            <div class="grid-matrix-container">
+              <div class="grid-matrix" id="examGridMatrix">
+                <!-- 120 Buttons rendered by JS -->
+              </div>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ===================================================================
+         VIEW 4: Practice Mode (ซ้อมรายข้อ มีเฉลยทันที)
+         =================================================================== -->
+    <section class="view-section" id="practiceView">
+      <div class="section-header">
+        <div>
+          <h2 style="font-size: 1.6rem; color: var(--primary-gold-dark);">🎯 โหมดฝึกทำโจทย์รายข้อ (Practice Mode)</h2>
+          <p style="color: var(--text-secondary); font-size: 0.95rem;">
+            คลิกเลือกคำตอบเพื่อตรวจทันที พร้อมแสดงคำอธิบายบริบทประวัติศาสตร์และเฉลยละเอียด
+          </p>
+        </div>
+
+        <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center;">
+          <select id="practiceUnitSelect" style="padding: 0.55rem 0.85rem; border-radius: var(--radius-md); border: 1px solid var(--border-color); background: var(--bg-surface); color: var(--text-primary); font-family: var(--font-body); font-size: 0.9rem;">
+            <option value="all">ทุกหน่วยการเรียนรู้ (120 ข้อ)</option>
+            <option value="1">หน่วยที่ 1: พัฒนาการประวัติศาสตร์</option>
+            <option value="2">หน่วยที่ 2: พัฒนาการการปกครอง</option>
+            <option value="3">หน่วยที่ 3: พัฒนาการเศรษฐกิจ</option>
+            <option value="4">หน่วยที่ 4: พัฒนาการสังคม</option>
+            <option value="5">หน่วยที่ 5: เทคโนโลยีไทย</option>
+            <option value="6">หน่วยที่ 6: ความเชื่อและศาสนา</option>
+            <option value="7">หน่วยที่ 7: ภาษาในสังคมไทย</option>
+            <option value="8">หน่วยที่ 8: ประเพณีและพิธีกรรม</option>
+            <option value="9">หน่วยที่ 9: การละเล่นพื้นบ้าน</option>
+            <option value="10">หน่วยที่ 10: นาฏศิลป์และดนตรีไทย</option>
+            <option value="11">หน่วยที่ 11: วรรณกรรมไทย</option>
+            <option value="12">หน่วยที่ 12: สถาปัตยกรรมไทย</option>
+            <option value="13">หน่วยที่ 13: ประติมากรรมและจิตรกรรม</option>
+            <option value="14">หน่วยที่ 14: งานช่างไทย</option>
+            <option value="15">หน่วยที่ 15: การพัฒนาบนวิถีไทย</option>
+          </select>
+
+          <select id="practiceFilterSelect" style="padding: 0.55rem 0.85rem; border-radius: var(--radius-md); border: 1px solid var(--border-color); background: var(--bg-surface); color: var(--text-primary); font-family: var(--font-body); font-size: 0.9rem;">
+            <option value="all">แสดงข้อสอบทั้งหมด</option>
+            <option value="bookmarked">⭐ ข้อที่บันทึกไว้ (Bookmarks)</option>
+            <option value="wrong">❌ ข้อที่เคยทำผิด (Mistakes)</option>
+          </select>
+
+          <span class="badge badge-unit" id="practiceTotalBadge">พบ 120 ข้อ</span>
+        </div>
+      </div>
+
+      <!-- Practice Question Box -->
+      <div class="card" style="max-width: 900px; margin: 0 auto; padding: 2rem;">
+        <div class="question-meta">
+          <div>
+            <span class="q-number" id="practiceQNum">ข้อที่ 1</span>
+            <span class="badge badge-unit" id="practiceUnitBadge" style="margin-left: 0.5rem;">หน่วยที่ 1</span>
+          </div>
+          <div class="q-actions">
+            <button class="btn btn-outline btn-sm" id="practiceBookmarkBtn">☆ บันทึกข้อนี้</button>
+            <button class="btn btn-secondary btn-sm" id="practiceRandomBtn">🎲 สุ่มข้อ</button>
+          </div>
+        </div>
+
+        <div class="question-text" id="practiceQText">
+          กำลังโหลดคำถาม...
+        </div>
+
+        <div class="options-list" id="practiceOptionsContainer">
+          <!-- Options rendered by JS -->
+        </div>
+
+        <!-- Instant Explanation Box -->
+        <div class="explanation-box" id="practiceExplanation" style="display: none;">
+          <!-- Rendered on click -->
+        </div>
+
+        <div class="exam-nav-footer" style="margin-top: 1.5rem;">
+          <button class="btn btn-outline" id="practicePrevBtn">⬅️ ข้อก่อนหน้า</button>
+          <button class="btn btn-primary" id="practiceNextBtn">ข้อถัดไป ➡️</button>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ===================================================================
+         VIEW 5: Exam Results & Analytics (รายงานผลคะแนน)
+         =================================================================== -->
+    <section class="view-section" id="resultsView">
+      <!-- Result Score Summary Banner -->
+      <div id="resultsHero" class="results-hero">
+        <div style="font-size: 3rem; margin-bottom: 0.5rem;">📋</div>
+        <h2 style="font-size: 1.5rem; margin-bottom: 0.5rem;">ยังไม่มีผลการสอบจำลองล่าสุด</h2>
+        <p style="color: var(--text-secondary); margin-bottom: 1.25rem;">
+          คุณยังไม่ได้เริ่มหรือส่งกระดาษคำตอบการจำลองสอบ 120 ข้อ กดปุ่มด้านล่างเพื่อเริ่มทำข้อสอบ
+        </p>
+        <button class="btn btn-accent btn-lg" id="btnRetakeExam">🚀 เริ่มทำข้อสอบจำลอง 120 ข้อ</button>
+      </div>
+
+      <!-- Unit-by-Unit Performance Breakdown -->
+      <div class="card unit-breakdown-card">
+        <h3 style="font-size: 1.2rem; color: var(--primary-gold-dark); margin-bottom: 0.25rem;">
+          📊 ผลการวิเคราะห์คะแนนแยกตามหน่วยการเรียนรู้ (15 หน่วย)
+        </h3>
+        <p style="font-size: 0.875rem; color: var(--text-secondary); margin-bottom: 1rem;">
+          เกณฑ์ผ่าน มสธ. คือ 60% (ต้องได้อย่างน้อย 5 ใน 8 ข้อต่อหน่วย) แถบสีแดงชี้ถึงหน่วยที่คุณควรกลับไปอ่านทบทวนเพิ่มเติม
+        </p>
+        <div id="resultsUnitBreakdown">
+          <!-- Filled by JS -->
+        </div>
+      </div>
+
+      <!-- Detailed Review of All 120 Questions -->
+      <div class="section-header" style="margin-top: 2rem;">
+        <div>
+          <h3 style="font-size: 1.25rem; color: var(--primary-gold-dark);">
+            📝 ตรวจทานข้อสอบพร้อมเฉลยละเอียดครบทุกข้อ
+          </h3>
+          <p style="font-size: 0.875rem; color: var(--text-secondary);">
+            ตรวจสอบคำตอบที่คุณเลือกเทียบกับเฉลยที่ถูกต้องพร้อมเหตุผลและบริบททางประวัติศาสตร์/วัฒนธรรม
+          </p>
+        </div>
+
+        <div>
+          <select id="resultsFilterSelect" style="padding: 0.5rem 0.85rem; border-radius: var(--radius-md); border: 1px solid var(--border-color); background: var(--bg-surface); color: var(--text-primary); font-family: var(--font-body); font-size: 0.9rem;">
+            <option value="all">แสดงทั้งหมด 120 ข้อ</option>
+            <option value="wrong">เฉพาะข้อที่ตอบผิด (Mistakes Only)</option>
+            <option value="correct">เฉพาะข้อที่ตอบถูก (Correct Only)</option>
+          </select>
+        </div>
+      </div>
+
+      <div id="resultsQuestionsReview">
+        <!-- Filled by JS -->
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Submit Confirmation Modal -->
+  <div class="modal-overlay" id="confirmSubmitModal">
+    <div class="modal-card">
+      <h3 class="modal-title">ยืนยันการส่งกระดาษคำตอบ?</h3>
+      <div class="modal-body">
+        <p style="margin-bottom: 0.75rem;">
+          คุณต้องการส่งกระดาษคำตอบเพื่อตรวจและประเมินผลเกรด มสธ. เลยหรือไม่?
+        </p>
+        <div style="background: var(--warning-bg); border: 1px solid rgba(217, 119, 6, 0.3); border-radius: var(--radius-md); padding: 0.75rem 1rem; color: var(--warning-amber); font-weight: 500;">
+          ⚠️ ยังมีข้อที่คุณยังไม่ได้ตอบอีก <strong id="modalUnansweredCount" style="color: var(--error-red);">0</strong> ข้อ!
+        </div>
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-outline" id="btnCancelSubmit">ย้อนกลับไปทำต่อ</button>
+        <button class="btn btn-accent" id="btnConfirmSubmit">ยืนยันส่งข้อสอบ</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <p>
+      สื่อการเรียนรู้และระบบจำลองข้อสอบ ชุดวิชา 10151 ไทยศึกษา (มสธ.)
+    </p>
+    <p style="margin-top: 0.25rem; font-size: 0.75rem; color: var(--text-muted);">
+      สร้างขึ้นเพื่อประโยชน์ทางการศึกษาและการเตรียมสอบสำหรับนักศึกษามหาวิทยาลัยสุโขทัยธรรมาธิราช
+    </p>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/summary-data.js"></script>
+  <script src="js/questions-data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

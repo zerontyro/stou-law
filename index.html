@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="th" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ศูนย์รวมสื่อสรุปบทเรียนและคลังข้อสอบ มสธ. (นิติศาสตร์ & หมวดศึกษาทั่วไป)</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;600;700;800&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <style>
+    :root {
+      --primary: #1e3a8a;
+      --bg: #f8fafc;
+      --card: #ffffff;
+      --border: #e2e8f0;
+      --text: #0f172a;
+      --muted: #475569;
+      --radius: 14px;
+      --shadow: 0 4px 6px -1px rgba(0,0,0,0.07), 0 2px 4px -2px rgba(0,0,0,0.05);
+      --font: 'Sarabun', sans-serif;
+    }
+    [data-theme="dark"] {
+      --bg: #0b0f19;
+      --card: #131b2e;
+      --border: #2d3748;
+      --text: #f1f5f9;
+      --muted: #94a3b8;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: var(--font); }
+    body { background-color: var(--bg); color: var(--text); min-height: 100vh; display: flex; flex-direction: column; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 2.5rem 1.5rem; width: 100%; flex: 1; }
+    .header { text-align: center; margin-bottom: 3rem; }
+    .badge-hub { display: inline-flex; align-items: center; gap: 0.5rem; background: linear-gradient(135deg, #1e3a8a, #b45309); color: #fff; padding: 0.4rem 1rem; border-radius: 9999px; font-weight: 700; font-size: 0.9rem; margin-bottom: 1rem; box-shadow: 0 2px 8px rgba(30,58,138,0.25); }
+    .header h1 { font-size: 2.2rem; margin-bottom: 0.75rem; font-weight: 800; }
+    .header p { color: var(--muted); font-size: 1.1rem; max-width: 680px; margin: 0 auto; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 1.5rem; }
+    .course-card { background-color: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.75rem; text-decoration: none; color: inherit; box-shadow: var(--shadow); transition: all 0.25s ease; display: flex; flex-direction: column; justify-content: space-between; position: relative; overflow: hidden; }
+    .course-card:hover { transform: translateY(-4px); box-shadow: 0 12px 20px -5px rgba(0,0,0,0.12); border-color: var(--primary); }
+    .course-card::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 5px; }
+    .c-41211::before { background: #1e3a8a; }
+    .c-41516::before { background: #991b1b; }
+    .c-40101::before { background: #0284c7; }
+    .c-10151::before { background: #059669; }
+    .code-tag { font-size: 0.85rem; font-weight: 800; padding: 0.25rem 0.6rem; border-radius: 6px; display: inline-block; margin-bottom: 0.75rem; }
+    .c-41211 .code-tag { background: #dbeafe; color: #1e3a8a; }
+    .c-41516 .code-tag { background: #fee2e2; color: #991b1b; }
+    .c-40101 .code-tag { background: #e0f2fe; color: #0284c7; }
+    .c-10151 .code-tag { background: #d1fae5; color: #059669; }
+    .course-card h2 { font-size: 1.35rem; margin-bottom: 0.5rem; font-weight: 700; line-height: 1.4; }
+    .course-card p { font-size: 0.95rem; color: var(--muted); line-height: 1.6; margin-bottom: 1.25rem; }
+    .features-list { list-style: none; font-size: 0.85rem; color: var(--muted); margin-bottom: 1.5rem; }
+    .features-list li { margin-bottom: 0.35rem; display: flex; align-items: center; gap: 0.5rem; }
+    .features-list li i { font-size: 0.75rem; color: #10b981; }
+    .enter-btn { display: inline-flex; align-items: center; justify-content: space-between; background: var(--bg); border: 1px solid var(--border); padding: 0.65rem 1rem; border-radius: 8px; font-weight: 700; font-size: 0.9rem; transition: all 0.2s; }
+    .course-card:hover .enter-btn { background: var(--primary); color: #fff; border-color: var(--primary); }
+    footer { text-align: center; padding: 2rem; border-top: 1px solid var(--border); font-size: 0.85rem; color: var(--muted); }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="header">
+      <div class="badge-hub">
+        <i class="fas fa-university"></i> มหาวิทยาลัยสุโขทัยธรรมาธิราช (มสธ.)
+      </div>
+      <h1>คลังสรุปบทเรียนและจำลองสอบเสมือนจริง</h1>
+      <p>หลักสูตรนิติศาสตรบัณฑิต และหมวดวิชาศึกษาทั่วไป พร้อมข้อสอบปรนัยจริง 120 ข้อ และข้อสอบอัตนัยตุ๊กตาตามแบบ มสธ.</p>
+    </div>
+
+    <div class="grid">
+      <!-- 41211 Civil Law 1 -->
+      <a href="41211-civil-law-1/index.html" class="course-card c-41211">
+        <div>
+          <span class="code-tag">41211 / 41511</span>
+          <h2>กฎหมายแพ่ง 1</h2>
+          <p>บุคคล นิติกรรม สัญญา (ป.พ.พ. บรรพ 1 - 2)</p>
+          <ul class="features-list">
+            <li><i class="fas fa-check"></i> สรุปเนื้อหาเข้มข้น 15 หน่วย</li>
+            <li><i class="fas fa-check"></i> ปรนัย 120 ข้อ (จับเวลา 180 นาที)</li>
+            <li><i class="fas fa-check"></i> อัตนัย 3 ข้อตุ๊กตา (60 คะแนน) พร้อมธง 3 สเต็ป</li>
+          </ul>
+        </div>
+        <div class="enter-btn">
+          <span>เข้าสู่บทเรียน 41211</span>
+          <i class="fas fa-arrow-right"></i>
+        </div>
+      </a>
+
+      <!-- 41516 Criminal Law 1 -->
+      <a href="41516-criminal-law-1/index.html" class="course-card c-41516">
+        <div>
+          <span class="code-tag">41516 / 41216</span>
+          <h2>กฎหมายอาญา 1</h2>
+          <p>ภาคบทบัญญัติทั่วไป (ป.อ. มาตรา 1 - 106)</p>
+          <ul class="features-list">
+            <li><i class="fas fa-check"></i> สรุปเนื้อหาเข้มข้น 15 หน่วย</li>
+            <li><i class="fas fa-check"></i> ปรนัย 120 ข้อ (จับเวลา 180 นาที)</li>
+            <li><i class="fas fa-check"></i> อัตนัย 3 ข้อตุ๊กตา (60 คะแนน) พร้อมธง 3 สเต็ป</li>
+          </ul>
+        </div>
+        <div class="enter-btn">
+          <span>เข้าสู่บทเรียน 41516</span>
+          <i class="fas fa-arrow-right"></i>
+        </div>
+      </a>
+
+      <!-- 40101 General Law Knowledge -->
+      <a href="40101 general law knowledge/index.html" class="course-card c-40101">
+        <div>
+          <span class="code-tag">40101</span>
+          <h2>ความรู้เบื้องต้นเกี่ยวกับกฎหมายทั่วไป</h2>
+          <p>พื้นฐานระบบกฎหมาย ที่มาของกฎหมาย และการใช้กฎหมาย</p>
+          <ul class="features-list">
+            <li><i class="fas fa-check"></i> สรุปเนื้อหาเข้มข้น 15 หน่วย</li>
+            <li><i class="fas fa-check"></i> ปรนัย 120 ข้อ (จับเวลา 180 นาที)</li>
+            <li><i class="fas fa-check"></i> วิเคราะห์จุดอ่อนรายหน่วย</li>
+          </ul>
+        </div>
+        <div class="enter-btn">
+          <span>เข้าสู่บทเรียน 40101</span>
+          <i class="fas fa-arrow-right"></i>
+        </div>
+      </a>
+
+      <!-- 10151 Thai Studies -->
+      <a href="10151-thai-studies/index.html" class="course-card c-10151">
+        <div>
+          <span class="code-tag">10151</span>
+          <h2>ไทยศึกษา (Thai Studies)</h2>
+          <p>ประวัติศาสตร์ สังคม วัฒนธรรม ภูมิปัญญา และเศรษฐกิจการเมืองไทย</p>
+          <ul class="features-list">
+            <li><i class="fas fa-check"></i> สรุปเนื้อหาเข้มข้น 15 หน่วย</li>
+            <li><i class="fas fa-check"></i> ปรนัย 120 ข้อ (จับเวลา 180 นาที)</li>
+            <li><i class="fas fa-check"></i> ข้อสอบฝึกทำรายข้อพร้อมเฉลยทันที</li>
+          </ul>
+        </div>
+        <div class="enter-btn">
+          <span>เข้าสู่บทเรียน 10151</span>
+          <i class="fas fa-arrow-right"></i>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <footer>
+    <p>© มหาวิทยาลัยสุโขทัยธรรมาธิราช • พัฒนาขึ้นเพื่อประโยชน์ทางการศึกษาของนักศึกษาและผู้สนใจกฎหมาย</p>
+  </footer>
+
+</body>
+</html>

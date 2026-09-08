@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="th" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>41516 กฎหมายอาญา 1 - สรุปเนื้อหา & จำลองสอบเสมือนจริง มสธ.</title>
+  
+  <!-- Google Fonts: Sarabun & Prompt -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;600;700;800&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <!-- Top Navigation Header -->
+  <header class="top-nav">
+    <div class="top-nav-inner">
+      <div class="brand-section">
+        <div class="brand-badge">
+          <i class="fas fa-balance-scale"></i> 41516
+        </div>
+        <div class="brand-info">
+          <h1>กฎหมายอาญา 1 (Criminal Law 1)</h1>
+          <p>ภาคบทบัญญัติทั่วไป มาตรา 1 - 106 | มหาวิทยาลัยสุโขทัยธรรมาธิราช (มสธ.)</p>
+        </div>
+      </div>
+
+      <div class="nav-actions">
+        <!-- Course Switcher Dropdown -->
+        <div class="course-switcher-dropdown">
+          <button id="btnCourseSwitcher" class="btn-switcher">
+            <i class="fas fa-university"></i> สลับรายวิชา มสธ. <i class="fas fa-chevron-down" style="font-size: 0.75rem;"></i>
+          </button>
+          <div id="switcherDropdown" class="dropdown-menu">
+            <a href="index.html" class="dropdown-item active">
+              <i class="fas fa-gavel text-primary"></i> 41516 กฎหมายอาญา 1 (ปัจจุบัน)
+            </a>
+            <a href="../41211-civil-law-1/index.html" class="dropdown-item">
+              <i class="fas fa-scroll text-secondary"></i> 41211 กฎหมายแพ่ง 1 (ใหม่)
+            </a>
+            <a href="../40101 general law knowledge/index.html" class="dropdown-item">
+              <i class="fas fa-book-reader text-secondary"></i> 40101 ความรู้เบื้องต้นเกี่ยวกับกฎหมายทั่วไป
+            </a>
+            <a href="../10151-thai-studies/index.html" class="dropdown-item">
+              <i class="fas fa-landmark text-secondary"></i> 10151 ไทยศึกษา (Thai Studies)
+            </a>
+          </div>
+        </div>
+
+        <!-- Theme Toggle Button -->
+        <button id="btnThemeToggle" class="btn-icon" title="สลับโหมดมืด/สว่าง">
+          <i class="fas fa-moon"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Navigation Tabs -->
+  <nav class="tab-navigation">
+    <div class="tab-container">
+      <button class="tab-btn active" data-tab="overview">
+        <i class="fas fa-home"></i> ภาพรวมรายวิชา
+      </button>
+      <button class="tab-btn" data-tab="summary">
+        <i class="fas fa-book"></i> สรุปเข้ม 15 หน่วย <span class="badge">15</span>
+      </button>
+      <button class="tab-btn" data-tab="exam">
+        <i class="fas fa-file-alt"></i> จำลองสอบปรนัย <span class="badge">120 ข้อ</span>
+      </button>
+      <button class="tab-btn" data-tab="essay">
+        <i class="fas fa-pen-nib"></i> ข้อสอบอัตนัยตุ๊กตา <span class="badge">3 ข้อ (60 คะแนน)</span>
+      </button>
+      <button class="tab-btn" data-tab="practice">
+        <i class="fas fa-tasks"></i> คลังฝึกทำรายข้อ <span class="badge">เฉลยทันที</span>
+      </button>
+      <button class="tab-btn" data-tab="results">
+        <i class="fas fa-chart-line"></i> ผลการสอบ & วิเคราะห์จุดอ่อน
+      </button>
+    </div>
+  </nav>
+
+  <!-- Main Content Container -->
+  <main class="main-content">
+
+    <!-- TAB 1: OVERVIEW -->
+    <section id="tab-overview" class="tab-panel active">
+      <div class="hero-banner">
+        <div class="hero-text">
+          <h2>เตรียมสอบกฎหมายอาญา 1 (41516 / 41216)</h2>
+          <p style="font-size: 1.05rem; color: var(--text-muted); margin-bottom: 1rem;">
+            ระบบติวเข้มแบบ Interactive ครอบคลุมประมวลกฎหมายอาญา ภาคบทบัญญัติทั่วไป (มาตรา 1 - 106)
+            ครบทั้ง 15 หน่วยการเรียน พร้อมแนวข้อสอบปรนัยจริง 120 ข้อ (5 ตัวเลือก) และข้อสอบอัตนัยปัญหาตุ๊กตา 3 ข้อ (ข้อละ 20 คะแนน)
+          </p>
+          <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+            <button class="btn-primary" onclick="window.switchTab('exam'); window.startExam();">
+              <i class="fas fa-play"></i> เริ่มทำข้อสอบปรนัย 120 ข้อ (จับเวลา 180 นาที)
+            </button>
+            <button class="btn-secondary" onclick="window.switchTab('essay');">
+              <i class="fas fa-feather-alt"></i> ฝึกเขียนข้อสอบอัตนัย 3 ข้อ
+            </button>
+            <button class="btn-secondary" onclick="window.switchTab('summary');">
+              <i class="fas fa-book-open"></i> อ่านสรุปเนื้อหา 15 หน่วย
+            </button>
+          </div>
+        </div>
+        <div class="hero-stats">
+          <div class="stat-box">
+            <div class="num">15</div>
+            <div class="lbl">หน่วยการเรียน</div>
+          </div>
+          <div class="stat-box">
+            <div class="num">120</div>
+            <div class="lbl">ข้อสอบปรนัย</div>
+          </div>
+          <div class="stat-box">
+            <div class="num">3</div>
+            <div class="lbl">ข้อสอบอัตนัย</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Core Criminal Liability Tripartite Structure -->
+      <div class="card">
+        <h3 style="margin-bottom: 0.5rem; font-size: 1.3rem; display: flex; align-items: center; gap: 0.5rem;">
+          <i class="fas fa-sitemap text-primary"></i> โครงสร้างความรับผิดในทางอาญา 3 ชั้น (The Tripartite Structure)
+        </h3>
+        <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 1.25rem;">
+          หัวใจสำคัญที่สุดในการวินิจฉัยข้อสอบทั้งปรนัยและอัตนัยของ มสธ. ต้องพิจารณาตามลำดับโครงสร้าง 3 ชั้นดังนี้:
+        </p>
+
+        <div class="doctrine-grid">
+          <!-- Layer 1 -->
+          <div class="doctrine-card layer-1">
+            <h4><i class="fas fa-cube text-primary"></i> ชั้นที่ 1: การกระทำครบองค์ประกอบที่กฎหมายกำหนด</h4>
+            <ul class="doctrine-list">
+              <li><strong>มีการกระทำ:</strong> เคลื่อนไหวหรือไม่เคลื่อนไหวร่างกายโดยรู้สำนึกภายใต้การควบคุมของจิตใจ (รวมถึงการงดเว้น ม.59 วรรคท้าย)</li>
+              <li><strong>ครบองค์ประกอบภายนอก:</strong> ผู้กระทำ + การกระทำ + วัตถุแห่งการกระทำ (และผลสัมพันธ์กับการกระทำ)</li>
+              <li><strong>ครบองค์ประกอบภายใน:</strong> เจตนา (ประสงค์ต่อผล หรือย่อมเล็งเห็นผล ม.59 ว.2) หรือ ประมาท (ม.59 ว.4) หรือ เจตนาพิเศษ (เช่น โดยทุจริต ม.1(1))</li>
+              <li><strong>ความสัมพันธ์ระหว่างเหตุและผล:</strong> ผลธรรมดาตามมาตรา 63 และทฤษฎีเงื่อนไข</li>
+            </ul>
+          </div>
+
+          <!-- Layer 2 -->
+          <div class="doctrine-card layer-2">
+            <h4><i class="fas fa-shield-alt text-success"></i> ชั้นที่ 2: ไม่มีการกระทำอันเป็นเหตุยกเว้นความผิด</h4>
+            <ul class="doctrine-list">
+              <li><strong>การป้องกันโดยชอบด้วยกฎหมาย (ม.68):</strong> ภัยอันละเมิดกฎหมาย ใกล้จะถึง จำต้องกระทำ พอสมควรแก่เหตุ = <em>ไม่มีความผิดเลย</em></li>
+              <li><strong>ความยินยอมอันบริสุทธิ์:</strong> ยินยอมไม่เป็นละเมิด ไม่ขัดต่อความสงบเรียบร้อยและศีลธรรมอันดี (เช่น แข่งขันกีฬาชกมวย, ศัลยกรรมรักษา)</li>
+              <li><strong>อำนาจตามกฎหมายอื่น:</strong> เจ้าพนักงานปฏิบัติตามหมายจับหรือคำสั่งศาล</li>
+            </ul>
+          </div>
+
+          <!-- Layer 3 -->
+          <div class="doctrine-card layer-3">
+            <h4><i class="fas fa-scale-balanced text-secondary"></i> ชั้นที่ 3: ไม่มีการกระทำอันเป็นเหตุยกเว้นโทษ / ลดโทษ</h4>
+            <ul class="doctrine-list">
+              <li><strong>เหตุยกเว้นโทษ (ยังผิดแต่อภัยโทษ):</strong> ความจำเป็น (ม.67), วิกลจริตไม่รู้ผิดชอบ (ม.65 ว.1), เด็กอายุไม่เกิน 12 ปี (ม.73), คำสั่งเจ้าพนักงาน (ม.70), ความผิดเกี่ยวกับทรัพย์ระหว่างสามีภริยา (ม.71 ว.1)</li>
+              <li><strong>เหตุลดโทษ:</strong> บันดาลโทสะ (ม.72), ป้องกัน/จำเป็นเกินสมควรแก่เหตุ (ม.69), จิตบกพร่องยังรู้ผิดชอบอยู่บ้าง (ม.65 ว.2), อายุ 18-20 ปี (ม.76), เหตุบรรเทาโทษ (ม.78)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Course Units Curriculum Map -->
+      <div class="card">
+        <h3 style="margin-bottom: 1rem; font-size: 1.25rem;">
+          <i class="fas fa-list-ol text-secondary"></i> สาระสำคัญ 15 หน่วยการเรียน (ชุดวิชา 41516)
+        </h3>
+        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem;">
+          <div style="background-color: var(--bg-subtle); padding: 1rem; border-radius: var(--radius-md);">
+            <strong>หน่วยที่ 1 - 2:</strong> ขอบเขต ลักษณะทั่วไป นิยามศัพท์ และการใช้กฎหมายเรื่องเวลา-สถานที่ (ม.1 - 11)
+          </div>
+          <div style="background-color: var(--bg-subtle); padding: 1rem; border-radius: var(--radius-md);">
+            <strong>หน่วยที่ 3 - 4:</strong> การกระทำทางอาญา การงดเว้น และความสัมพันธ์ระหว่างการกระทำกับผล (ม.59 วรรคท้าย, ม.63)
+          </div>
+          <div style="background-color: var(--bg-subtle); padding: 1rem; border-radius: var(--radius-md);">
+            <strong>หน่วยที่ 5 - 7:</strong> เจตนา ประมาท ความสำคัญผิด และการกระทำโดยพลาด (ม.59, 60, 61, 62)
+          </div>
+          <div style="background-color: var(--bg-subtle); padding: 1rem; border-radius: var(--radius-md);">
+            <strong>หน่วยที่ 8 - 9:</strong> เหตุยกเว้นความผิด (ป้องกันตัว) และเหตุยกเว้นโทษ (ความจำเป็น, คำสั่ง) (ม.67, 68, 70, 71)
+          </div>
+          <div style="background-color: var(--bg-subtle); padding: 1rem; border-radius: var(--radius-md);">
+            <strong>หน่วยที่ 10 - 11:</strong> ความบกพร่องทางจิต อายุ ความมึนเมา บันดาลโทสะ และเหตุลดโทษ (ม.65, 66, 72 - 78)
+          </div>
+          <div style="background-color: var(--bg-subtle); padding: 1rem; border-radius: var(--radius-md);">
+            <strong>หน่วยที่ 12 - 14:</strong> ขั้นการกระทำ (พยายาม ม.80 - 82) และผู้เกี่ยวข้อง (ตัวการ ม.83, ผู้ใช้ ม.84, ผู้สนับสนุน ม.86)
+          </div>
+          <div style="background-color: var(--bg-subtle); padding: 1rem; border-radius: var(--radius-md);">
+            <strong>หน่วยที่ 15:</strong> โทษ 5 สถาน วิธีการเพื่อความปลอดภัย รอการลงโทษ และอายุความ (ม.18, 56, 90, 91, 95)
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 2: UNIT SUMMARIES -->
+    <section id="tab-summary" class="tab-panel">
+      <div class="summary-toolbar">
+        <div class="search-input-wrap">
+          <i class="fas fa-search search-icon"></i>
+          <input type="text" id="summarySearchInput" class="search-input" placeholder="ค้นหาตามมาตรา หัวข้อ หรือคีย์เวิร์ดในสรุป...">
+        </div>
+        <select id="summaryUnitFilter" class="select-filter">
+          <option value="all">ทุกหน่วยการเรียน (หน่วยที่ 1 - 15)</option>
+          <option value="1">หน่วยที่ 1 ขอบเขตและนิยามศัพท์</option>
+          <option value="2">หน่วยที่ 2 เวลาและสถานที่</option>
+          <option value="3">หน่วยที่ 3 การกระทำและการงดเว้น</option>
+          <option value="4">หน่วยที่ 4 ความสัมพันธ์แห่งผล</option>
+          <option value="5">หน่วยที่ 5 เจตนาและประมาท</option>
+          <option value="6">หน่วยที่ 6 สำคัญผิดและเหตุเพิ่มโทษ</option>
+          <option value="7">หน่วยที่ 7 การกระทำโดยพลาด</option>
+          <option value="8">หน่วยที่ 8 ป้องกันตัวและความยินยอม</option>
+          <option value="9">หน่วยที่ 9 ความจำเป็นและคำสั่ง</option>
+          <option value="10">หน่วยที่ 10 จิตบกพร่อง อายุ มึนเมา</option>
+          <option value="11">หน่วยที่ 11 บันดาลโทสะและเหตุลดโทษ</option>
+          <option value="12">หน่วยที่ 12 การพยายามกระทำความผิด</option>
+          <option value="13">หน่วยที่ 13 ตัวการร่วม</option>
+          <option value="14">หน่วยที่ 14 ผู้ใช้และผู้สนับสนุน</option>
+          <option value="15">หน่วยที่ 15 โทษ ความปลอดภัย อายุความ</option>
+        </select>
+        <button id="btnExpandAllSummaries" class="btn-secondary" style="font-size: 0.85rem;">
+          <i class="fas fa-expand-alt"></i> ขยายทั้งหมด
+        </button>
+        <button id="btnCollapseAllSummaries" class="btn-secondary" style="font-size: 0.85rem;">
+          <i class="fas fa-compress-alt"></i> ยุบทั้งหมด
+        </button>
+      </div>
+
+      <div id="summariesContainer">
+        <!-- Rendered dynamically by app.js -->
+      </div>
+    </section>
+
+    <!-- TAB 3: EXAM SIMULATION (120 Questions) -->
+    <section id="tab-exam" class="tab-panel">
+      <!-- Exam Welcome / Rules Box -->
+      <div id="examWelcomeBox" class="card" style="text-align: center; padding: 3rem 2rem;">
+        <i class="fas fa-clipboard-check" style="font-size: 3.5rem; color: var(--primary); margin-bottom: 1.25rem;"></i>
+        <h2 style="font-size: 1.8rem; margin-bottom: 0.75rem;">แบบทดสอบจำลองเสมือนจริง 120 ข้อ (มสธ. 41516)</h2>
+        <p style="max-width: 680px; margin: 0 auto 1.5rem; color: var(--text-muted); font-size: 1rem;">
+          ข้อสอบปรนัย 5 ตัวเลือก (ก-จ) จำนวน 120 ข้อ เฉลี่ย 8 ข้อต่อหน่วย ครบทั้ง 15 หน่วยการเรียน<br>
+          เวลาในการสอบจริง: <strong>180 นาที (3 ชั่วโมง)</strong> | เกณฑ์ประเมินผล: <strong>H (≥76%), S (60-75%), U (&lt;60%)</strong>
+        </p>
+        <div style="display: flex; gap: 1rem; justify-content: center;">
+          <button id="btnStartExam" class="btn-primary" style="font-size: 1.1rem; padding: 0.85rem 2rem;">
+            <i class="fas fa-play"></i> เริ่มต้นทำแบบทดสอบ 120 ข้อ
+          </button>
+        </div>
+      </div>
+
+      <!-- Active Exam Interface -->
+      <div id="examActiveBox" class="hidden">
+        <div class="exam-layout">
+          <!-- Left: Question Area -->
+          <div class="exam-main-col">
+            <div id="examQuestionContainer">
+              <!-- Rendered dynamically by app.js -->
+            </div>
+
+            <div class="exam-controls">
+              <button id="btnPrevExamQ" class="btn-secondary">
+                <i class="fas fa-chevron-left"></i> ข้อก่อนหน้า
+              </button>
+              <div style="display: flex; gap: 0.75rem;">
+                <button id="btnFlagExamQ" class="btn-secondary">
+                  <i class="fas fa-flag"></i> ติดธงทบทวน
+                </button>
+                <button id="btnNextExamQ" class="btn-secondary">
+                  ข้อถัดไป <i class="fas fa-chevron-right"></i>
+                </button>
+              </div>
+              <button id="btnSubmitExam" class="btn-danger">
+                <i class="fas fa-paper-plane"></i> ส่งข้อสอบ
+              </button>
+            </div>
+          </div>
+
+          <!-- Right: Navigator & Timer Sidebar -->
+          <aside class="exam-sidebar">
+            <div class="exam-timer-box">
+              <div class="timer-label"><i class="fas fa-clock"></i> เวลาที่เหลือ</div>
+              <div id="examTimerDisplay" class="timer-digits">03:00:00</div>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; font-size: 0.875rem; font-weight: 600;">
+              <span>ความคืบหน้า</span>
+              <span id="examAnsweredCount">0 / 120 ข้อ</span>
+            </div>
+            <div class="exam-progress-bar">
+              <div id="examProgressFill" class="exam-progress-fill"></div>
+            </div>
+
+            <div style="margin: 1rem 0 0.5rem; font-size: 0.85rem; font-weight: 700; color: var(--text-muted);">
+              แผงกระดาษคำตอบ (ข้อ 1 - 120):
+            </div>
+            <div id="examNavGrid" class="question-nav-grid">
+              <!-- Rendered dynamically -->
+            </div>
+
+            <div style="display: flex; gap: 0.75rem; font-size: 0.75rem; color: var(--text-muted); justify-content: center; flex-wrap: wrap;">
+              <span><span style="display:inline-block; width:10px; height:10px; background:var(--primary); border-radius:2px;"></span> ตอบแล้ว</span>
+              <span><span style="display:inline-block; width:10px; height:10px; background:var(--bg-subtle); border:1px solid var(--border-color); border-radius:2px;"></span> ยังไม่ตอบ</span>
+              <span><span style="display:inline-block; width:10px; height:10px; background:var(--secondary-light); border:1px solid var(--secondary); border-radius:2px;"></span> ติดธง</span>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 4: SUBJECTIVE ESSAY WORKSHOP (3 Questions) -->
+    <section id="tab-essay" class="tab-panel">
+      <div class="card" style="margin-bottom: 1.25rem;">
+        <h2 style="font-size: 1.4rem; color: var(--primary); margin-bottom: 0.4rem;">
+          <i class="fas fa-pen-nib"></i> ข้อสอบอัตนัยวิเคราะห์ปัญหาตุ๊กตา (Subjective Exam - 3 ข้อ 60 คะแนน)
+        </h2>
+        <p style="color: var(--text-muted); font-size: 0.95rem;">
+          จำลองสนามสอบอัตนัยของ มสธ. ชุดละ 3 ข้อ (ข้อละ 20 คะแนน รวม 60 คะแนน) โดยต้องตอบตามรูปแบบมาตรฐาน: 
+          <strong>1. หลักกฎหมายที่เกี่ยวข้อง 2. วินิจฉัยปรับบทกับข้อเท็จจริง 3. สรุปผลคำวินิจฉัย</strong>
+        </p>
+      </div>
+
+      <div class="essay-container">
+        <!-- Question Selector Tabs -->
+        <div id="essayQuestionTabs" class="essay-tabs">
+          <!-- Rendered dynamically -->
+        </div>
+
+        <!-- Active Question Split View -->
+        <div id="essayActiveContainer">
+          <!-- Rendered dynamically -->
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 5: PRACTICE REPOSITORY (Immediate Feedback) -->
+    <section id="tab-practice" class="tab-panel">
+      <div class="summary-toolbar">
+        <div class="search-input-wrap">
+          <i class="fas fa-search search-icon"></i>
+          <input type="text" id="practiceSearchInput" class="search-input" placeholder="ค้นหาข้อสอบ คำถาม หรือมาตรา...">
+        </div>
+        <select id="practiceUnitFilter" class="select-filter">
+          <option value="all">ทุกหน่วยการเรียน (120 ข้อ)</option>
+          <option value="1">หน่วยที่ 1 ขอบเขตและนิยามศัพท์ (8 ข้อ)</option>
+          <option value="2">หน่วยที่ 2 เวลาและสถานที่ (8 ข้อ)</option>
+          <option value="3">หน่วยที่ 3 การกระทำและการงดเว้น (8 ข้อ)</option>
+          <option value="4">หน่วยที่ 4 ความสัมพันธ์แห่งผล (8 ข้อ)</option>
+          <option value="5">หน่วยที่ 5 เจตนาและประมาท (8 ข้อ)</option>
+          <option value="6">หน่วยที่ 6 สำคัญผิดและเหตุเพิ่มโทษ (8 ข้อ)</option>
+          <option value="7">หน่วยที่ 7 การกระทำโดยพลาด (8 ข้อ)</option>
+          <option value="8">หน่วยที่ 8 ป้องกันตัวและความยินยอม (8 ข้อ)</option>
+          <option value="9">หน่วยที่ 9 ความจำเป็นและคำสั่ง (8 ข้อ)</option>
+          <option value="10">หน่วยที่ 10 จิตบกพร่อง อายุ มึนเมา (8 ข้อ)</option>
+          <option value="11">หน่วยที่ 11 บันดาลโทสะและเหตุลดโทษ (8 ข้อ)</option>
+          <option value="12">หน่วยที่ 12 การพยายามกระทำความผิด (8 ข้อ)</option>
+          <option value="13">หน่วยที่ 13 ตัวการร่วม (8 ข้อ)</option>
+          <option value="14">หน่วยที่ 14 ผู้ใช้และผู้สนับสนุน (8 ข้อ)</option>
+          <option value="15">หน่วยที่ 15 โทษ ความปลอดภัย อายุความ (8 ข้อ)</option>
+        </select>
+        <label style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.9rem; font-weight: 600; cursor: pointer;">
+          <input type="checkbox" id="practiceBookmarkFilter">
+          <i class="fas fa-star" style="color: var(--secondary);"></i> เฉพาะข้อที่บันทึกไว้
+        </label>
+      </div>
+
+      <div id="practiceQuestionsContainer">
+        <!-- Rendered dynamically -->
+      </div>
+    </section>
+
+    <!-- TAB 6: RESULTS & UNIT ANALYTICS -->
+    <section id="tab-results" class="tab-panel">
+      <div id="resultsSummaryBox">
+        <div class="card" style="text-align: center; padding: 3rem;">
+          <i class="fas fa-hourglass-start" style="font-size: 3rem; color: var(--text-subtle); margin-bottom: 1rem;"></i>
+          <h3 style="color: var(--text-muted);">ยังไม่มีผลการสอบจำลอง</h3>
+          <p style="margin: 0.5rem 0 1.5rem; color: var(--text-muted);">
+            กรุณาเข้าสู่แท็บ "จำลองสอบปรนัย" และทำการส่งข้อสอบเพื่อดูผลการประเมินเกรด มสธ. และการวิเคราะห์จุดอ่อนรายหน่วย
+          </p>
+          <button class="btn-primary" onclick="window.switchTab('exam'); window.startExam();">
+            <i class="fas fa-play"></i> เริ่มจำลองสอบ 120 ข้อ
+          </button>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top: 1.5rem;">
+        <h3 style="font-size: 1.25rem; margin-bottom: 0.5rem; color: var(--primary);">
+          <i class="fas fa-chart-pie"></i> ผลการวิเคราะห์แยกรายหน่วยการเรียน (หน่วยที่ 1 - 15)
+        </h3>
+        <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.25rem;">
+          เกณฑ์สี: <span class="text-success font-bold">เขียว (≥75%)</span> จุดแข็ง | <span class="text-secondary font-bold">ส้ม (50-74%)</span> ปานกลาง | <span class="text-danger font-bold">แดง (&lt;50%)</span> จุดอ่อนที่ต้องอ่านทบทวนด่วน
+        </p>
+        <div id="resultsUnitAnalysisGrid" class="unit-analysis-grid">
+          <!-- Rendered dynamically by app.js -->
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div style="max-width: 1440px; margin: 0 auto; display: flex; flex-direction: column; gap: 0.5rem; align-items: center;">
+      <p style="font-weight: 700; color: var(--text-main);">
+        แอปพลิเคชันเพื่อการศึกษาและทบทวนเตรียมสอบ: ชุดวิชา 41516 / 41216 กฎหมายอาญา 1 (Criminal Law 1)
+      </p>
+      <p style="font-size: 0.8rem; color: var(--text-muted);">
+        อ้างอิงตามหลักสูตรปริญญาตรีนิติศาสตรบัณฑิต มหาวิทยาลัยสุโขทัยธรรมาธิราช (มสธ.) และประมวลกฎหมายอาญา (ฉบับแก้ไขเพิ่มเติมล่าสุด)
+      </p>
+      <div style="margin-top: 0.5rem; display: flex; gap: 1rem; font-size: 0.85rem; flex-wrap: wrap; justify-content: center;">
+        <a href="../41211-civil-law-1/index.html"><i class="fas fa-scroll"></i> 41211 กฎหมายแพ่ง 1</a>
+        <span>•</span>
+        <a href="../40101 general law knowledge/index.html"><i class="fas fa-book"></i> 40101 กฎหมายทั่วไป</a>
+        <span>•</span>
+        <a href="../10151-thai-studies/index.html"><i class="fas fa-landmark"></i> 10151 ไทยศึกษา</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Script Files -->
+  <script src="js/summary-data.js"></script>
+  <script src="js/essay-data.js"></script>
+  <script src="js/questions-data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
