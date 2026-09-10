@@ -40,7 +40,10 @@ document.addEventListener('DOMContentLoaded', () => {
     summary: {
       currentUnit: 'all',
       searchQuery: ''
-    }
+    },
+
+    // Inline Unit Quiz State per Unit
+    unitQuiz: {}
   };
 
   // --------------------------------------------------------------------------
@@ -146,6 +149,155 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+  function getUnitQuizState(unitNum) {
+    if (!state.unitQuiz[unitNum]) {
+      state.unitQuiz[unitNum] = {
+        userAnswers: {},
+        revealed: {},
+        show: false
+      };
+    }
+    return state.unitQuiz[unitNum];
+  }
+
+  function renderUnitSampleEssay(unit) {
+    if (!unit.sampleEssay) return '';
+    const essay = unit.sampleEssay;
+    return `
+      <div class="sample-essay-card" id="sample-essay-card-${unit.unit}">
+        <div class="sample-essay-header" onclick="window.toggleUnitEssay(${unit.unit})">
+          <h4>
+            <i class="fas fa-balance-scale"></i> ${escapeHtml(essay.title || `ตัวอย่างโจทย์อัตนัยตุ๊กตาประจำหน่วยที่ ${unit.unit}`)}
+          </h4>
+          <span style="font-size: 0.85rem; color: var(--secondary); font-weight: 700;">
+            <i class="fas fa-chevron-down" id="sample-essay-icon-${unit.unit}"></i> คลิกดูโจทย์ & ธงคำตอบ 3 สเต็ป
+          </span>
+        </div>
+        <div class="sample-essay-body" id="sample-essay-body-${unit.unit}">
+          <div class="sample-problem-box">
+            <strong style="color: var(--secondary); display: block; margin-bottom: 0.5rem; font-size: 1rem;">
+              <i class="fas fa-question-circle"></i> ข้อเท็จจริงโจทย์ปัญหาตุ๊กตา:
+            </strong>
+            ${escapeHtml(essay.problem)}
+          </div>
+          <div class="sample-solution-box">
+            <div class="sample-step">
+              <h5><i class="fas fa-book"></i> 1. หลักกฎหมายที่เกี่ยวข้อง (Statutory Provisions)</h5>
+              <div class="sample-step-content">${escapeHtml(essay.legalPrinciples)}</div>
+            </div>
+            <div class="sample-step">
+              <h5><i class="fas fa-gavel"></i> 2. การปรับบทและการวินิจฉัยข้อกฎหมาย (Subsumption & Analysis)</h5>
+              <div class="sample-step-content">${escapeHtml(essay.analysis)}</div>
+            </div>
+            <div class="sample-step">
+              <h5><i class="fas fa-check-circle"></i> 3. สรุปคำวินิจฉัย (Conclusion)</h5>
+              <div class="sample-step-content">${escapeHtml(essay.conclusion)}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  function renderInlineUnitQuiz(unitNum) {
+    if (typeof QUESTIONS_DATA === 'undefined') return '';
+    const unitQuestions = QUESTIONS_DATA.filter(q => q.unit === unitNum);
+    if (unitQuestions.length === 0) return '';
+
+    const qState = getUnitQuizState(unitNum);
+    let answeredCount = 0;
+    let correctCount = 0;
+
+    unitQuestions.forEach(q => {
+      const ans = qState.userAnswers[q.id];
+      if (ans !== undefined) {
+        answeredCount++;
+        if (ans === q.answer) correctCount++;
+      }
+    });
+
+    const percent = unitQuestions.length > 0 ? Math.round((correctCount / unitQuestions.length) * 100) : 0;
+
+    return `
+      <div class="unit-quiz-card" id="unit-quiz-card-${unitNum}">
+        <div class="unit-quiz-header" onclick="window.toggleUnitQuiz(${unitNum})">
+          <h4>
+            <i class="fas fa-tasks"></i> แบบทดสอบวัดความเข้าใจประจำหน่วยที่ ${unitNum}
+            <span class="badge" style="background-color: var(--primary); color: #fff; margin-left: 0.5rem; font-size: 0.75rem; padding: 0.2rem 0.55rem; border-radius: var(--radius-sm);">8 ข้อ (เฉลยทันที)</span>
+          </h4>
+          <div style="display: flex; align-items: center; gap: 0.75rem;">
+            <span style="font-size: 0.85rem; font-weight: 700; color: var(--primary);">
+              ${answeredCount > 0 ? `คะแนน: ${correctCount}/${unitQuestions.length} (${percent}%)` : 'คลิกเพื่อเริ่มทำ'}
+            </span>
+            <i class="fas fa-chevron-${qState.show ? 'up' : 'down'}" id="unit-quiz-icon-${unitNum}" style="color: var(--primary); transition: transform 0.2s;"></i>
+          </div>
+        </div>
+
+        <div class="unit-quiz-body ${qState.show ? 'show' : ''}" id="unit-quiz-body-${unitNum}">
+          <div class="unit-quiz-stats">
+            <div>
+              <i class="fas fa-chart-pie" style="color: var(--primary); margin-right: 0.35rem;"></i>
+              ทำแล้ว: <strong>${answeredCount}</strong> / ${unitQuestions.length} ข้อ | 
+              ตอบถูก: <strong style="color: var(--success);">${correctCount}</strong> ข้อ (${percent}%)
+            </div>
+            <div style="display: flex; gap: 0.5rem;">
+              <button class="btn-secondary" style="font-size: 0.8rem; padding: 0.3rem 0.65rem;" onclick="window.resetUnitQuiz(${unitNum})">
+                <i class="fas fa-redo"></i> ทำใหม่
+              </button>
+              <button class="btn-secondary" style="font-size: 0.8rem; padding: 0.3rem 0.65rem;" onclick="window.goToPracticeUnit(${unitNum})">
+                <i class="fas fa-external-link-alt"></i> ทำในคลังข้อสอบ
+              </button>
+            </div>
+          </div>
+
+          <div class="unit-quiz-list">
+            ${unitQuestions.map((q, idx) => {
+              const selected = qState.userAnswers[q.id];
+              const isRevealed = qState.revealed[q.id] || selected !== undefined;
+              return `
+                <div class="unit-quiz-item" id="uq_${q.id}">
+                  <div class="unit-quiz-item-header">
+                    <span><strong>ข้อที่ ${idx + 1}</strong> จาก ${unitQuestions.length} (รหัสข้อ ${q.id})</span>
+                    ${isRevealed ? (
+                      selected === q.answer ? 
+                      '<span style="color: var(--success); font-weight: 700;"><i class="fas fa-check-circle"></i> ตอบถูกต้อง (+1)</span>' :
+                      '<span style="color: var(--danger); font-weight: 700;"><i class="fas fa-times-circle"></i> ยังไม่ถูกต้อง</span>'
+                    ) : '<span style="color: var(--text-subtle);">คลิกเลือกคำตอบ</span>'}
+                  </div>
+                  <div class="unit-quiz-qtext">${escapeHtml(q.question)}</div>
+                  <div class="unit-quiz-options">
+                    ${q.options.map((opt, optIdx) => {
+                      let optClass = 'unit-quiz-opt';
+                      if (isRevealed) {
+                        optClass += ' disabled';
+                        if (optIdx === q.answer) optClass += ' correct';
+                        else if (selected === optIdx) optClass += ' wrong';
+                      }
+                      return `
+                        <div class="${optClass}" onclick="${isRevealed ? '' : `window.handleUnitQuizSelect(${unitNum}, ${q.id}, ${optIdx})`}">
+                          <input type="radio" name="uq_radio_${q.id}" ${selected === optIdx ? 'checked' : ''} ${isRevealed ? 'disabled' : ''} style="margin-top: 0.25rem;">
+                          <div style="flex: 1;">${escapeHtml(opt)}</div>
+                        </div>
+                      `;
+                    }).join('')}
+                  </div>
+                  ${isRevealed ? `
+                    <div class="unit-quiz-explanation">
+                      <strong style="color: var(--success); display: block; margin-bottom: 0.3rem;">
+                        <i class="fas fa-lightbulb"></i> คำอธิบายเฉลย:
+                      </strong>
+                      ${escapeHtml(q.explanation)}
+                    </div>
+                  ` : ''}
+                </div>
+              `;
+            }).join('')}
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
   function renderSummaries() {
     const container = document.getElementById('summariesContainer');
     if (!container || typeof SUMMARY_DATA === 'undefined') return;
@@ -159,13 +311,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (searchQuery) {
       filtered = filtered.filter(u => {
+        const topics = u.keyTopics || u.keyConcepts || [];
         const inTitle = u.title.toLowerCase().includes(searchQuery);
-        const inTopics = u.keyTopics.some(t => 
+        const inTopics = topics.some(t => 
           t.topic.toLowerCase().includes(searchQuery) || 
           t.details.toLowerCase().includes(searchQuery)
         );
-        const inTips = u.examTips.some(tip => tip.toLowerCase().includes(searchQuery));
-        return inTitle || inTopics || inTips;
+        const inTips = (u.examTips || []).some(tip => tip.toLowerCase().includes(searchQuery));
+        const inEssay = u.sampleEssay ? (
+          u.sampleEssay.title.toLowerCase().includes(searchQuery) ||
+          u.sampleEssay.problem.toLowerCase().includes(searchQuery)
+        ) : false;
+        return inTitle || inTopics || inTips || inEssay;
       });
     }
 
@@ -178,40 +335,137 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    container.innerHTML = filtered.map(unit => `
-      <div class="unit-card ${currentUnit !== 'all' || searchQuery ? 'expanded' : ''}" data-unit="${unit.unit}">
-        <div class="unit-card-header" onclick="this.parentElement.classList.toggle('expanded')">
-          <div class="unit-card-title">
-            <span class="unit-badge">หน่วยที่ ${unit.unit}</span>
-            <h3 style="font-size: 1.15rem;">${unit.title}</h3>
-          </div>
-          <i class="fas fa-chevron-down toggle-icon" style="color: var(--text-subtle); transition: transform 0.2s;"></i>
-        </div>
-        <div class="unit-sections-wrap">
-          ${unit.keyTopics.map(topic => `
-            <div class="topic-block">
-              <div class="topic-title">
-                <i class="fas fa-bookmark" style="color: var(--secondary); margin-right: 0.4rem; font-size: 0.9rem;"></i>
-                ${topic.topic}
-              </div>
-              <div class="topic-content">${escapeHtml(topic.details)}</div>
-            </div>
-          `).join('')}
+    container.innerHTML = filtered.map(unit => {
+      const topics = unit.keyTopics || unit.keyConcepts || [];
+      const tips = unit.examTips || [];
 
-          ${unit.examTips && unit.examTips.length > 0 ? `
-            <div class="exam-tip-box">
-              <strong style="display: block; margin-bottom: 0.4rem;">
-                <i class="fas fa-lightbulb" style="margin-right: 0.4rem;"></i> จุดเน้นออกสอบบ่อย (High-Yield Tips):
-              </strong>
-              <ul style="margin-left: 1.25rem; font-size: 0.95rem;">
-                ${unit.examTips.map(tip => `<li>${escapeHtml(tip)}</li>`).join('')}
-              </ul>
+      return `
+        <div class="unit-card ${currentUnit !== 'all' || searchQuery ? 'expanded' : ''}" data-unit="${unit.unit}">
+          <div class="unit-card-header" onclick="this.parentElement.classList.toggle('expanded')">
+            <div class="unit-card-title">
+              <span class="unit-badge">หน่วยที่ ${unit.unit}</span>
+              <div>
+                <h3 style="font-size: 1.15rem; margin: 0;">${unit.title}</h3>
+                ${unit.subtitle ? `<div style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.2rem;">${escapeHtml(unit.subtitle)}</div>` : ''}
+              </div>
             </div>
-          ` : ''}
+            <i class="fas fa-chevron-down toggle-icon" style="color: var(--text-subtle); transition: transform 0.2s;"></i>
+          </div>
+
+          <div class="unit-sections-wrap">
+            <!-- Quick Actions Toolbar inside Unit -->
+            <div class="unit-quick-actions">
+              <button class="btn-unit-action" onclick="event.stopPropagation(); window.toggleUnitQuiz(${unit.unit});">
+                <i class="fas fa-pencil-alt" style="color: var(--primary);"></i> ทำแบบทดสอบประจำหน่วย (8 ข้อ)
+              </button>
+              <button class="btn-unit-action" onclick="event.stopPropagation(); window.toggleUnitEssay(${unit.unit});">
+                <i class="fas fa-balance-scale" style="color: var(--secondary);"></i> ตัวอย่างโจทย์อัตนัยตุ๊กตา + ธงคำตอบ
+              </button>
+              <button class="btn-unit-action" onclick="event.stopPropagation(); window.goToPracticeUnit(${unit.unit});">
+                <i class="fas fa-book-reader" style="color: var(--text-muted);"></i> ฝึกทำในคลังข้อสอบใหญ่
+              </button>
+            </div>
+
+            <!-- Unit Core Summary Topics -->
+            ${topics.map(topic => `
+              <div class="topic-block">
+                <div class="topic-title">
+                  <i class="fas fa-bookmark" style="color: var(--secondary); margin-right: 0.4rem; font-size: 0.9rem;"></i>
+                  ${topic.topic}
+                </div>
+                <div class="topic-content">${escapeHtml(topic.details)}</div>
+              </div>
+            `).join('')}
+
+            <!-- Unit High-Yield Exam Tips -->
+            ${tips.length > 0 ? `
+              <div class="exam-tip-box">
+                <strong style="display: block; margin-bottom: 0.4rem;">
+                  <i class="fas fa-lightbulb" style="margin-right: 0.4rem;"></i> จุดเน้นออกสอบบ่อย (High-Yield Tips):
+                </strong>
+                <ul style="margin-left: 1.25rem; font-size: 0.95rem;">
+                  ${tips.map(tip => `<li>${escapeHtml(tip)}</li>`).join('')}
+                </ul>
+              </div>
+            ` : ''}
+
+            <!-- Sample Subjective Essay Problem with 3-Step Solution -->
+            ${renderUnitSampleEssay(unit)}
+
+            <!-- Inline 8-Question Unit Quiz with Instant Feedback -->
+            ${renderInlineUnitQuiz(unit.unit)}
+          </div>
         </div>
-      </div>
-    `).join('');
+      `;
+    }).join('');
   }
+
+  // Window functions for Unit Quizzes and Essays
+  window.toggleUnitQuiz = function(unitNum) {
+    const card = document.querySelector(`.unit-card[data-unit="${unitNum}"]`);
+    if (card && !card.classList.contains('expanded')) {
+      card.classList.add('expanded');
+    }
+    const qState = getUnitQuizState(unitNum);
+    qState.show = !qState.show;
+    const body = document.getElementById(`unit-quiz-body-${unitNum}`);
+    const icon = document.getElementById(`unit-quiz-icon-${unitNum}`);
+    if (body) body.classList.toggle('show', qState.show);
+    if (icon) icon.className = `fas fa-chevron-${qState.show ? 'up' : 'down'}`;
+  };
+
+  window.toggleUnitEssay = function(unitNum) {
+    const card = document.querySelector(`.unit-card[data-unit="${unitNum}"]`);
+    if (card && !card.classList.contains('expanded')) {
+      card.classList.add('expanded');
+    }
+    const body = document.getElementById(`sample-essay-body-${unitNum}`);
+    const icon = document.getElementById(`sample-essay-icon-${unitNum}`);
+    if (body) {
+      const isShowing = body.classList.toggle('show');
+      if (icon) icon.className = `fas fa-chevron-${isShowing ? 'up' : 'down'}`;
+    }
+  };
+
+  window.handleUnitQuizSelect = function(unitNum, qid, optIdx) {
+    const qState = getUnitQuizState(unitNum);
+    qState.userAnswers[qid] = optIdx;
+    qState.revealed[qid] = true;
+    
+    // Re-render only this unit quiz card
+    const cardEl = document.getElementById(`unit-quiz-card-${unitNum}`);
+    if (cardEl) {
+      const wrapper = document.createElement('div');
+      wrapper.innerHTML = renderInlineUnitQuiz(unitNum);
+      const newCard = wrapper.firstElementChild;
+      cardEl.parentNode.replaceChild(newCard, cardEl);
+    }
+  };
+
+  window.resetUnitQuiz = function(unitNum) {
+    if (confirm(`คุณต้องการล้างคำตอบแบบทดสอบหน่วยที่ ${unitNum} และเริ่มทำใหม่หรือไม่?`)) {
+      const qState = getUnitQuizState(unitNum);
+      qState.userAnswers = {};
+      qState.revealed = {};
+      const cardEl = document.getElementById(`unit-quiz-card-${unitNum}`);
+      if (cardEl) {
+        const wrapper = document.createElement('div');
+        wrapper.innerHTML = renderInlineUnitQuiz(unitNum);
+        const newCard = wrapper.firstElementChild;
+        cardEl.parentNode.replaceChild(newCard, cardEl);
+      }
+    }
+  };
+
+  window.goToPracticeUnit = function(unitNum) {
+    switchTab('practice');
+    const unitSelect = document.getElementById('practiceUnitFilter');
+    if (unitSelect) {
+      unitSelect.value = String(unitNum);
+      state.practice.currentUnit = String(unitNum);
+      renderPractice();
+    }
+  };
 
   // --------------------------------------------------------------------------
   // 120-Question Multiple Choice Exam System
@@ -520,33 +774,42 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!container || typeof ESSAY_DATA === 'undefined') return;
 
     const q = ESSAY_DATA[state.essay.currentIndex];
+    if (!q) return;
+
     const currentDraft = state.essay.drafts[q.id] || '';
     const isRevealed = !!state.essay.revealedAnswers[q.id];
     const savedRubrics = state.essay.rubricScores[q.id] || {};
+    const tips = q.examTips || q.tips || [];
+    const factPattern = q.factPattern || q.question || '';
+    const prompt = q.prompt || 'ให้ท่านวินิจฉัยความรับผิดในทางอาญาของบุคคลที่เกี่ยวข้องทั้งหมด';
+    const legalPrinciples = q.modelAnswer ? (q.modelAnswer.legalPrinciples || q.modelAnswer.principles || '') : '';
+    const analysis = q.modelAnswer ? (q.modelAnswer.analysis || '') : '';
+    const conclusion = q.modelAnswer ? (q.modelAnswer.conclusion || '') : '';
+    const rubricList = q.rubric || [];
 
     container.innerHTML = `
       <div class="essay-split-layout">
         <!-- Left: Facts & Question -->
         <div class="essay-fact-box">
           <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
-            <span class="unit-badge">ข้อสอบอัตนัย 20 คะแนน (หน่วยที่ ${q.unit})</span>
+            <span class="unit-badge">ข้อสอบอัตนัย 20 คะแนน (${q.unit || 'ภาคบทบัญญัติทั่วไป'})</span>
             <span style="font-size: 0.85rem; color: var(--secondary); font-weight: 700;">เกณฑ์ มสธ. ข้อละ 20 คะแนน</span>
           </div>
           <h3 style="margin-bottom: 1rem; font-size: 1.25rem;">ข้อที่ ${q.id}: ${escapeHtml(q.title)}</h3>
           <div class="essay-fact-text">
             <strong>คำถามตุ๊กตาข้อเท็จจริง:</strong><br><br>
-            ${escapeHtml(q.factPattern)}
+            ${escapeHtml(factPattern)}
           </div>
           <div class="essay-prompt-box">
             <i class="fas fa-question-circle" style="margin-right: 0.5rem;"></i>
-            <strong>ประเด็นที่ต้องวินิจฉัย:</strong> ${escapeHtml(q.prompt)}
+            <strong>ประเด็นที่ต้องวินิจฉัย:</strong> ${escapeHtml(prompt)}
           </div>
           <div class="essay-tips-box">
             <strong style="color: var(--secondary); display: block; margin-bottom: 0.4rem;">
               <i class="fas fa-lightbulb"></i> คำแนะนำและแนวทางการตอบ:
             </strong>
             <ul style="margin-left: 1.25rem; font-size: 0.9rem; color: var(--text-muted);">
-              ${q.examTips.map(tip => `<li>${escapeHtml(tip)}</li>`).join('')}
+              ${tips.map(tip => `<li>${escapeHtml(tip)}</li>`).join('')}
             </ul>
           </div>
         </div>
@@ -581,19 +844,19 @@ document.addEventListener('DOMContentLoaded', () => {
         <!-- Step 1: Legal Principles -->
         <div class="model-step-card">
           <h5><i class="fas fa-book"></i> 1. หลักกฎหมายที่เกี่ยวข้อง (Statutory Provisions)</h5>
-          <div class="model-step-content">${escapeHtml(q.modelAnswer.legalPrinciples)}</div>
+          <div class="model-step-content">${escapeHtml(legalPrinciples)}</div>
         </div>
 
         <!-- Step 2: Subsumption / Analysis -->
         <div class="model-step-card">
           <h5><i class="fas fa-gavel"></i> 2. การปรับใช้กฎหมายกับข้อเท็จจริง (วินิจฉัย)</h5>
-          <div class="model-step-content">${escapeHtml(q.modelAnswer.analysis)}</div>
+          <div class="model-step-content">${escapeHtml(analysis)}</div>
         </div>
 
         <!-- Step 3: Conclusion -->
         <div class="model-step-card">
           <h5><i class="fas fa-check-circle"></i> 3. สรุปคำตอบ (Conclusion)</h5>
-          <div class="model-step-content">${escapeHtml(q.modelAnswer.conclusion)}</div>
+          <div class="model-step-content">${escapeHtml(conclusion)}</div>
         </div>
 
         <!-- Self Scoring Rubric Checklist -->
@@ -602,7 +865,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <span>เกณฑ์การให้คะแนนและการประเมินตนเอง (Rubrics)</span>
             <span id="rubricTotalDisplay">คะแนนที่ได้: 0 / 20 คะแนน</span>
           </div>
-          ${q.rubric.map((r, rIdx) => {
+          ${rubricList.map((r, rIdx) => {
             const isChecked = !!savedRubrics[rIdx];
             return `
               <div class="rubric-item">
