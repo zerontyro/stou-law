@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>คลังวารสารกฎหมาย มสธ. (ข้อมูลดิบ PDF + ไฮไลท์ + สรุป)</title>
+  <title>คลังวารสารกฎหมาย มสธ. (เปิดอ่านออนไลน์ + ไฮไลท์ + สรุปรายฉบับ)</title>
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -48,7 +48,7 @@
     .search-box input:focus { border-color: #b45309; }
     .search-box i { position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--muted); font-size: 1.1rem; }
     
-    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.5rem; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 1.5rem; }
     .journal-card { background-color: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem; box-shadow: var(--shadow); transition: all 0.25s ease; display: flex; flex-direction: column; justify-content: space-between; position: relative; overflow: hidden; }
     .journal-card:hover { transform: translateY(-4px); box-shadow: 0 12px 20px -5px rgba(0,0,0,0.12); border-color: #b45309; }
     .journal-card::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 5px; background: var(--primary-gradient); }
@@ -57,12 +57,14 @@
     .journal-card h2 { font-size: 1.25rem; margin-bottom: 0.5rem; font-weight: 700; line-height: 1.4; }
     .journal-card p { font-size: 0.9rem; color: var(--muted); line-height: 1.6; margin-bottom: 1.25rem; }
     
-    .actions { display: flex; gap: 0.5rem; margin-top: auto; }
-    .btn { flex: 1; display: inline-flex; align-items: center; justify-content: center; gap: 0.4rem; padding: 0.6rem 0.8rem; border-radius: 8px; font-size: 0.85rem; font-weight: 700; text-decoration: none; transition: all 0.2s; border: 1px solid var(--border); cursor: pointer; }
-    .btn-primary { background: #b45309; color: #fff; border-color: #b45309; }
-    .btn-primary:hover { background: #78350f; border-color: #78350f; }
-    .btn-secondary { background: var(--bg); color: var(--text); }
-    .btn-secondary:hover { background: var(--border); }
+    .actions { display: flex; gap: 0.4rem; margin-top: auto; flex-wrap: wrap; }
+    .btn { flex: 1; min-width: 95px; display: inline-flex; align-items: center; justify-content: center; gap: 0.3rem; padding: 0.55rem 0.6rem; border-radius: 8px; font-size: 0.8rem; font-weight: 700; text-decoration: none; transition: all 0.2s; border: 1px solid var(--border); cursor: pointer; text-align: center; }
+    .btn-view { background: #b45309; color: #fff; border-color: #b45309; }
+    .btn-view:hover { background: #78350f; border-color: #78350f; }
+    .btn-summary { background: #0284c7; color: #fff; border-color: #0284c7; }
+    .btn-summary:hover { background: #0369a1; border-color: #0369a1; }
+    .btn-download { background: var(--bg); color: var(--text); }
+    .btn-download:hover { background: var(--border); }
     
     footer { text-align: center; padding: 2rem; border-top: 1px solid var(--border); font-size: 0.85rem; color: var(--muted); }
   </style>
@@ -80,8 +82,8 @@
       <div class="badge-hub">
         <i class="fas fa-book-journal-whills"></i> คลังวารสารกฎหมาย มสธ.
       </div>
-      <h1>วารสารกฎหมาย & สรุปไฮไลท์ประเด็นฎีกา</h1>
-      <p>รวบรวมวารสารกฎหมาย มสธ. ครบถ้วน 22 ฉบับ (ปี 2544 - 2563) พร้อมไฟล์ PDF ข้อมูลดิบ สรุปสาระสำคัญ และแนวข้อสอบอัตนัย</p>
+      <h1>วารสารกฎหมาย (เปิดอ่านออนไลน์ + สรุปรายฉบับ)</h1>
+      <p>คลังข้อมูลวารสารกฎหมาย มสธ. ครบถ้วน 22 ฉบับ พร้อมระบบเปิดดู PDF ในเว็บ สรุปเนื้อหาเจาะลึกรายฉบับ และดาวน์โหลด</p>
     </div>
 
     <div class="search-box">
@@ -91,303 +93,327 @@
 
     <div class="grid" id="journalGrid">
       
-      <!-- Summary Card -->
+      <!-- Summary Master Card -->
       <div class="journal-card" style="grid-column: 1 / -1; background: linear-gradient(to right, var(--card), #fffbeb);">
         <div>
           <span class="card-tag"><i class="fas fa-star"></i> สรุปภาพรวม & ไฮไลท์พิเศษ</span>
-          <h2>สรุปสาระสำคัญ & ไฮไลท์ฎีกาวารสารกฎหมาย มสธ.</h2>
-          <p>รวมประเด็นข้อกฎหมายเด่น คำพิพากษาศาลฎีกาสำคัญ (แพ่ง, อาญา, พาณิชย์) และธงแนวตอบข้อสอบอัตนัย 3 สเต็ป มสธ.</p>
+          <h2>รวมสรุปภาพรวม & ไฮไลท์ฎีกาวารสารกฎหมาย มสธ. (22 ฉบับ)</h2>
+          <p>รวมสาระสำคัญประเด็นกฎหมายเด่น คำพิพากษาศาลฎีกาสำคัญ (แพ่ง, อาญา, พาณิชย์) และธงแนวตอบข้อสอบอัตนัย 3 สเต็ป มสธ.</p>
         </div>
         <div class="actions" style="margin-top: 1rem;">
-          <a href="summaries/README.md" class="btn btn-primary" style="max-width: 300px;">
-            <i class="fas fa-file-alt"></i> อ่านสรุปเนื้อหา & ไฮไลท์ (Markdown)
+          <a href="summaries/README.md" class="btn btn-summary" style="max-width: 320px;">
+            <i class="fas fa-file-alt"></i> อ่านสรุปดรรชนีรวม 22 เล่ม (Markdown)
           </a>
         </div>
       </div>
 
-      <!-- Journal 0 -->
-      <div class="journal-card" data-title="วารสารกฎหมาย ฉบับที่ 2 2544">
+      <!-- Journal Cards (22 Items) -->
+
+      <!-- 0 -->
+      <div class="journal-card" data-title="วารสารกฎหมาย ฉบับที่ 2 2544 มหาชน ดุลพินิจ">
         <div>
           <span class="card-tag">พ.ศ. 2544</span>
           <h2>วารสารกฎหมาย ฉบับที่ 2 (2544)</h2>
-          <p>บทความวิเคราะห์กฎหมายมหาชน และหลักการตีความกฎหมายตามเจตนารมณ์</p>
+          <p>บทความวิเคราะห์กฎหมายมหาชน หลักการตีความกฎหมาย และการควบคุมการใช้อำนาจดุลพินิจทางปกครอง</p>
         </div>
         <div class="actions">
-          <a href="raw/0_Ch2_2544.pdf" class="btn btn-primary" download><i class="fas fa-download"></i> ดาวน์โหลด PDF</a>
-          <a href="summaries/README.md" class="btn btn-secondary"><i class="fas fa-eye"></i> สรุป</a>
+          <a href="viewer.html?file=0_Ch2_2544.pdf" class="btn btn-view"><i class="fas fa-eye"></i> เปิดอ่านในเว็บ</a>
+          <a href="summaries/journal_0_2544.md" class="btn btn-summary"><i class="fas fa-book"></i> อ่านสรุป</a>
+          <a href="raw/0_Ch2_2544.pdf" class="btn btn-download" download><i class="fas fa-download"></i> โหลด PDF</a>
         </div>
       </div>
 
-      <!-- Journal 1 -->
-      <div class="journal-card" data-title="วารสารปี 22 1 มิย 53 2553 ละเมิด">
+      <!-- 1 -->
+      <div class="journal-card" data-title="วารสารปี 22 1 มิย 53 2553 ละเมิด เจ้าหน้าที่">
         <div>
           <span class="card-tag">ปีที่ 22 ฉบับที่ 1 (มิ.ย. 53)</span>
           <h2>วารสารกฎหมาย ปี 22 ฉบับ 1 (2553)</h2>
-          <p>วิเคราะห์ความรับผิดทางละเมิดของเจ้าหน้าที่ และอายุความฟ้องร้อง</p>
+          <p>วิเคราะห์ความรับผิดทางละเมิดของเจ้าหน้าที่ (พ.ร.บ. 2539) สิทธิการไล่เบี้ย และอายุความการฟ้องคดี</p>
         </div>
         <div class="actions">
-          <a href="raw/1_Journal_22_1_Jun53.pdf" class="btn btn-primary" download><i class="fas fa-download"></i> ดาวน์โหลด PDF</a>
-          <a href="summaries/README.md" class="btn btn-secondary"><i class="fas fa-eye"></i> สรุป</a>
+          <a href="viewer.html?file=1_Journal_22_1_Jun53.pdf" class="btn btn-view"><i class="fas fa-eye"></i> เปิดอ่านในเว็บ</a>
+          <a href="summaries/journal_1_2553_1.md" class="btn btn-summary"><i class="fas fa-book"></i> อ่านสรุป</a>
+          <a href="raw/1_Journal_22_1_Jun53.pdf" class="btn btn-download" download><i class="fas fa-download"></i> โหลด PDF</a>
         </div>
       </div>
 
-      <!-- Journal 2 -->
-      <div class="journal-card" data-title="วารสารปี 22 2 ธค 53 2553 สัญญา">
+      <!-- 2 -->
+      <div class="journal-card" data-title="วารสารปี 22 2 ธค 53 2553 สัญญาไม่เป็นธรรม จำนอง">
         <div>
           <span class="card-tag">ปีที่ 22 ฉบับที่ 2 (ธ.ค. 53)</span>
           <h2>วารสารกฎหมาย ปี 22 ฉบับ 2 (2553)</h2>
-          <p>หลักสัญญาไม่เป็นธรรม และการคุ้มครองผู้บริโภคในสัญญามาตรฐาน</p>
+          <p>หลักข้อสัญญาไม่เป็นธรรม (พ.ร.บ. 2540) สัญญามาตรฐาน และการจำนองประกันหนี้บุคคลอื่น</p>
         </div>
         <div class="actions">
-          <a href="raw/2_Journal_22_2_Dec53.pdf" class="btn btn-primary" download><i class="fas fa-download"></i> ดาวน์โหลด PDF</a>
-          <a href="summaries/README.md" class="btn btn-secondary"><i class="fas fa-eye"></i> สรุป</a>
+          <a href="viewer.html?file=2_Journal_22_2_Dec53.pdf" class="btn btn-view"><i class="fas fa-eye"></i> เปิดอ่านในเว็บ</a>
+          <a href="summaries/journal_2_2553_2.md" class="btn btn-summary"><i class="fas fa-book"></i> อ่านสรุป</a>
+          <a href="raw/2_Journal_22_2_Dec53.pdf" class="btn btn-download" download><i class="fas fa-download"></i> โหลด PDF</a>
         </div>
       </div>
 
-      <!-- Journal 3 -->
-      <div class="journal-card" data-title="วารสารปี 23 1 มิย 54 2554 อาญา">
+      <!-- 3 -->
+      <div class="journal-card" data-title="วารสารปี 23 1 มิย 54 2554 อาญา เจตนา">
         <div>
           <span class="card-tag">ปีที่ 23 ฉบับที่ 1 (มิ.ย. 54)</span>
           <h2>วารสารกฎหมาย ปี 23 ฉบับ 1 (2554)</h2>
-          <p>โครงสร้างความรับผิดทางอาญา: เจตนา เล็งเห็นผล และประมาทเลินเล่ออย่างร้ายแรง</p>
+          <p>โครงสร้างความรับผิดทางอาญา: เจตนาประสงค์ต่อผล เจตนาเล็งเห็นผล และความประมาทเลินเล่อ</p>
         </div>
         <div class="actions">
-          <a href="raw/3_Journal_23_1_Jun54.pdf" class="btn btn-primary" download><i class="fas fa-download"></i> ดาวน์โหลด PDF</a>
-          <a href="summaries/README.md" class="btn btn-secondary"><i class="fas fa-eye"></i> สรุป</a>
+          <a href="viewer.html?file=3_Journal_23_1_Jun54.pdf" class="btn btn-view"><i class="fas fa-eye"></i> เปิดอ่านในเว็บ</a>
+          <a href="summaries/journal_3_2554_1.md" class="btn btn-summary"><i class="fas fa-book"></i> อ่านสรุป</a>
+          <a href="raw/3_Journal_23_1_Jun54.pdf" class="btn btn-download" download><i class="fas fa-download"></i> โหลด PDF</a>
         </div>
       </div>
 
-      <!-- Journal 4 -->
-      <div class="journal-card" data-title="วารสารปี 23 2 ธค 54 2554 ทรัพย์สิน">
+      <!-- 4 -->
+      <div class="journal-card" data-title="วารสารปี 23 2 ธค 54 2554 ทรัพย์สิน ครอบครอง">
         <div>
           <span class="card-tag">ปีที่ 23 ฉบับที่ 2 (ธ.ค. 54)</span>
           <h2>วารสารกฎหมาย ปี 23 ฉบับ 2 (2554)</h2>
-          <p>สิทธิครอบครองและกรรมสิทธิ์ในอสังหาริมทรัพย์ ตาม ป.พ.พ. บรรพ 4</p>
+          <p>สิทธิครอบครองและกรรมสิทธิ์ในอสังหาริมทรัพย์ ตาม ป.พ.พ. มาตรา 1299 และที่ดินมือเปล่า น.ส.3</p>
         </div>
         <div class="actions">
-          <a href="raw/4_Journal_23_2_Dec54.pdf" class="btn btn-primary" download><i class="fas fa-download"></i> ดาวน์โหลด PDF</a>
-          <a href="summaries/README.md" class="btn btn-secondary"><i class="fas fa-eye"></i> สรุป</a>
+          <a href="viewer.html?file=4_Journal_23_2_Dec54.pdf" class="btn btn-view"><i class="fas fa-eye"></i> เปิดอ่านในเว็บ</a>
+          <a href="summaries/journal_4_2554_2.md" class="btn btn-summary"><i class="fas fa-book"></i> อ่านสรุป</a>
+          <a href="raw/4_Journal_23_2_Dec54.pdf" class="btn btn-download" download><i class="fas fa-download"></i> โหลด PDF</a>
         </div>
       </div>
 
-      <!-- Journal 5 -->
-      <div class="journal-card" data-title="วารสารปี 24 1 มิย 55 2555 ละเมิด">
+      <!-- 5 -->
+      <div class="journal-card" data-title="วารสารปี 24 1 มิย 55 2555 ละเมิด ยานพาหนะ">
         <div>
           <span class="card-tag">ปีที่ 24 ฉบับที่ 1 (มิ.ย. 55)</span>
           <h2>วารสารกฎหมาย ปี 24 ฉบับ 1 (2555)</h2>
-          <p>วิเคราะห์ฎีกาใหม่: ละเมิดจากการใช้ยานพาหนะและข้ออ้างเหตุสุดวิสัย</p>
+          <p>ความรับผิดอันเกิดจากยานพาหนะอันเดินด้วยกำลังเครื่องจักร (ป.พ.พ. ม. 437) และเหตุสุดวิสัย</p>
         </div>
         <div class="actions">
-          <a href="raw/5_Journal_24_1_Jun55.pdf" class="btn btn-primary" download><i class="fas fa-download"></i> ดาวน์โหลด PDF</a>
-          <a href="summaries/README.md" class="btn btn-secondary"><i class="fas fa-eye"></i> สรุป</a>
+          <a href="viewer.html?file=5_Journal_24_1_Jun55.pdf" class="btn btn-view"><i class="fas fa-eye"></i> เปิดอ่านในเว็บ</a>
+          <a href="summaries/journal_5_2555_1.md" class="btn btn-summary"><i class="fas fa-book"></i> อ่านสรุป</a>
+          <a href="raw/5_Journal_24_1_Jun55.pdf" class="btn btn-download" download><i class="fas fa-download"></i> โหลด PDF</a>
         </div>
       </div>
 
-      <!-- Journal 6 -->
-      <div class="journal-card" data-title="วารสารปี 24 2 ธค 55 2555 สัญญา">
+      <!-- 6 -->
+      <div class="journal-card" data-title="วารสารปี 24 2 ธค 55 2555 เลิกสัญญา">
         <div>
           <span class="card-tag">ปีที่ 24 ฉบับที่ 2 (ธ.ค. 55)</span>
           <h2>วารสารกฎหมาย ปี 24 ฉบับ 2 (2555)</h2>
-          <p>การเลิกสัญญาและผลของการกลับคืนสู่ฐานะเดิม ตาม ป.พ.พ. มาตรา 391</p>
+          <p>การเลิกสัญญาและผลของการกลับคืนสู่ฐานะเดิม ตาม ป.พ.พ. มาตรา 386 - 391</p>
         </div>
         <div class="actions">
-          <a href="raw/6_Journal_24_2_Dec55.pdf" class="btn btn-primary" download><i class="fas fa-download"></i> ดาวน์โหลด PDF</a>
-          <a href="summaries/README.md" class="btn btn-secondary"><i class="fas fa-eye"></i> สรุป</a>
+          <a href="viewer.html?file=6_Journal_24_2_Dec55.pdf" class="btn btn-view"><i class="fas fa-eye"></i> เปิดอ่านในเว็บ</a>
+          <a href="summaries/journal_6_2555_2.md" class="btn btn-summary"><i class="fas fa-book"></i> อ่านสรุป</a>
+          <a href="raw/6_Journal_24_2_Dec55.pdf" class="btn btn-download" download><i class="fas fa-download"></i> โหลด PDF</a>
         </div>
       </div>
 
-      <!-- Journal 7 -->
-      <div class="journal-card" data-title="วารสารปี 25 1 มิย 56 2556 นิติกรรม">
+      <!-- 7 -->
+      <div class="journal-card" data-title="วารสารปี 25 1 มิย 56 2556 โมฆะ โมฆียะ">
         <div>
           <span class="card-tag">ปีที่ 25 ฉบับที่ 1 (มิ.ย. 56)</span>
           <h2>วารสารกฎหมาย ปี 25 ฉบับ 1 (2556)</h2>
-          <p>ผลของการทำนิติกรรมของโมฆียะบุคคล และการบอกล้างนิติกรรม</p>
+          <p>ผลของโมฆะกรรมและโมฆียะกรรม สิทธิการบอกล้างนิติกรรมของผู้เยาว์และผู้ถูกกลฉ้อฉล</p>
         </div>
         <div class="actions">
-          <a href="raw/7_Journal_25_1_Jun56.pdf" class="btn btn-primary" download><i class="fas fa-download"></i> ดาวน์โหลด PDF</a>
-          <a href="summaries/README.md" class="btn btn-secondary"><i class="fas fa-eye"></i> สรุป</a>
+          <a href="viewer.html?file=7_Journal_25_1_Jun56.pdf" class="btn btn-view"><i class="fas fa-eye"></i> เปิดอ่านในเว็บ</a>
+          <a href="summaries/journal_7_2556_1.md" class="btn btn-summary"><i class="fas fa-book"></i> อ่านสรุป</a>
+          <a href="raw/7_Journal_25_1_Jun56.pdf" class="btn btn-download" download><i class="fas fa-download"></i> โหลด PDF</a>
         </div>
       </div>
 
-      <!-- Journal 8 -->
-      <div class="journal-card" data-title="วารสารปี 25 2 ธค 56 2556 อาญา">
+      <!-- 8 -->
+      <div class="journal-card" data-title="วารสารปี 25 2 ธค 56 2556 ป้องกัน จำเป็น">
         <div>
           <span class="card-tag">ปีที่ 25 ฉบับที่ 2 (ธ.ค. 56)</span>
           <h2>วารสารกฎหมาย ปี 25 ฉบับ 2 (2556)</h2>
-          <p>วิเคราะห์เหตุพ้นผิดและเหตุลดโทษในกฎหมายอาญา (ป.อ. มาตรา 67-68)</p>
+          <p>เหตุพ้นผิดและเหตุยกเว้นโทษทางอาญา: การป้องกันโดยชอบด้วยกฎหมาย (ม. 68) และความจำเป็น (ม. 67)</p>
         </div>
         <div class="actions">
-          <a href="raw/8_Journal_25_2_Dec56.pdf" class="btn btn-primary" download><i class="fas fa-download"></i> ดาวน์โหลด PDF</a>
-          <a href="summaries/README.md" class="btn btn-secondary"><i class="fas fa-eye"></i> สรุป</a>
+          <a href="viewer.html?file=8_Journal_25_2_Dec56.pdf" class="btn btn-view"><i class="fas fa-eye"></i> เปิดอ่านในเว็บ</a>
+          <a href="summaries/journal_8_2556_2.md" class="btn btn-summary"><i class="fas fa-book"></i> อ่านสรุป</a>
+          <a href="raw/8_Journal_25_2_Dec56.pdf" class="btn btn-download" download><i class="fas fa-download"></i> โหลด PDF</a>
         </div>
       </div>
 
-      <!-- Journal 9 -->
-      <div class="journal-card" data-title="วารสารปี 26 1 มิย 57 2557 สิทธิเรียกร้อง">
+      <!-- 9 -->
+      <div class="journal-card" data-title="วารสารปี 26 1 มิย 57 2557 โอนสิทธิเรียกร้อง">
         <div>
           <span class="card-tag">ปีที่ 26 ฉบับที่ 1 (มิ.ย. 57)</span>
           <h2>วารสารกฎหมาย ปี 26 ฉบับ 1 (2557)</h2>
-          <p>การโอนสิทธิเรียกร้องและการรับช่วงสิทธิ ตาม ป.พ.พ. บรรพ 2</p>
+          <p>การโอนสิทธิเรียกร้อง (ม. 306) และการรับช่วงสิทธิของบุคคลผู้มีส่วนได้เสีย (ม. 226)</p>
         </div>
         <div class="actions">
-          <a href="raw/9_Journal_26_1_Jun57.pdf" class="btn btn-primary" download><i class="fas fa-download"></i> ดาวน์โหลด PDF</a>
-          <a href="summaries/README.md" class="btn btn-secondary"><i class="fas fa-eye"></i> สรุป</a>
+          <a href="viewer.html?file=9_Journal_26_1_Jun57.pdf" class="btn btn-view"><i class="fas fa-eye"></i> เปิดอ่านในเว็บ</a>
+          <a href="summaries/journal_9_2557_1.md" class="btn btn-summary"><i class="fas fa-book"></i> อ่านสรุป</a>
+          <a href="raw/9_Journal_26_1_Jun57.pdf" class="btn btn-download" download><i class="fas fa-download"></i> โหลด PDF</a>
         </div>
       </div>
 
-      <!-- Journal 10 -->
-      <div class="journal-card" data-title="วารสารปี 26 2 ธค 57 2557 กู้ยืมเงิน">
+      <!-- 10 -->
+      <div class="journal-card" data-title="วารสารปี 26 2 ธค 57 2557 กู้ยืมเงิน ดอกเบี้ย">
         <div>
           <span class="card-tag">ปีที่ 26 ฉบับที่ 2 (ธ.ค. 57)</span>
           <h2>วารสารกฎหมาย ปี 26 ฉบับ 2 (2557)</h2>
-          <p>สัญญากู้ยืมเงิน การคิดดอกเบี้ยเกินอัตรา และผลในทางกฎหมาย</p>
+          <p>สัญญากู้ยืมเงิน หลักฐานเป็นหนังสือ การคิดดอกเบี้ยเกินอัตราและผลในทางกฎหมาย</p>
         </div>
         <div class="actions">
-          <a href="raw/10_Journal_26_2_Dec57.pdf" class="btn btn-primary" download><i class="fas fa-download"></i> ดาวน์โหลด PDF</a>
-          <a href="summaries/README.md" class="btn btn-secondary"><i class="fas fa-eye"></i> สรุป</a>
+          <a href="viewer.html?file=10_Journal_26_2_Dec57.pdf" class="btn btn-view"><i class="fas fa-eye"></i> เปิดอ่านในเว็บ</a>
+          <a href="summaries/journal_10_2557_2.md" class="btn btn-summary"><i class="fas fa-book"></i> อ่านสรุป</a>
+          <a href="raw/10_Journal_26_2_Dec57.pdf" class="btn btn-download" download><i class="fas fa-download"></i> โหลด PDF</a>
         </div>
       </div>
 
-      <!-- Journal 11 -->
-      <div class="journal-card" data-title="วารสารปี 27 1 กย 58 2558 อาญา">
+      <!-- 11 -->
+      <div class="journal-card" data-title="วารสารปี 27 1 กย 58 2558 บันดาลโทสะ">
         <div>
           <span class="card-tag">ปีที่ 27 ฉบับที่ 1 (ก.ย. 58)</span>
           <h2>วารสารกฎหมาย ปี 27 ฉบับ 1 (2558)</h2>
-          <p>การป้องกันตนโดยชอบด้วยกฎหมาย และการกระทำด้วยความจำเป็น</p>
+          <p>เหตุบันดาลโทสะทางอาญา (ป.อ. มาตรา 72) การข่มเหงอย่างร้ายแรงด้วยเหตุอันไม่เป็นธรรม</p>
         </div>
         <div class="actions">
-          <a href="raw/11_Journal_27_1_Sep58.pdf" class="btn btn-primary" download><i class="fas fa-download"></i> ดาวน์โหลด PDF</a>
-          <a href="summaries/README.md" class="btn btn-secondary"><i class="fas fa-eye"></i> สรุป</a>
+          <a href="viewer.html?file=11_Journal_27_1_Sep58.pdf" class="btn btn-view"><i class="fas fa-eye"></i> เปิดอ่านในเว็บ</a>
+          <a href="summaries/journal_11_2558_1.md" class="btn btn-summary"><i class="fas fa-book"></i> อ่านสรุป</a>
+          <a href="raw/11_Journal_27_1_Sep58.pdf" class="btn btn-download" download><i class="fas fa-download"></i> โหลด PDF</a>
         </div>
       </div>
 
-      <!-- Journal 12 -->
-      <div class="journal-card" data-title="วารสารปี 27 1 เมย 59 2559 ค้ำประกัน">
+      <!-- 12 -->
+      <div class="journal-card" data-title="วารสารปี 27 1 เมย 59 2559 ค้ำประกัน จำนอง">
         <div>
           <span class="card-tag">ปีที่ 27 ฉบับที่ 1 (เม.ย. 59)</span>
           <h2>วารสารกฎหมาย ปี 27 ฉบับ 1 (2559)</h2>
-          <p>ค้ำประกัน ค้ำประกันจำนอง และกฎหมายที่แก้ไขปรับปรุงใหม่</p>
+          <p>กฎหมายค้ำประกันและจำนองแก้ไขปรับปรุงใหม่ ข้อห้ามผู้ค้ำเป็นลูกหนี้ร่วมและการบอกกล่าว</p>
         </div>
         <div class="actions">
-          <a href="raw/12_Journal_27_1_Apr59.pdf" class="btn btn-primary" download><i class="fas fa-download"></i> ดาวน์โหลด PDF</a>
-          <a href="summaries/README.md" class="btn btn-secondary"><i class="fas fa-eye"></i> สรุป</a>
+          <a href="viewer.html?file=12_Journal_27_1_Apr59.pdf" class="btn btn-view"><i class="fas fa-eye"></i> เปิดอ่านในเว็บ</a>
+          <a href="summaries/journal_12_2559_1.md" class="btn btn-summary"><i class="fas fa-book"></i> อ่านสรุป</a>
+          <a href="raw/12_Journal_27_1_Apr59.pdf" class="btn btn-download" download><i class="fas fa-download"></i> โหลด PDF</a>
         </div>
       </div>
 
-      <!-- Journal 13 -->
-      <div class="journal-card" data-title="วารสารปี 28 1 กย 59 2559 ตั๋วเงิน">
+      <!-- 13 -->
+      <div class="journal-card" data-title="วารสารปี 28 1 กย 59 2559 ตั๋วเงิน เช็ค">
         <div>
           <span class="card-tag">ปีที่ 28 ฉบับที่ 1 (ก.ย. 59)</span>
           <h2>วารสารกฎหมาย ปี 28 ฉบับ 1 (2559)</h2>
-          <p>ตั๋วเงิน (ตั๋วแลกเงิน เช็ค) และความรับผิดของผู้สั่งจ่าย/ผู้สลักหลัง</p>
+          <p>ตั๋วเงิน (ตั๋วแลกเงิน เช็ค) ความรับผิดของผู้สั่งจ่าย/ผู้สลักหลัง และความผิดเกี่ยวกับเช็ค</p>
         </div>
         <div class="actions">
-          <a href="raw/13_Journal_28_1_Sep59.pdf" class="btn btn-primary" download><i class="fas fa-download"></i> ดาวน์โหลด PDF</a>
-          <a href="summaries/README.md" class="btn btn-secondary"><i class="fas fa-eye"></i> สรุป</a>
+          <a href="viewer.html?file=13_Journal_28_1_Sep59.pdf" class="btn btn-view"><i class="fas fa-eye"></i> เปิดอ่านในเว็บ</a>
+          <a href="summaries/journal_13_2559_1.md" class="btn btn-summary"><i class="fas fa-book"></i> อ่านสรุป</a>
+          <a href="raw/13_Journal_28_1_Sep59.pdf" class="btn btn-download" download><i class="fas fa-download"></i> โหลด PDF</a>
         </div>
       </div>
 
-      <!-- Journal 14 -->
-      <div class="journal-card" data-title="วารสารปี 28 1 เมย 60 2560 ทรัพย์">
+      <!-- 14 -->
+      <div class="journal-card" data-title="วารสารปี 28 1 เมย 60 2560 ลักทรัพย์ ชิงทรัพย์">
         <div>
           <span class="card-tag">ปีที่ 28 ฉบับที่ 1 (เม.ย. 60)</span>
           <h2>วารสารกฎหมาย ปี 28 ฉบับ 1 (2560)</h2>
-          <p>ความผิดเกี่ยวกับทรัพย์: ลักทรัพย์ วิ่งพรวด ชิงทรัพย์ และปล้นทรัพย์</p>
+          <p>ความผิดเกี่ยวกับทรัพย์: แยกแยะระหว่างลักทรัพย์ วิ่งพรวด ชิงทรัพย์ และปล้นทรัพย์</p>
         </div>
         <div class="actions">
-          <a href="raw/14_Journal_28_1_Apr60.pdf" class="btn btn-primary" download><i class="fas fa-download"></i> ดาวน์โหลด PDF</a>
-          <a href="summaries/README.md" class="btn btn-secondary"><i class="fas fa-eye"></i> สรุป</a>
+          <a href="viewer.html?file=14_Journal_28_1_Apr60.pdf" class="btn btn-view"><i class="fas fa-eye"></i> เปิดอ่านในเว็บ</a>
+          <a href="summaries/journal_14_2560_1.md" class="btn btn-summary"><i class="fas fa-book"></i> อ่านสรุป</a>
+          <a href="raw/14_Journal_28_1_Apr60.pdf" class="btn btn-download" download><i class="fas fa-download"></i> โหลด PDF</a>
         </div>
       </div>
 
-      <!-- Journal 15 -->
-      <div class="journal-card" data-title="วารสารปี 29 1 กย 60 2560 ปรปักษ์">
+      <!-- 15 -->
+      <div class="journal-card" data-title="วารสารปี 29 1 กย 60 2560 ปรปักษ์ ภาระจำยอม">
         <div>
           <span class="card-tag">ปีที่ 29 ฉบับที่ 1 (ก.ย. 60)</span>
           <h2>วารสารกฎหมาย ปี 29 ฉบับ 1 (2560)</h2>
-          <p>การครอบครองปรปักษ์ในอสังหาริมทรัพย์และภาระจำยอม</p>
+          <p>การครอบครองปรปักษ์อสังหาริมทรัพย์ 10 ปี (ม. 1382) และภาระจำยอมโดยอายุความ (ม. 1401)</p>
         </div>
         <div class="actions">
-          <a href="raw/15_Journal_29_1_Sep60.pdf" class="btn btn-primary" download><i class="fas fa-download"></i> ดาวน์โหลด PDF</a>
-          <a href="summaries/README.md" class="btn btn-secondary"><i class="fas fa-eye"></i> สรุป</a>
+          <a href="viewer.html?file=15_Journal_29_1_Sep60.pdf" class="btn btn-view"><i class="fas fa-eye"></i> เปิดอ่านในเว็บ</a>
+          <a href="summaries/journal_15_2560_1.md" class="btn btn-summary"><i class="fas fa-book"></i> อ่านสรุป</a>
+          <a href="raw/15_Journal_29_1_Sep60.pdf" class="btn btn-download" download><i class="fas fa-download"></i> โหลด PDF</a>
         </div>
       </div>
 
-      <!-- Journal 16 -->
-      <div class="journal-card" data-title="วารสารปี 29 2 เมย 61 2561 หุ้นส่วน">
+      <!-- 16 -->
+      <div class="journal-card" data-title="วารสารปี 29 2 เมย 61 2561 หุ้นส่วน บริษัท">
         <div>
           <span class="card-tag">ปีที่ 29 ฉบับที่ 2 (เม.ย. 61)</span>
           <h2>วารสารกฎหมาย ปี 29 ฉบับ 2 (2561)</h2>
-          <p>หุ้นส่วนบริษัท: ความรับผิดของหุ้นส่วนผู้จัดการและกรรมการบริษัท</p>
+          <p>ห้างหุ้นส่วนและบริษัทจำกัด ความรับผิดของหุ้นส่วนผู้จัดการและกรรมการบริษัท</p>
         </div>
         <div class="actions">
-          <a href="raw/16_Journal_29_2_Apr61.pdf" class="btn btn-primary" download><i class="fas fa-download"></i> ดาวน์โหลด PDF</a>
-          <a href="summaries/README.md" class="btn btn-secondary"><i class="fas fa-eye"></i> สรุป</a>
+          <a href="viewer.html?file=16_Journal_29_2_Apr61.pdf" class="btn btn-view"><i class="fas fa-eye"></i> เปิดอ่านในเว็บ</a>
+          <a href="summaries/journal_16_2561_2.md" class="btn btn-summary"><i class="fas fa-book"></i> อ่านสรุป</a>
+          <a href="raw/16_Journal_29_2_Apr61.pdf" class="btn btn-download" download><i class="fas fa-download"></i> โหลด PDF</a>
         </div>
       </div>
 
-      <!-- Journal 17 -->
-      <div class="journal-card" data-title="วารสารปี 30 1 กย 61 2561 วิแพ่ง">
+      <!-- 17 -->
+      <div class="journal-card" data-title="วารสารปี 30 1 กย 61 2561 วิแพ่ง ฟ้อง">
         <div>
           <span class="card-tag">ปีที่ 30 ฉบับที่ 1 (ก.ย. 61)</span>
           <h2>วารสารกฎหมาย ปี 30 ฉบับ 1 (2561)</h2>
-          <p>กฎหมายวิธีพิจารณาความแพ่ง: การฟ้องคดี อุทธรณ์ และการบังคับคดี</p>
+          <p>กฎหมายวิธีพิจารณาความแพ่ง (วิ.แพ่ง) เขตอำนาจศาล คำฟ้อง คำให้การ การอุทธรณ์และฎีกา</p>
         </div>
         <div class="actions">
-          <a href="raw/17_Journal_30_1_Sep61.pdf" class="btn btn-primary" download><i class="fas fa-download"></i> ดาวน์โหลด PDF</a>
-          <a href="summaries/README.md" class="btn btn-secondary"><i class="fas fa-eye"></i> สรุป</a>
+          <a href="viewer.html?file=17_Journal_30_1_Sep61.pdf" class="btn btn-view"><i class="fas fa-eye"></i> เปิดอ่านในเว็บ</a>
+          <a href="summaries/journal_17_2561_1.md" class="btn btn-summary"><i class="fas fa-book"></i> อ่านสรุป</a>
+          <a href="raw/17_Journal_30_1_Sep61.pdf" class="btn btn-download" download><i class="fas fa-download"></i> โหลด PDF</a>
         </div>
       </div>
 
-      <!-- Journal 18 -->
-      <div class="journal-card" data-title="วารสารปี 30 มย 62 2562 วิอาญา">
+      <!-- 18 -->
+      <div class="journal-card" data-title="วารสารปี 30 มย 62 2562 วิอาญา สอบสวน">
         <div>
           <span class="card-tag">ปีที่ 30 (มิ.ย. 62)</span>
           <h2>วารสารกฎหมาย ปี 30 (2562)</h2>
-          <p>กฎหมายวิธีพิจารณาความอาญา: อำนาจสอบสวน และการจับกุมค้น</p>
+          <p>กฎหมายวิธีพิจารณาความอาญา (วิ.อาญา) อำนาจสอบสวน หมายจับหมายค้น การประกันตัว</p>
         </div>
         <div class="actions">
-          <a href="raw/18_Journal_30_Jun62.pdf" class="btn btn-primary" download><i class="fas fa-download"></i> ดาวน์โหลด PDF</a>
-          <a href="summaries/README.md" class="btn btn-secondary"><i class="fas fa-eye"></i> สรุป</a>
+          <a href="viewer.html?file=18_Journal_30_Jun62.pdf" class="btn btn-view"><i class="fas fa-eye"></i> เปิดอ่านในเว็บ</a>
+          <a href="summaries/journal_18_2562_jun.md" class="btn btn-summary"><i class="fas fa-book"></i> อ่านสรุป</a>
+          <a href="raw/18_Journal_30_Jun62.pdf" class="btn btn-download" download><i class="fas fa-download"></i> โหลด PDF</a>
         </div>
       </div>
 
-      <!-- Journal 19 -->
-      <div class="journal-card" data-title="วารสารปี 31 กย 62 2562 พยาน">
+      <!-- 19 -->
+      <div class="journal-card" data-title="วารสารปี 31 กย 62 2562 พยานหลักฐาน">
         <div>
           <span class="card-tag">ปีที่ 31 (ก.ย. 62)</span>
           <h2>วารสารกฎหมาย ปี 31 (2562)</h2>
-          <p>สรุปประเด็นพยานหลักฐานในคดีแพ่งและคดีอาญา</p>
+          <p>กฎหมายพยานหลักฐาน (Law of Evidence) ภาระการนำสืบ ข้อห้ามพยานบอกเล่า พยานเอกสาร</p>
         </div>
         <div class="actions">
-          <a href="raw/19_Journal_31_Sep62.pdf" class="btn btn-primary" download><i class="fas fa-download"></i> ดาวน์โหลด PDF</a>
-          <a href="summaries/README.md" class="btn btn-secondary"><i class="fas fa-eye"></i> สรุป</a>
+          <a href="viewer.html?file=19_Journal_31_Sep62.pdf" class="btn btn-view"><i class="fas fa-eye"></i> เปิดอ่านในเว็บ</a>
+          <a href="summaries/journal_19_2562_sep.md" class="btn btn-summary"><i class="fas fa-book"></i> อ่านสรุป</a>
+          <a href="raw/19_Journal_31_Sep62.pdf" class="btn btn-download" download><i class="fas fa-download"></i> โหลด PDF</a>
         </div>
       </div>
 
-      <!-- Journal 20 -->
-      <div class="journal-card" data-title="วารสารปี 31 1 มค มิย 63 2563 ฎีกา">
+      <!-- 20 -->
+      <div class="journal-card" data-title="วารสารปี 31 1 มค มิย 63 2563 ดิจิทัล">
         <div>
           <span class="card-tag">ปีที่ 31 ฉบับที่ 1 (ม.ค.-มิ.ย. 63)</span>
           <h2>วารสารกฎหมาย ปี 31 ฉบับ 1 (2563)</h2>
-          <p>รวมบทความวิจัยและวิเคราะห์ฎีกาเด่นประจำปี 2563</p>
+          <p>รวมบทความวิจัย วิเคราะห์ฎีกาเด่น กฎหมายดิจิทัลและพยานหลักฐานอิเล็กทรอนิกส์</p>
         </div>
         <div class="actions">
-          <a href="raw/20_Journal_31_1_JanJun63.pdf" class="btn btn-primary" download><i class="fas fa-download"></i> ดาวน์โหลด PDF</a>
-          <a href="summaries/README.md" class="btn btn-secondary"><i class="fas fa-eye"></i> สรุป</a>
+          <a href="viewer.html?file=20_Journal_31_1_JanJun63.pdf" class="btn btn-view"><i class="fas fa-eye"></i> เปิดอ่านในเว็บ</a>
+          <a href="summaries/journal_20_2563_1.md" class="btn btn-summary"><i class="fas fa-book"></i> อ่านสรุป</a>
+          <a href="raw/20_Journal_31_1_JanJun63.pdf" class="btn btn-download" download><i class="fas fa-download"></i> โหลด PDF</a>
         </div>
       </div>
 
-      <!-- Journal 21 (Subjective) -->
+      <!-- 21 -->
       <div class="journal-card" data-title="วารสารอัต แพ่ง อาญา พา 1 รวมข้อสอบ อัตนัย">
         <div>
           <span class="card-tag" style="background: #fee2e2; color: #991b1b;"><i class="fas fa-pen-nib"></i> รวมข้อสอบอัตนัย</span>
           <h2>วารสารอัต. แพ่ง อาญา พาณิชย์ 1</h2>
-          <p>รวมแนวข้อสอบอัตนัยตุ๊กตา พร้อมธงคำตอบ 3 สเต็ป มสธ.</p>
+          <p>รวมแนวข้อสอบอัตนัยตุ๊กตา แพ่ง อาญา พาณิชย์ พร้อมธงคำตอบ 3 สเต็ป มสธ.</p>
         </div>
         <div class="actions">
-          <a href="raw/Journal_Subjective_Civil_Criminal_Commercial_1.pdf" class="btn btn-primary" download><i class="fas fa-download"></i> ดาวน์โหลด PDF</a>
-          <a href="summaries/README.md" class="btn btn-secondary"><i class="fas fa-eye"></i> สรุป</a>
+          <a href="viewer.html?file=Journal_Subjective_Civil_Criminal_Commercial_1.pdf" class="btn btn-view"><i class="fas fa-eye"></i> เปิดอ่านในเว็บ</a>
+          <a href="summaries/journal_21_subjective.md" class="btn btn-summary"><i class="fas fa-book"></i> อ่านสรุป</a>
+          <a href="raw/Journal_Subjective_Civil_Criminal_Commercial_1.pdf" class="btn btn-download" download><i class="fas fa-download"></i> โหลด PDF</a>
         </div>
       </div>
 

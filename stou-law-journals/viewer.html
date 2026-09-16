@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="th" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>เปิดอ่านวารสารออนไลน์ - คลังวารสารกฎหมาย มสธ.</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;600;700&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <style>
+    :root {
+      --primary: #b45309;
+      --bg: #f8fafc;
+      --card: #ffffff;
+      --border: #cbd5e1;
+      --text: #0f172a;
+      --muted: #475569;
+      --font: 'Sarabun', sans-serif;
+    }
+    [data-theme="dark"] {
+      --bg: #0b0f19;
+      --card: #131b2e;
+      --border: #334155;
+      --text: #f1f5f9;
+      --muted: #94a3b8;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: var(--font); }
+    body, html { height: 100vh; overflow: hidden; background-color: var(--bg); color: var(--text); display: flex; flex-direction: column; }
+    
+    .top-bar { height: 60px; background-color: var(--card); border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; padding: 0 1.5rem; flex-shrink: 0; }
+    .nav-left { display: flex; align-items: center; gap: 1rem; }
+    .back-btn { display: inline-flex; align-items: center; gap: 0.5rem; color: var(--muted); text-decoration: none; font-weight: 600; padding: 0.4rem 0.8rem; border-radius: 6px; border: 1px solid var(--border); transition: all 0.2s; font-size: 0.9rem; }
+    .back-btn:hover { background-color: var(--bg); color: var(--text); }
+    .doc-title { font-weight: 700; font-size: 1.1rem; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 500px; }
+    
+    .nav-right { display: flex; align-items: center; gap: 0.75rem; }
+    .view-btn { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.4rem 0.8rem; border-radius: 6px; border: 1px solid var(--border); background-color: var(--bg); color: var(--text); text-decoration: none; font-weight: 600; font-size: 0.85rem; cursor: pointer; transition: all 0.2s; }
+    .view-btn:hover, .view-btn.active { background-color: var(--primary); color: #fff; border-color: var(--primary); }
+    
+    .content-area { flex: 1; display: flex; height: calc(100vh - 60px); overflow: hidden; }
+    .pdf-pane { flex: 1; height: 100%; border-right: 1px solid var(--border); background-color: #525659; }
+    .pdf-pane iframe, .pdf-pane object { width: 100%; height: 100%; border: none; }
+    
+    .summary-pane { width: 420px; height: 100%; background-color: var(--card); overflow-y: auto; padding: 1.5rem; display: flex; flex-direction: column; flex-shrink: 0; }
+    .summary-pane h2 { font-size: 1.25rem; font-weight: 700; margin-bottom: 1rem; color: var(--primary); border-bottom: 2px solid var(--primary); padding-bottom: 0.5rem; }
+    .summary-content { font-size: 0.95rem; line-height: 1.7; color: var(--text); }
+    .summary-content h3 { font-size: 1.05rem; margin-top: 1.25rem; margin-bottom: 0.5rem; font-weight: 700; }
+    .summary-content ul { padding-left: 1.2rem; margin-bottom: 1rem; }
+    .summary-content li { margin-bottom: 0.4rem; }
+    
+    @media (max-width: 850px) {
+      .summary-pane { display: none; }
+      .doc-title { max-width: 250px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="top-bar">
+    <div class="nav-left">
+      <a href="index.html" class="back-link back-btn">
+        <i class="fas fa-arrow-left"></i> กลับคลังวารสาร
+      </a>
+      <span class="doc-title" id="docTitle">เปิดอ่านวารสารออนไลน์</span>
+    </div>
+    
+    <div class="nav-right">
+      <button class="view-btn" id="btnToggleSide" onclick="toggleSummaryPane()"><i class="fas fa-columns"></i> <span id="toggleText">ซ่อนสรุป</span></button>
+      <a href="#" id="downloadLink" class="view-btn" download><i class="fas fa-download"></i> ดาวน์โหลด PDF</a>
+      <a href="#" id="openNewTabLink" class="view-btn" target="_blank"><i class="fas fa-external-link-alt"></i> เปิดแท็บใหม่</a>
+    </div>
+  </div>
+
+  <div class="content-area">
+    <div class="pdf-pane">
+      <object id="pdfObject" data="" type="application/pdf">
+        <p>เบราว์เซอร์ของคุณไม่รองรับการแสดงผล PDF แบบฝัง <a id="fallbackLink" href="#">คลิกที่นี่เพื่อเปิดอ่านไฟล์ PDF ในแท็บใหม่</a></p>
+      </object>
+    </div>
+    
+    <div class="summary-pane" id="summaryPane">
+      <h2><i class="fas fa-bookmark"></i> สรุปและไฮไลท์ประจำฉบับ</h2>
+      <div class="summary-content" id="summaryBox">
+        <p>กำลังโหลดข้อมูลสรุปประจำฉบับ...</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const itemsMap = {
+      "0_Ch2_2544.pdf": { name: "วารสารกฎหมาย ฉบับที่ 2 (2544)", summary: "journal_0_2544.md", topic: "บทความวิเคราะห์กฎหมายมหาชน หลักการตีความกฎหมาย และการควบคุมการใช้อำนาจดุลพินิจทางปกครอง" },
+      "1_Journal_22_1_Jun53.pdf": { name: "วารสารกฎหมาย ปี 22 ฉบับ 1 (มิ.ย. 53)", summary: "journal_1_2553_1.md", topic: "วิเคราะห์ความรับผิดทางละเมิดของเจ้าหน้าที่ (พ.ร.บ. 2539) สิทธิการไล่เบี้ย และอายุความการฟ้องคดี" },
+      "2_Journal_22_2_Dec53.pdf": { name: "วารสารกฎหมาย ปี 22 ฉบับ 2 (ธ.ค. 53)", summary: "journal_2_2553_2.md", topic: "หลักข้อสัญญาไม่เป็นธรรม (พ.ร.บ. 2540) สัญญามาตรฐาน และการจำนองประกันหนี้บุคคลอื่น" },
+      "3_Journal_23_1_Jun54.pdf": { name: "วารสารกฎหมาย ปี 23 ฉบับ 1 (มิ.ย. 54)", summary: "journal_3_2554_1.md", topic: "โครงสร้างความรับผิดทางอาญา: เจตนาประสงค์ต่อผล เจตนาเล็งเห็นผล และความประมาทเลินเล่อ" },
+      "4_Journal_23_2_Dec54.pdf": { name: "วารสารกฎหมาย ปี 23 ฉบับ 2 (ธ.ค. 54)", summary: "journal_4_2554_2.md", topic: "สิทธิครอบครองและกรรมสิทธิ์ในอสังหาริมทรัพย์ ตาม ป.พ.พ. มาตรา 1299 และที่ดินมือเปล่า น.ส.3" },
+      "5_Journal_24_1_Jun55.pdf": { name: "วารสารกฎหมาย ปี 24 ฉบับ 1 (มิ.ย. 55)", summary: "journal_5_2555_1.md", topic: "ความรับผิดอันเกิดจากยานพาหนะอันเดินด้วยกำลังเครื่องจักร (ป.พ.พ. ม. 437) และเหตุสุดวิสัย" },
+      "6_Journal_24_2_Dec55.pdf": { name: "วารสารกฎหมาย ปี 24 ฉบับ 2 (ธ.ค. 55)", summary: "journal_6_2555_2.md", topic: "การเลิกสัญญาและผลของการกลับคืนสู่ฐานะเดิม ตาม ป.พ.พ. มาตรา 386 - 391" },
+      "7_Journal_25_1_Jun56.pdf": { name: "วารสารกฎหมาย ปี 25 ฉบับ 1 (มิ.ย. 56)", summary: "journal_7_2556_1.md", topic: "ผลของโมฆะกรรมและโมฆียะกรรม สิทธิการบอกล้างนิติกรรมของผู้เยาว์และผู้ถูกกลฉ้อฉล" },
+      "8_Journal_25_2_Dec56.pdf": { name: "วารสารกฎหมาย ปี 25 ฉบับ 2 (ธ.ค. 56)", summary: "journal_8_2556_2.md", topic: "เหตุพ้นผิดและเหตุยกเว้นโทษทางอาญา: การป้องกันโดยชอบด้วยกฎหมาย (ม. 68) และความจำเป็น (ม. 67)" },
+      "9_Journal_26_1_Jun57.pdf": { name: "วารสารกฎหมาย ปี 26 ฉบับ 1 (มิ.ย. 57)", summary: "journal_9_2557_1.md", topic: "การโอนสิทธิเรียกร้อง (ม. 306) และการรับช่วงสิทธิของบุคคลผู้มีส่วนได้เสีย (ม. 226)" },
+      "10_Journal_26_2_Dec57.pdf": { name: "วารสารกฎหมาย ปี 26 ฉบับ 2 (ธ.ค. 57)", summary: "journal_10_2557_2.md", topic: "สัญญากู้ยืมเงิน หลักฐานเป็นหนังสือ การคิดดอกเบี้ยเกินอัตราและผลในทางกฎหมาย" },
+      "11_Journal_27_1_Sep58.pdf": { name: "วารสารกฎหมาย ปี 27 ฉบับ 1 (ก.ย. 58)", summary: "journal_11_2558_1.md", topic: "เหตุบันดาลโทสะทางอาญา (ป.อ. มาตรา 72) การข่มเหงอย่างร้ายแรงด้วยเหตุอันไม่เป็นธรรม" },
+      "12_Journal_27_1_Apr59.pdf": { name: "วารสารกฎหมาย ปี 27 ฉบับ 1 (เม.ย. 59)", summary: "journal_12_2559_1.md", topic: "กฎหมายค้ำประกันและจำนองแก้ไขปรับปรุงใหม่ ข้อห้ามผู้ค้ำเป็นลูกหนี้ร่วมและการบอกกล่าว" },
+      "13_Journal_28_1_Sep59.pdf": { name: "วารสารกฎหมาย ปี 28 ฉบับ 1 (ก.ย. 59)", summary: "journal_13_2559_1.md", topic: "ตั๋วเงิน (ตั๋วแลกเงิน เช็ค) ความรับผิดของผู้สั่งจ่าย/ผู้สลักหลัง และความผิดเกี่ยวกับเช็ค" },
+      "14_Journal_28_1_Apr60.pdf": { name: "วารสารกฎหมาย ปี 28 ฉบับ 1 (เม.ย. 60)", summary: "journal_14_2560_1.md", topic: "ความผิดเกี่ยวกับทรัพย์: แยกแยะระหว่างลักทรัพย์ วิ่งพรวด ชิงทรัพย์ และปล้นทรัพย์" },
+      "15_Journal_29_1_Sep60.pdf": { name: "วารสารกฎหมาย ปี 29 ฉบับ 1 (ก.ย. 60)", summary: "journal_15_2560_1.md", topic: "การครอบครองปรปักษ์อสังหาริมทรัพย์ 10 ปี (ม. 1382) และภาระจำยอมโดยอายุความ (ม. 1401)" },
+      "16_Journal_29_2_Apr61.pdf": { name: "วารสารกฎหมาย ปี 29 ฉบับ 2 (เม.ย. 61)", summary: "journal_16_2561_2.md", topic: "ห้างหุ้นส่วนและบริษัทจำกัด ความรับผิดของหุ้นส่วนผู้จัดการและกรรมการบริษัท" },
+      "17_Journal_30_1_Sep61.pdf": { name: "วารสารกฎหมาย ปี 30 ฉบับ 1 (ก.ย. 61)", summary: "journal_17_2561_1.md", topic: "กฎหมายวิธีพิจารณาความแพ่ง (วิ.แพ่ง) เขตอำนาจศาล คำฟ้อง คำให้การ การอุทธรณ์และฎีกา" },
+      "18_Journal_30_Jun62.pdf": { name: "วารสารกฎหมาย ปี 30 (มิ.ย. 62)", summary: "journal_18_2562_jun.md", topic: "กฎหมายวิธีพิจารณาความอาญา (วิ.อาญา) อำนาจสอบสวน หมายจับหมายค้น การประกันตัว" },
+      "19_Journal_31_Sep62.pdf": { name: "วารสารกฎหมาย ปี 31 (ก.ย. 62)", summary: "journal_19_2562_sep.md", topic: "กฎหมายพยานหลักฐาน (Law of Evidence) ภาระการนำสืบ ข้อห้ามพยานบอกเล่า พยานเอกสาร" },
+      "20_Journal_31_1_JanJun63.pdf": { name: "วารสารกฎหมาย ปี 31 ฉบับ 1 (ม.ค.-มิ.ย. 63)", summary: "journal_20_2563_1.md", topic: "รวมบทความวิจัย วิเคราะห์ฎีกาเด่น กฎหมายดิจิทัลและพยานหลักฐานอิเล็กทรอนิกส์" },
+      "Journal_Subjective_Civil_Criminal_Commercial_1.pdf": { name: "วารสารรวมข้อสอบอัตนัย (แพ่ง อาญา พาณิชย์ 1)", summary: "journal_21_subjective.md", topic: "รวมแนวข้อสอบอัตนัยตุ๊กตา แพ่ง อาญา พาณิชย์ พร้อมธงคำตอบ 3 สเต็ป มสธ." }
+    };
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const fileName = urlParams.get('file') || "0_Ch2_2544.pdf";
+    const rawUrl = "raw/" + fileName;
+
+    document.getElementById('pdfObject').data = rawUrl;
+    document.getElementById('downloadLink').href = rawUrl;
+    document.getElementById('openNewTabLink').href = rawUrl;
+    document.getElementById('fallbackLink').href = rawUrl;
+
+    const item = itemsMap[fileName] || { name: fileName, summary: "README.md", topic: "สรุปสาระสำคัญประจำฉบับ" };
+    document.getElementById('docTitle').innerText = item.name;
+
+    // Load summary content
+    document.getElementById('summaryBox').innerHTML = `
+      <h3>${item.name}</h3>
+      <p style="background:#fef3c7; color:#92400e; padding:0.75rem; border-radius:8px; font-weight:600; margin-bottom:1rem;">
+        <i class="fas fa-lightbulb"></i> ${item.topic}
+      </p>
+      <h3><i class="fas fa-book-open"></i> ประเด็นสำคัญและบรรทัดฐานฎีกา</h3>
+      <ul>
+        <li>วิเคราะห์โครงสร้างหลักกฎหมายและมาตราสำคัญประจำฉบับ</li>
+        <li>บรรทัดฐานคำพิพากษาศาลฎีกาและแนวคิดทางกฎหมายของ มสธ.</li>
+        <li>ประเด็นสำหรับเตรียมสอบปรนัยและสเต็ปการตอบข้อสอบอัตนัย 3 สเต็ป</li>
+      </ul>
+      <p style="margin-top:1.5rem;">
+        <a href="summaries/${item.summary}" target="_blank" style="color:var(--primary); font-weight:700; text-decoration:none;">
+          <i class="fas fa-file-alt"></i> เปิดอ่านไฟล์สรุป Markdown ฉบับเต็ม
+        </a>
+      </p>
+    `;
+
+    function toggleSummaryPane() {
+      const pane = document.getElementById('summaryPane');
+      const text = document.getElementById('toggleText');
+      if (pane.style.display === 'none') {
+        pane.style.display = 'flex';
+        text.innerText = 'ซ่อนสรุป';
+      } else {
+        pane.style.display = 'none';
+        text.innerText = 'แสดงสรุป';
+      }
+    }
+  </script>
+</body>
+</html>
