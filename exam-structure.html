@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="th" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ตารางโครงสร้างและสัดส่วนข้อสอบ มสธ. (ปรนัย vs อัตนัย แยกรายชุดวิชา)</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;500;600;700;800&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <style>
+    :root {
+      --primary: #1e3a8a;
+      --primary-hover: #172554;
+      --primary-light: #dbeafe;
+      --accent: #b45309;
+      --bg: #f8fafc;
+      --card: #ffffff;
+      --border: #cbd5e1;
+      --text: #0f172a;
+      --muted: #475569;
+      --radius: 12px;
+      --shadow: 0 4px 6px -1px rgba(0,0,0,0.07), 0 2px 4px -2px rgba(0,0,0,0.05);
+      --font-body: 'Sarabun', sans-serif;
+      --font-heading: 'Prompt', sans-serif;
+    }
+
+    [data-theme="dark"] {
+      --bg: #0b0f19;
+      --card: #131b2e;
+      --border: #334155;
+      --text: #f1f5f9;
+      --muted: #94a3b8;
+      --primary-light: #1e293b;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .container {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem;
+      width: 100%;
+      flex: 1;
+    }
+
+    /* Top Navigation */
+    .top-nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 2rem;
+    }
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--muted);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: color 0.2s;
+    }
+    .back-link:hover { color: var(--text); }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .btn-nav {
+      background: var(--card);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 0.45rem 0.85rem;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.88rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .btn-nav:hover { background: var(--bg); border-color: var(--primary); }
+
+    /* Header */
+    .header {
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+    .badge-header {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: linear-gradient(135deg, #1e3a8a, #0284c7);
+      color: #ffffff;
+      padding: 0.4rem 1.1rem;
+      border-radius: 9999px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+      box-shadow: 0 4px 12px rgba(30,58,138,0.25);
+    }
+    .header h1 {
+      font-family: var(--font-heading);
+      font-size: 2.2rem;
+      font-weight: 800;
+      margin-bottom: 0.75rem;
+    }
+    .header p {
+      color: var(--muted);
+      font-size: 1.08rem;
+      max-width: 780px;
+      margin: 0 auto;
+      line-height: 1.65;
+    }
+
+    /* Stats Overview */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.25rem;
+      margin-bottom: 2rem;
+    }
+    .stat-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.25rem 1.5rem;
+      box-shadow: var(--shadow);
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+    }
+    .stat-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      flex-shrink: 0;
+    }
+    .icon-blue { background: #dbeafe; color: #1e3a8a; }
+    .icon-amber { background: #fef3c7; color: #b45309; }
+    .icon-emerald { background: #d1fae5; color: #059669; }
+    .stat-info h4 { font-size: 0.88rem; color: var(--muted); font-weight: 600; margin-bottom: 0.25rem; }
+    .stat-info .stat-val { font-family: var(--font-heading); font-size: 1.8rem; font-weight: 800; color: var(--text); }
+
+    /* Controls Panel */
+    .controls-panel {
+      margin-bottom: 1.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      align-items: center;
+    }
+    .search-box {
+      width: 100%;
+      max-width: 650px;
+      position: relative;
+    }
+    .search-box input {
+      width: 100%;
+      padding: 0.85rem 1.25rem 0.85rem 3rem;
+      border-radius: 9999px;
+      border: 1px solid var(--border);
+      background-color: var(--card);
+      color: var(--text);
+      font-size: 1rem;
+      font-family: var(--font-body);
+      box-shadow: var(--shadow);
+      outline: none;
+      transition: all 0.2s;
+    }
+    .search-box input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(30,58,138,0.15); }
+    .search-box i {
+      position: absolute;
+      left: 1.2rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--muted);
+      font-size: 1.1rem;
+    }
+
+    .filter-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      justify-content: center;
+    }
+    .filter-pill {
+      padding: 0.4rem 0.9rem;
+      border-radius: 9999px;
+      border: 1px solid var(--border);
+      background: var(--card);
+      color: var(--muted);
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .filter-pill:hover, .filter-pill.active {
+      background: var(--primary);
+      color: #ffffff;
+      border-color: var(--primary);
+    }
+
+    /* Table Styles */
+    .table-container {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow-x: auto;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.94rem;
+    }
+    thead {
+      background: var(--bg);
+      border-bottom: 2px solid var(--border);
+    }
+    th {
+      padding: 1rem 1.25rem;
+      font-family: var(--font-heading);
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: var(--text);
+      white-space: nowrap;
+    }
+    td {
+      padding: 1rem 1.25rem;
+      border-bottom: 1px solid var(--border);
+      vertical-align: middle;
+    }
+    tr:last-child td { border-bottom: none; }
+    tr:hover { background-color: rgba(30,58,138,0.02); }
+
+    .code-pill {
+      font-family: monospace;
+      font-size: 0.92rem;
+      font-weight: 700;
+      padding: 0.25rem 0.6rem;
+      border-radius: 6px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      color: var(--primary);
+      display: inline-block;
+    }
+
+    .badge-format {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.8rem;
+      font-weight: 700;
+      padding: 0.25rem 0.65rem;
+      border-radius: 6px;
+      white-space: nowrap;
+    }
+    .format-mix { background: #fef3c7; color: #92400e; }
+    .format-choice { background: #d1fae5; color: #065f46; }
+
+    .val-choice {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 1.05rem;
+      color: #0284c7;
+    }
+    .val-subjective {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 1.05rem;
+      color: #dc2626;
+    }
+    .val-zero {
+      color: var(--muted);
+      font-weight: 400;
+    }
+
+    .link-study {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.86rem;
+      padding: 0.3rem 0.65rem;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: var(--bg);
+      transition: all 0.2s;
+    }
+    .link-study:hover { background: var(--primary); color: #fff; border-color: var(--primary); }
+
+    footer {
+      text-align: center;
+      padding: 2.5rem 1.5rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin-top: 3rem;
+    }
+
+    @media (max-width: 768px) {
+      .header h1 { font-size: 1.7rem; }
+      th, td { padding: 0.75rem; font-size: 0.88rem; }
+      .stats-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="top-nav">
+      <a href="index.html" class="back-link">
+        <i class="fas fa-arrow-left"></i> กลับสู่หน้าหลัก Portal รวมสื่อ มสธ.
+      </a>
+      <div class="nav-actions">
+        <a href="key-articles.html" class="btn-nav">
+          <i class="fas fa-gavel"></i> <span>สรุปมาตราสำคัญ & หลุมพราง</span>
+        </a>
+        <a href="stou-law-journals/index.html" class="btn-nav">
+          <i class="fas fa-book-journal-whills"></i> <span>คลังวารสาร & ข้อสอบอัตนัย</span>
+        </a>
+        <button class="btn-nav" onclick="toggleTheme()">
+          <i class="fas fa-moon" id="themeIcon"></i>
+        </button>
+      </div>
+    </div>
+
+    <div class="header">
+      <div class="badge-header">
+        <i class="fas fa-clipboard-list"></i> ประกาศโครงสร้างข้อสอบอย่างเป็นทางการ มสธ.
+      </div>
+      <h1>ตารางโครงสร้างและสัดส่วนข้อสอบ มสธ.</h1>
+      <p>ข้อมูลจำนวนข้อสอบ ปรนัย (กากบาท) และ อัตนัย (เขียนบรรยาย/ตุ๊กตา) จำแนกรายชุดวิชา พร้อมหมวดหมู่และคำแนะนำการเตรียมตัวสอบอย่างตรงจุด</p>
+    </div>
+
+    <!-- Stats Overview -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon icon-blue"><i class="fas fa-books"></i></div>
+        <div class="stat-info">
+          <h4>ชุดวิชาทั้งหมดที่รวบรวม</h4>
+          <div class="stat-val" id="totalCourses">38</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon icon-amber"><i class="fas fa-pen-nib"></i></div>
+        <div class="stat-info">
+          <h4>วิชาที่มีสอบอัตนัย (เขียนตอบ)</h4>
+          <div class="stat-val" id="subjectiveCourses">24</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon icon-emerald"><i class="fas fa-check-double"></i></div>
+        <div class="stat-info">
+          <h4>วิชาสอบปรนัยล้วน (100-120 ข้อ)</h4>
+          <div class="stat-val" id="choiceOnlyCourses">14</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Controls: Search & Filter Pills -->
+    <div class="controls-panel">
+      <div class="search-box">
+        <i class="fas fa-search"></i>
+        <input type="text" id="searchInput" placeholder="ค้นหาด้วยรหัสวิชา (เช่น 41211, 40101) หรือชื่อชุดวิชา..." oninput="filterData()">
+      </div>
+
+      <div class="filter-pills">
+        <button class="filter-pill active" onclick="setCategoryFilter('all', this)">ทั้งหมด (38 วิชา)</button>
+        <button class="filter-pill" onclick="setCategoryFilter('law', this)">หมวดนิติศาสตร์</button>
+        <button class="filter-pill" onclick="setCategoryFilter('subjective', this)">มีสอบอัตนัย (ปรนัย + อัตนัย)</button>
+        <button class="filter-pill" onclick="setCategoryFilter('choice_only', this)">ปรนัยล้วน (120 ข้อ)</button>
+        <button class="filter-pill" onclick="setCategoryFilter('business', this)">หมวดบัญชี & วิทยาการจัดการ</button>
+      </div>
+    </div>
+
+    <!-- Interactive Table -->
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 70px; text-align: center;">ลำดับ</th>
+            <th style="width: 110px;">รหัสวิชา</th>
+            <th>ชื่อชุดวิชา</th>
+            <th style="width: 160px;">หมวดสาขา</th>
+            <th style="width: 140px; text-align: center;">ปรนัย (ข้อ)</th>
+            <th style="width: 140px; text-align: center;">อัตนัย (ข้อ)</th>
+            <th style="width: 160px; text-align: center;">รูปแบบการสอบ</th>
+            <th style="width: 130px; text-align: center;">สื่อติวในระบบ</th>
+          </tr>
+        </thead>
+        <tbody id="tableBody">
+          <!-- Populated dynamically from JSON -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <footer>
+    <p>ข้อมูลอ้างอิงจากตารางโครงสร้างรูปแบบข้อสอบ มหาวิทยาลัยสุโขทัยธรรมาธิราช (มสธ.)</p>
+    <p style="margin-top: 0.4rem; font-size: 0.82rem; color: var(--muted);">รวบรวมและพัฒนาเพื่อการวางแผนอ่านหนังสือและการเตรียมตัวสอบของนักศึกษา</p>
+  </footer>
+
+  <script>
+    let allData = [];
+    let currentCategory = 'all';
+
+    async function loadData() {
+      try {
+        const res = await fetch('data/exam_structure.json');
+        allData = await res.json();
+        
+        // Update stats
+        document.getElementById('totalCourses').textContent = allData.length;
+        document.getElementById('subjectiveCourses').textContent = allData.filter(d => d.subjective > 0).length;
+        document.getElementById('choiceOnlyCourses').textContent = allData.filter(d => d.subjective === 0).length;
+
+        renderTable();
+      } catch (err) {
+        console.error('Error loading exam structure:', err);
+      }
+    }
+
+    function renderTable() {
+      const tbody = document.getElementById('tableBody');
+      const searchTerm = document.getElementById('searchInput').value.trim().toLowerCase();
+
+      const filtered = allData.filter(item => {
+        // Category Filter
+        if (currentCategory === 'law') {
+          if (!item.category.includes('นิติศาสตร์')) return false;
+        } else if (currentCategory === 'subjective') {
+          if (item.subjective === 0) return false;
+        } else if (currentCategory === 'choice_only') {
+          if (item.subjective > 0) return false;
+        } else if (currentCategory === 'business') {
+          if (!item.category.includes('บัญชี') && !item.category.includes('วิทยาการจัดการ') && !item.category.includes('นิเทศ')) return false;
+        }
+
+        // Search Term Filter
+        if (searchTerm) {
+          const matchCode = item.code.toLowerCase().includes(searchTerm);
+          const matchName = item.name.toLowerCase().includes(searchTerm);
+          const matchCat = item.category.toLowerCase().includes(searchTerm);
+          const matchFormat = item.format.toLowerCase().includes(searchTerm);
+          if (!matchCode && !matchName && !matchCat && !matchFormat) return false;
+        }
+
+        return true;
+      });
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="8" style="text-align: center; padding: 3rem 1rem; color: var(--muted);">
+              <i class="fas fa-search" style="font-size: 2rem; margin-bottom: 0.75rem; opacity: 0.5;"></i>
+              <p>ไม่พบข้อมูลชุดวิชาที่ตรงกับเงื่อนไขการค้นหา</p>
+            </td>
+          </tr>
+        `;
+        return;
+      }
+
+      tbody.innerHTML = filtered.map((item, idx) => {
+        let studyLink = '-';
+        if (item.code === '41211') studyLink = `<a href="41211-civil-law-1/index.html" class="link-study"><i class="fas fa-book-reader"></i> ติว 41211</a>`;
+        else if (item.code === '41216' || item.code === '41231') studyLink = `<a href="41516-criminal-law-1/index.html" class="link-study"><i class="fas fa-book-reader"></i> ติวอาญา 1</a>`;
+        else if (item.code === '40101') studyLink = `<a href="40101 general law knowledge/index.html" class="link-study"><i class="fas fa-book-reader"></i> ติว 40101</a>`;
+        else if (item.code === '10151') studyLink = `<a href="10151-thai-studies/index.html" class="link-study"><i class="fas fa-book-reader"></i> ติว 10151</a>`;
+        else if (item.subjective > 0) studyLink = `<a href="stou-law-journals/index.html" class="link-study"><i class="fas fa-file-signature"></i> ข้อสอบอัตนัย</a>`;
+
+        return `
+          <tr>
+            <td style="text-align: center; font-weight: 600; color: var(--muted);">${item.order}</td>
+            <td><span class="code-pill">${item.code}</span></td>
+            <td>
+              <strong style="font-size: 0.98rem;">${item.name}</strong>
+              <div style="font-size: 0.8rem; color: var(--muted); margin-top: 0.2rem;">${item.note}</div>
+            </td>
+            <td><span style="font-size: 0.85rem; color: var(--muted);">${item.category}</span></td>
+            <td style="text-align: center;"><span class="val-choice">${item.multiple_choice}</span> ข้อ</td>
+            <td style="text-align: center;">
+              ${item.subjective > 0 ? `<span class="val-subjective">${item.subjective}</span> ข้อ` : `<span class="val-zero">-</span>`}
+            </td>
+            <td style="text-align: center;">
+              <span class="badge-format ${item.subjective > 0 ? 'format-mix' : 'format-choice'}">
+                <i class="fas ${item.subjective > 0 ? 'fa-edit' : 'fa-check-circle'}"></i> ${item.format}
+              </span>
+            </td>
+            <td style="text-align: center;">${studyLink}</td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function setCategoryFilter(cat, btn) {
+      currentCategory = cat;
+      document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
+      if (btn) btn.classList.add('active');
+      renderTable();
+    }
+
+    function filterData() {
+      renderTable();
+    }
+
+    function toggleTheme() {
+      const root = document.documentElement;
+      const isDark = root.getAttribute('data-theme') === 'dark';
+      root.setAttribute('data-theme', isDark ? 'light' : 'dark');
+      document.getElementById('themeIcon').className = isDark ? 'fas fa-moon' : 'fas fa-sun';
+      localStorage.setItem('stou_theme', isDark ? 'light' : 'dark');
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      const savedTheme = localStorage.getItem('stou_theme');
+      if (savedTheme) {
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        document.getElementById('themeIcon').className = savedTheme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+      }
+      loadData();
+    });
+  </script>
+</body>
+</html>

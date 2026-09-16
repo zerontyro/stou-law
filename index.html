@@ -31,12 +31,100 @@
     }
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: var(--font); }
     body { background-color: var(--bg); color: var(--text); min-height: 100vh; display: flex; flex-direction: column; }
-    .container { max-width: 1200px; margin: 0 auto; padding: 2.5rem 1.5rem; width: 100%; flex: 1; }
-    .header { text-align: center; margin-bottom: 3rem; }
+    .container { max-width: 1240px; margin: 0 auto; padding: 2.5rem 1.5rem; width: 100%; flex: 1; }
+    
+    .top-nav {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+    }
+    .btn-top {
+      background: var(--card);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 0.45rem 0.85rem;
+      border-radius: 8px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-top:hover { background: var(--bg); border-color: var(--primary); }
+
+    .header { text-align: center; margin-bottom: 2.5rem; }
     .badge-hub { display: inline-flex; align-items: center; gap: 0.5rem; background: linear-gradient(135deg, #1e3a8a, #b45309); color: #fff; padding: 0.4rem 1rem; border-radius: 9999px; font-weight: 700; font-size: 0.9rem; margin-bottom: 1rem; box-shadow: 0 2px 8px rgba(30,58,138,0.25); }
-    .header h1 { font-size: 2.2rem; margin-bottom: 0.75rem; font-weight: 800; }
-    .header p { color: var(--muted); font-size: 1.1rem; max-width: 680px; margin: 0 auto; }
-    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 1.5rem; }
+    .header h1 { font-size: 2.2rem; margin-bottom: 0.75rem; font-weight: 800; font-family: 'Prompt', sans-serif; }
+    .header p { color: var(--muted); font-size: 1.1rem; max-width: 720px; margin: 0 auto; line-height: 1.6; }
+
+    /* Highlights Row for New Tools */
+    .hero-features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2.5rem;
+    }
+    .hero-box {
+      background: var(--card);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.75rem;
+      box-shadow: var(--shadow);
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.25s ease;
+    }
+    .hero-box:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 20px -5px rgba(0,0,0,0.12);
+    }
+    .hero-box.h-structure { border-color: #1e3a8a; }
+    .hero-box.h-structure::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 5px; background: linear-gradient(135deg, #1e3a8a, #0284c7); }
+    .hero-box.h-articles { border-color: #991b1b; }
+    .hero-box.h-articles::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 5px; background: linear-gradient(135deg, #991b1b, #b45309); }
+
+    .hero-tag {
+      font-size: 0.82rem;
+      font-weight: 800;
+      padding: 0.25rem 0.65rem;
+      border-radius: 6px;
+      display: inline-block;
+      margin-bottom: 0.75rem;
+    }
+    .h-structure .hero-tag { background: #dbeafe; color: #1e3a8a; }
+    .h-articles .hero-tag { background: #fee2e2; color: #991b1b; }
+    .hero-box h3 { font-size: 1.35rem; font-weight: 700; margin-bottom: 0.5rem; font-family: 'Prompt', sans-serif; }
+    .hero-box p { font-size: 0.95rem; color: var(--muted); line-height: 1.6; margin-bottom: 1.25rem; }
+    
+    .section-divider {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin: 1rem 0 2rem 0;
+      color: var(--muted);
+      font-weight: 700;
+      font-size: 1.1rem;
+      font-family: 'Prompt', sans-serif;
+    }
+    .section-divider::before, .section-divider::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* Course Cards Grid */
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
     .course-card { background-color: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.75rem; text-decoration: none; color: inherit; box-shadow: var(--shadow); transition: all 0.25s ease; display: flex; flex-direction: column; justify-content: space-between; position: relative; overflow: hidden; }
     .course-card:hover { transform: translateY(-4px); box-shadow: 0 12px 20px -5px rgba(0,0,0,0.12); border-color: var(--primary); }
     .course-card::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 5px; }
@@ -51,37 +139,87 @@
     .c-40101 .code-tag { background: #e0f2fe; color: #0284c7; }
     .c-10151 .code-tag { background: #d1fae5; color: #059669; }
     .c-journal .code-tag { background: #fef3c7; color: #b45309; }
-    .course-card h2 { font-size: 1.35rem; margin-bottom: 0.5rem; font-weight: 700; line-height: 1.4; }
+    .course-card h2 { font-size: 1.35rem; margin-bottom: 0.5rem; font-weight: 700; line-height: 1.4; font-family: 'Prompt', sans-serif; }
     .course-card p { font-size: 0.95rem; color: var(--muted); line-height: 1.6; margin-bottom: 1.25rem; }
     .features-list { list-style: none; font-size: 0.85rem; color: var(--muted); margin-bottom: 1.5rem; }
     .features-list li { margin-bottom: 0.35rem; display: flex; align-items: center; gap: 0.5rem; }
     .features-list li i { font-size: 0.75rem; color: #10b981; }
     .enter-btn { display: inline-flex; align-items: center; justify-content: space-between; background: var(--bg); border: 1px solid var(--border); padding: 0.65rem 1rem; border-radius: 8px; font-weight: 700; font-size: 0.9rem; transition: all 0.2s; }
-    .course-card:hover .enter-btn { background: var(--primary); color: #fff; border-color: var(--primary); }
-    footer { text-align: center; padding: 2rem; border-top: 1px solid var(--border); font-size: 0.85rem; color: var(--muted); }
+    .course-card:hover .enter-btn, .hero-box:hover .enter-btn { background: var(--primary); color: #fff; border-color: var(--primary); }
+    .hero-box.h-articles:hover .enter-btn { background: #991b1b; border-color: #991b1b; }
+
+    footer { text-align: center; padding: 2rem; border-top: 1px solid var(--border); font-size: 0.85rem; color: var(--muted); margin-top: 3rem; }
   </style>
 </head>
 <body>
 
   <div class="container">
+    <div class="top-nav">
+      <a href="exam-structure.html" class="btn-top">
+        <i class="fas fa-table"></i> โครงสร้างข้อสอบ 38 วิชา
+      </a>
+      <a href="key-articles.html" class="btn-top">
+        <i class="fas fa-gavel"></i> มาตราสำคัญ & จุดสังเกต
+      </a>
+      <a href="stou-law-journals/index.html" class="btn-top">
+        <i class="fas fa-book-journal-whills"></i> คลังวารสาร & OCR
+      </a>
+      <button class="btn-top" onclick="toggleTheme()" title="สลับโหมดมืด/สว่าง">
+        <i class="fas fa-moon" id="themeIcon"></i>
+      </button>
+    </div>
+
     <div class="header">
       <div class="badge-hub">
         <i class="fas fa-university"></i> มหาวิทยาลัยสุโขทัยธรรมาธิราช (มสธ.)
       </div>
-      <h1>คลังสรุปบทเรียนและจำลองสอบเสมือนจริง</h1>
-      <p>หลักสูตรนิติศาสตรบัณฑิต และหมวดวิชาศึกษาทั่วไป พร้อมข้อสอบปรนัยจริง 120 ข้อ และข้อสอบอัตนัยตุ๊กตาตามแบบ มสธ.</p>
+      <h1>ศูนย์รวมสื่อสรุปบทเรียนและคลังข้อสอบ มสธ.</h1>
+      <p>หลักสูตรนิติศาสตรบัณฑิต และหมวดวิชาศึกษาทั่วไป พร้อมข้อสอบปรนัยจริง 120 ข้อ, ข้อสอบอัตนัยตุ๊กตาตามแบบ มสธ. และคลังมาตราสำคัญ</p>
+    </div>
+
+    <!-- Hero Features: Exam Structure & Key Articles -->
+    <div class="hero-features">
+      <!-- 1. Exam Structure -->
+      <a href="exam-structure.html" class="hero-box h-structure">
+        <div>
+          <span class="hero-tag"><i class="fas fa-clipboard-check"></i> ตารางสัดส่วนข้อสอบทางการ</span>
+          <h3>ตารางโครงสร้างข้อสอบ มสธ. (38 ชุดวิชา)</h3>
+          <p>ตรวจเช็กจำนวนข้อสอบ ปรนัย (กากบาท) และ อัตนัย (เขียนบรรยาย 2-4 ข้อ) แยกตามรายชุดวิชา พร้อมสถิติวิชาปรนัยล้วน 120 ข้อ และวิชาที่มีสอบอัตนัย</p>
+        </div>
+        <div class="enter-btn">
+          <span>ดูตารางโครงสร้างข้อสอบทั้งหมด</span>
+          <i class="fas fa-arrow-right"></i>
+        </div>
+      </a>
+
+      <!-- 2. High-Yield Articles & Pitfalls -->
+      <a href="key-articles.html" class="hero-box h-articles">
+        <div>
+          <span class="hero-tag"><i class="fas fa-fire"></i> สรุปมาตราออกสอบบ่อยที่สุด</span>
+          <h3>สรุปมาตราสำคัญ & จุดสังเกต/หลุมพราง</h3>
+          <p>รวมมาตราฮิตที่ข้อสอบ มสธ. ออกบ่อยที่สุด (แพ่ง 1, แพ่ง 2, อาญา 1, อาญา 2, พาณิชย์, กฎหมายทั่วไป) พร้อมวิเคราะห์จุดตัดคะแนนและหลุมพรางที่ต้องระวัง</p>
+        </div>
+        <div class="enter-btn">
+          <span>อ่านสรุปมาตรา & หลุมพราง</span>
+          <i class="fas fa-arrow-right"></i>
+        </div>
+      </a>
+    </div>
+
+    <div class="section-divider">
+      <span>รายวิชาในระบบและคลังบทเรียน</span>
     </div>
 
     <div class="grid">
       <!-- 41211 Civil Law 1 -->
       <a href="41211-civil-law-1/index.html" class="course-card c-41211">
         <div>
-          <span class="code-tag">41211 / 41511</span>
+          <span class="code-tag">41211 / 41214</span>
           <h2>กฎหมายแพ่ง 1</h2>
           <p>บุคคล นิติกรรม สัญญา (ป.พ.พ. บรรพ 1 - 2)</p>
           <ul class="features-list">
             <li><i class="fas fa-check"></i> สรุปเนื้อหาเข้มข้น 15 หน่วย</li>
-            <li><i class="fas fa-check"></i> ปรนัย 120 ข้อ (จับเวลา 180 นาที)</li>
+            <li><i class="fas fa-check"></i> ปรนัย 60 ข้อ (สัดส่วน 50%)</li>
             <li><i class="fas fa-check"></i> อัตนัย 3 ข้อตุ๊กตา (60 คะแนน) พร้อมธง 3 สเต็ป</li>
           </ul>
         </div>
@@ -94,12 +232,12 @@
       <!-- 41516 Criminal Law 1 -->
       <a href="41516-criminal-law-1/index.html" class="course-card c-41516">
         <div>
-          <span class="code-tag">41516 / 41216</span>
+          <span class="code-tag">41516 / 41216 / 41231</span>
           <h2>กฎหมายอาญา 1</h2>
           <p>ภาคบทบัญญัติทั่วไป (ป.อ. มาตรา 1 - 106)</p>
           <ul class="features-list">
             <li><i class="fas fa-check"></i> สรุปเนื้อหาเข้มข้น 15 หน่วย</li>
-            <li><i class="fas fa-check"></i> ปรนัย 120 ข้อ (จับเวลา 180 นาที)</li>
+            <li><i class="fas fa-check"></i> ปรนัย 60 ข้อ (สัดส่วน 50%)</li>
             <li><i class="fas fa-check"></i> อัตนัย 3 ข้อตุ๊กตา (60 คะแนน) พร้อมธง 3 สเต็ป</li>
           </ul>
         </div>
@@ -112,12 +250,12 @@
       <!-- 40101 General Law Knowledge -->
       <a href="40101 general law knowledge/index.html" class="course-card c-40101">
         <div>
-          <span class="code-tag">40101</span>
+          <span class="code-tag">40101 (ปรนัยล้วน)</span>
           <h2>ความรู้เบื้องต้นเกี่ยวกับกฎหมายทั่วไป</h2>
           <p>พื้นฐานระบบกฎหมาย ที่มาของกฎหมาย และการใช้กฎหมาย</p>
           <ul class="features-list">
             <li><i class="fas fa-check"></i> สรุปเนื้อหาเข้มข้น 15 หน่วย</li>
-            <li><i class="fas fa-check"></i> ปรนัย 120 ข้อ (จับเวลา 180 นาที)</li>
+            <li><i class="fas fa-check"></i> ปรนัย 120 ข้อ (จับเวลา 180 นาที, ไม่มีอัตนัย)</li>
             <li><i class="fas fa-check"></i> วิเคราะห์จุดอ่อนรายหน่วย</li>
           </ul>
         </div>
@@ -127,10 +265,28 @@
         </div>
       </a>
 
+      <!-- STOU Law Journals -->
+      <a href="stou-law-journals/index.html" class="course-card c-journal">
+        <div>
+          <span class="code-tag">คลังวารสาร & ฎีกา</span>
+          <h2>วารสารกฎหมาย มสธ. (22 ฉบับ)</h2>
+          <p>คลังข้อมูลดิบ PDF 22 ฉบับ + ถอดความ OCR ข้อสอบอัตนัย และธงคำตอบ</p>
+          <ul class="features-list">
+            <li><i class="fas fa-check"></i> ไฟล์ดิบ PDF วารสารกฎหมายครบ 22 ฉบับ</li>
+            <li><i class="fas fa-check"></i> ถอดความ OCR ข้อสอบอัตนัยจริง พร้อมธงคำตอบอาจารย์</li>
+            <li><i class="fas fa-check"></i> ระบบเปิดอ่าน Split View (PDF คู่กับข้อสอบ)</li>
+          </ul>
+        </div>
+        <div class="enter-btn">
+          <span>เข้าสู่คลังวารสาร</span>
+          <i class="fas fa-arrow-right"></i>
+        </div>
+      </a>
+
       <!-- 10151 Thai Studies -->
       <a href="10151-thai-studies/index.html" class="course-card c-10151">
         <div>
-          <span class="code-tag">10151</span>
+          <span class="code-tag">10151 (หมวดศึกษาทั่วไป)</span>
           <h2>ไทยศึกษา (Thai Studies)</h2>
           <p>ประวัติศาสตร์ สังคม วัฒนธรรม ภูมิปัญญา และเศรษฐกิจการเมืองไทย</p>
           <ul class="features-list">
@@ -144,24 +300,6 @@
           <i class="fas fa-arrow-right"></i>
         </div>
       </a>
-
-      <!-- STOU Law Journals -->
-      <a href="stou-law-journals/index.html" class="course-card c-journal">
-        <div>
-          <span class="code-tag">คลังวารสาร & ฎีกา</span>
-          <h2>วารสารกฎหมาย มสธ.</h2>
-          <p>คลังข้อมูลดิบ PDF 22 ฉบับ + สรุปไฮไลท์ฎีกาเด่น และแนวข้อสอบอัตนัย</p>
-          <ul class="features-list">
-            <li><i class="fas fa-check"></i> ไฟล์ดิบ PDF วารสารกฎหมายครบ 22 ฉบับ</li>
-            <li><i class="fas fa-check"></i> สรุปไฮไลท์ประเด็นฎีกาสำคัญ (แพ่ง อาญา พาณิชย์)</li>
-            <li><i class="fas fa-check"></i> รวมแนวข้อสอบอัตนัย พร้อมธงคำตอบ 3 สเต็ป</li>
-          </ul>
-        </div>
-        <div class="enter-btn">
-          <span>เข้าสู่คลังวารสาร</span>
-          <i class="fas fa-arrow-right"></i>
-        </div>
-      </a>
     </div>
   </div>
 
@@ -169,5 +307,22 @@
     <p>© มหาวิทยาลัยสุโขทัยธรรมาธิราช • พัฒนาขึ้นเพื่อประโยชน์ทางการศึกษาของนักศึกษาและผู้สนใจกฎหมาย</p>
   </footer>
 
+  <script>
+    function toggleTheme() {
+      const root = document.documentElement;
+      const isDark = root.getAttribute('data-theme') === 'dark';
+      root.setAttribute('data-theme', isDark ? 'light' : 'dark');
+      document.getElementById('themeIcon').className = isDark ? 'fas fa-moon' : 'fas fa-sun';
+      localStorage.setItem('stou_theme', isDark ? 'light' : 'dark');
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      const savedTheme = localStorage.getItem('stou_theme');
+      if (savedTheme) {
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        document.getElementById('themeIcon').className = savedTheme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+      }
+    });
+  </script>
 </body>
 </html>
