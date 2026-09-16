@@ -3,70 +3,389 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>คลังวารสารกฎหมาย มสธ. (เปิดอ่านออนไลน์ + ไฮไลท์ + สรุปรายฉบับ)</title>
+  <title>คลังวารสารกฎหมาย มสธ. (วิเคราะห์ข้อสอบอัตนัย + ถอดความ OCR + เปิดอ่านในเว็บ)</title>
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;600;700;800&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;500;600;700;800&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   
   <style>
     :root {
-      --primary: #854d0e;
-      --primary-gradient: linear-gradient(135deg, #b45309, #78350f);
+      --primary: #b45309;
+      --primary-hover: #92400e;
+      --primary-light: #fef3c7;
       --bg: #f8fafc;
       --card: #ffffff;
-      --border: #e2e8f0;
+      --border: #cbd5e1;
       --text: #0f172a;
       --muted: #475569;
-      --radius: 14px;
+      --radius: 12px;
       --shadow: 0 4px 6px -1px rgba(0,0,0,0.07), 0 2px 4px -2px rgba(0,0,0,0.05);
-      --font: 'Sarabun', sans-serif;
+      --font-body: 'Sarabun', sans-serif;
+      --font-heading: 'Prompt', sans-serif;
     }
+
     [data-theme="dark"] {
       --bg: #0b0f19;
       --card: #131b2e;
-      --border: #2d3748;
+      --border: #334155;
       --text: #f1f5f9;
       --muted: #94a3b8;
+      --primary-light: #78350f;
     }
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: var(--font); }
-    body { background-color: var(--bg); color: var(--text); min-height: 100vh; display: flex; flex-direction: column; }
-    .container { max-width: 1200px; margin: 0 auto; padding: 2.5rem 1.5rem; width: 100%; flex: 1; }
-    
-    .top-nav { margin-bottom: 1.5rem; }
-    .back-link { display: inline-flex; align-items: center; gap: 0.5rem; color: var(--muted); text-decoration: none; font-weight: 600; font-size: 0.95rem; transition: color 0.2s; }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .container {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem;
+      width: 100%;
+      flex: 1;
+    }
+
+    .top-nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 2rem;
+    }
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--muted);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: color 0.2s;
+    }
     .back-link:hover { color: var(--text); }
-    
-    .header { text-align: center; margin-bottom: 2.5rem; }
-    .badge-hub { display: inline-flex; align-items: center; gap: 0.5rem; background: var(--primary-gradient); color: #fff; padding: 0.4rem 1rem; border-radius: 9999px; font-weight: 700; font-size: 0.9rem; margin-bottom: 1rem; box-shadow: 0 2px 8px rgba(180,83,9,0.3); }
-    .header h1 { font-size: 2.2rem; margin-bottom: 0.75rem; font-weight: 800; }
-    .header p { color: var(--muted); font-size: 1.1rem; max-width: 720px; margin: 0 auto; }
-    
-    .search-box { max-width: 600px; margin: 0 auto 2rem auto; position: relative; }
-    .search-box input { width: 100%; padding: 0.85rem 1.2rem 0.85rem 2.8rem; border-radius: 9999px; border: 1px solid var(--border); background-color: var(--card); color: var(--text); font-size: 1rem; box-shadow: var(--shadow); outline: none; transition: border-color 0.2s; }
-    .search-box input:focus { border-color: #b45309; }
-    .search-box i { position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--muted); font-size: 1.1rem; }
-    
-    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 1.5rem; }
-    .journal-card { background-color: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem; box-shadow: var(--shadow); transition: all 0.25s ease; display: flex; flex-direction: column; justify-content: space-between; position: relative; overflow: hidden; }
-    .journal-card:hover { transform: translateY(-4px); box-shadow: 0 12px 20px -5px rgba(0,0,0,0.12); border-color: #b45309; }
-    .journal-card::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 5px; background: var(--primary-gradient); }
-    
-    .card-tag { font-size: 0.8rem; font-weight: 800; padding: 0.2rem 0.6rem; border-radius: 6px; display: inline-block; margin-bottom: 0.75rem; background: #fef3c7; color: #92400e; }
-    .journal-card h2 { font-size: 1.25rem; margin-bottom: 0.5rem; font-weight: 700; line-height: 1.4; }
-    .journal-card p { font-size: 0.9rem; color: var(--muted); line-height: 1.6; margin-bottom: 1.25rem; }
-    
-    .actions { display: flex; gap: 0.4rem; margin-top: auto; flex-wrap: wrap; }
-    .btn { flex: 1; min-width: 95px; display: inline-flex; align-items: center; justify-content: center; gap: 0.3rem; padding: 0.55rem 0.6rem; border-radius: 8px; font-size: 0.8rem; font-weight: 700; text-decoration: none; transition: all 0.2s; border: 1px solid var(--border); cursor: pointer; text-align: center; }
-    .btn-view { background: #b45309; color: #fff; border-color: #b45309; }
-    .btn-view:hover { background: #78350f; border-color: #78350f; }
-    .btn-summary { background: #0284c7; color: #fff; border-color: #0284c7; }
-    .btn-summary:hover { background: #0369a1; border-color: #0369a1; }
-    .btn-download { background: var(--bg); color: var(--text); }
-    .btn-download:hover { background: var(--border); }
-    
-    footer { text-align: center; padding: 2rem; border-top: 1px solid var(--border); font-size: 0.85rem; color: var(--muted); }
+
+    .theme-toggle-btn {
+      background: var(--card);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      padding: 0.45rem 0.85rem;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-weight: 600;
+      transition: all 0.2s;
+    }
+    .theme-toggle-btn:hover { color: var(--text); background: var(--bg); }
+
+    /* Header */
+    .header {
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+    .badge-hub {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: linear-gradient(135deg, #b45309, #78350f);
+      color: #fff;
+      padding: 0.4rem 1.1rem;
+      border-radius: 9999px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+      box-shadow: 0 4px 12px rgba(180,83,9,0.25);
+    }
+    .header h1 {
+      font-family: var(--font-heading);
+      font-size: 2.2rem;
+      margin-bottom: 0.75rem;
+      font-weight: 800;
+    }
+    .header p {
+      color: var(--muted);
+      font-size: 1.08rem;
+      max-width: 780px;
+      margin: 0 auto;
+      line-height: 1.65;
+    }
+
+    /* Filters and Search */
+    .controls-panel {
+      margin-bottom: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+      align-items: center;
+    }
+
+    .search-box {
+      width: 100%;
+      max-width: 650px;
+      position: relative;
+    }
+    .search-box input {
+      width: 100%;
+      padding: 0.85rem 1.25rem 0.85rem 3rem;
+      border-radius: 9999px;
+      border: 1px solid var(--border);
+      background-color: var(--card);
+      color: var(--text);
+      font-size: 1rem;
+      font-family: var(--font-body);
+      box-shadow: var(--shadow);
+      outline: none;
+      transition: all 0.2s;
+    }
+    .search-box input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(180,83,9,0.15); }
+    .search-box i {
+      position: absolute;
+      left: 1.2rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--muted);
+      font-size: 1.1rem;
+    }
+
+    .filter-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      justify-content: center;
+    }
+    .filter-pill {
+      padding: 0.4rem 0.9rem;
+      border-radius: 9999px;
+      border: 1px solid var(--border);
+      background: var(--card);
+      color: var(--muted);
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .filter-pill:hover, .filter-pill.active {
+      background: var(--primary);
+      color: #ffffff;
+      border-color: var(--primary);
+    }
+
+    /* Master Banner Card */
+    .master-card {
+      background: linear-gradient(135deg, rgba(180,83,9,0.1), rgba(180,83,9,0.02));
+      border: 1.5px solid var(--primary);
+      border-radius: var(--radius);
+      padding: 1.75rem;
+      margin-bottom: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+    .master-info h3 {
+      font-family: var(--font-heading);
+      font-size: 1.3rem;
+      color: var(--primary);
+      margin-bottom: 0.4rem;
+    }
+    .master-info p {
+      color: var(--muted);
+      font-size: 0.96rem;
+      max-width: 700px;
+      line-height: 1.6;
+    }
+    .master-actions {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    /* Cards Grid */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .journal-card {
+      background-color: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      box-shadow: var(--shadow);
+      transition: all 0.25s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+    }
+    .journal-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 20px -5px rgba(0,0,0,0.12);
+      border-color: var(--primary);
+    }
+    .journal-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 5px;
+      background: linear-gradient(135deg, #b45309, #d97706);
+    }
+
+    .card-top {
+      margin-bottom: 1rem;
+    }
+    .meta-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 0.6rem;
+      gap: 0.5rem;
+    }
+    .period-badge {
+      font-size: 0.8rem;
+      font-weight: 700;
+      padding: 0.2rem 0.6rem;
+      border-radius: 6px;
+      background: var(--primary-light);
+      color: var(--primary);
+    }
+    .file-badge {
+      font-size: 0.78rem;
+      color: var(--muted);
+      font-family: monospace;
+    }
+
+    .card-title {
+      font-family: var(--font-heading);
+      font-size: 1.25rem;
+      font-weight: 700;
+      line-height: 1.4;
+      margin-bottom: 0.6rem;
+      color: var(--text);
+    }
+
+    .subject-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      margin-bottom: 0.85rem;
+    }
+    .sub-badge {
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 0.2rem 0.55rem;
+      border-radius: 5px;
+      background-color: var(--bg);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .sub-badge:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    .card-desc {
+      font-size: 0.92rem;
+      color: var(--muted);
+      line-height: 1.65;
+      margin-bottom: 1.25rem;
+    }
+
+    .tag-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      margin-bottom: 1.25rem;
+    }
+    .tag-chip {
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 0.15rem 0.5rem;
+      border-radius: 4px;
+      background-color: rgba(180,83,9,0.08);
+      color: var(--primary);
+    }
+
+    /* Card Actions */
+    .actions {
+      display: flex;
+      gap: 0.45rem;
+      margin-top: auto;
+      flex-wrap: wrap;
+    }
+    .btn {
+      flex: 1;
+      min-width: 95px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      padding: 0.55rem 0.75rem;
+      border-radius: 8px;
+      font-size: 0.84rem;
+      font-weight: 700;
+      text-decoration: none;
+      transition: all 0.2s;
+      border: 1px solid var(--border);
+      cursor: pointer;
+      text-align: center;
+      white-space: nowrap;
+    }
+    .btn-view {
+      background: var(--primary);
+      color: #ffffff;
+      border-color: var(--primary);
+    }
+    .btn-view:hover {
+      background: var(--primary-hover);
+      border-color: var(--primary-hover);
+    }
+    .btn-ocr {
+      background: #0284c7;
+      color: #ffffff;
+      border-color: #0284c7;
+    }
+    .btn-ocr:hover {
+      background: #0369a1;
+      border-color: #0369a1;
+    }
+    .btn-download {
+      background: var(--bg);
+      color: var(--text);
+    }
+    .btn-download:hover {
+      background: var(--border);
+    }
+
+    footer {
+      text-align: center;
+      padding: 2.5rem 1.5rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin-top: 3rem;
+    }
+
+    @media (max-width: 768px) {
+      .header h1 { font-size: 1.8rem; }
+      .grid { grid-template-columns: 1fr; }
+    }
   </style>
 </head>
 <body>
@@ -74,372 +393,190 @@
   <div class="container">
     <div class="top-nav">
       <a href="../index.html" class="back-link">
-        <i class="fas fa-arrow-left"></i> กลับสู่หน้าหลัก portal มสธ.
+        <i class="fas fa-arrow-left"></i> กลับหน้าหลัก Portal รวมสื่อ มสธ.
       </a>
+      <button class="theme-toggle-btn" onclick="toggleTheme()">
+        <i class="fas fa-moon" id="themeIcon"></i> <span>โหมดแสดงผล</span>
+      </button>
     </div>
 
     <div class="header">
       <div class="badge-hub">
-        <i class="fas fa-book-journal-whills"></i> คลังวารสารกฎหมาย มสธ.
+        <i class="fas fa-balance-scale"></i> คลังวารสารนิติศาสตร์ มสธ. (ฉบับสมบูรณ์)
       </div>
-      <h1>วารสารกฎหมาย (เปิดอ่านออนไลน์ + สรุปรายฉบับ)</h1>
-      <p>คลังข้อมูลวารสารกฎหมาย มสธ. ครบถ้วน 22 ฉบับ พร้อมระบบเปิดดู PDF ในเว็บ สรุปเนื้อหาเจาะลึกรายฉบับ และดาวน์โหลด</p>
+      <h1>คลังวารสารกฎหมาย & ถอดความข้อสอบอัตนัย</h1>
+      <p>รวมวารสารกฎหมาย มสธ. 22 ฉบับ พร้อมการถอดความ OCR ข้อสอบอัตนัยจริง, ธงคำตอบ 3 สเต็ปของคณาจารย์, วิเคราะห์จุดบกพร่อง และระบบเปิดอ่าน PDF คู่กับข้อสอบในเว็บ</p>
     </div>
 
-    <div class="search-box">
-      <i class="fas fa-search"></i>
-      <input type="text" id="searchInput" placeholder="ค้นหาวารสาร ปี พ.ศ. หรือหัวข้อกฎหมาย (เช่น 2553, ละเมิด, อัตนัย)..." onkeyup="filterCards()">
+    <!-- Master Banner -->
+    <div class="master-card">
+      <div class="master-info">
+        <h3><i class="fas fa-graduation-cap"></i> รวมคู่มือแนวทางการศึกษาวิชากฎหมายและวิธีตอบข้อสอบอัตนัย (14 ชุดวิชา)</h3>
+        <p>คู่มือหลักการเขียนตอบอัตนัย 3 สเต็ป (หลักกฎหมาย - วินิจฉัยปรับบท - ฟันธงสรุป), รวมข้อสอบเก่ากว่า 140 ข้อ ครบทั้ง แพ่ง อาญา พาณิชย์ วิ.แพ่ง และ วิ.อาญา</p>
+      </div>
+      <div class="master-actions">
+        <a href="viewer.html?file=Journal_Subjective_Civil_Criminal_Commercial_1.pdf&view=split" class="btn btn-view">
+          <i class="fas fa-columns"></i> เปิดอ่านคู่มือฉบับเต็ม
+        </a>
+        <a href="summaries/journal_21_subjective.md" class="btn btn-ocr">
+          <i class="fas fa-file-alt"></i> สรุป Markdown
+        </a>
+      </div>
     </div>
 
+    <!-- Controls: Search & Subject Filters -->
+    <div class="controls-panel">
+      <div class="search-box">
+        <i class="fas fa-search"></i>
+        <input type="text" id="searchInput" placeholder="ค้นหาตามชื่อฉบับ, มาตรา (เช่น 156, 68), คำสำคัญ หรืออาจารย์ผู้วิเคราะห์..." oninput="filterJournals()">
+      </div>
+
+      <div class="filter-pills">
+        <button class="filter-pill active" onclick="setSubjectFilter('all', this)">ทั้งหมด (22 ฉบับ)</button>
+        <button class="filter-pill" onclick="setSubjectFilter('กฎหมายแพ่ง 1', this)">กฎหมายแพ่ง 1</button>
+        <button class="filter-pill" onclick="setSubjectFilter('กฎหมายแพ่ง 2', this)">กฎหมายแพ่ง 2</button>
+        <button class="filter-pill" onclick="setSubjectFilter('กฎหมายอาญา 1', this)">กฎหมายอาญา 1</button>
+        <button class="filter-pill" onclick="setSubjectFilter('กฎหมายอาญา 2', this)">กฎหมายอาญา 2</button>
+        <button class="filter-pill" onclick="setSubjectFilter('พาณิชย์', this)">กฎหมายพาณิชย์</button>
+      </div>
+    </div>
+
+    <!-- Journal Cards Grid -->
     <div class="grid" id="journalGrid">
-      
-      <!-- Summary Master Card -->
-      <div class="journal-card" style="grid-column: 1 / -1; background: linear-gradient(to right, var(--card), #fffbeb);">
-        <div>
-          <span class="card-tag"><i class="fas fa-star"></i> สรุปภาพรวม & ไฮไลท์พิเศษ</span>
-          <h2>รวมสรุปภาพรวม & ไฮไลท์ฎีกาวารสารกฎหมาย มสธ. (22 ฉบับ)</h2>
-          <p>รวมสาระสำคัญประเด็นกฎหมายเด่น คำพิพากษาศาลฎีกาสำคัญ (แพ่ง, อาญา, พาณิชย์) และธงแนวตอบข้อสอบอัตนัย 3 สเต็ป มสธ.</p>
-        </div>
-        <div class="actions" style="margin-top: 1rem;">
-          <a href="summaries/README.md" class="btn btn-summary" style="max-width: 320px;">
-            <i class="fas fa-file-alt"></i> อ่านสรุปดรรชนีรวม 22 เล่ม (Markdown)
-          </a>
-        </div>
-      </div>
-
-      <!-- Journal Cards (22 Items) -->
-
-      <!-- 0 -->
-      <div class="journal-card" data-title="วารสารกฎหมาย ฉบับที่ 2 2544 มหาชน ดุลพินิจ">
-        <div>
-          <span class="card-tag">พ.ศ. 2544</span>
-          <h2>วารสารกฎหมาย ฉบับที่ 2 (2544)</h2>
-          <p>บทความวิเคราะห์กฎหมายมหาชน หลักการตีความกฎหมาย และการควบคุมการใช้อำนาจดุลพินิจทางปกครอง</p>
-        </div>
-        <div class="actions">
-          <a href="viewer.html?file=0_Ch2_2544.pdf" class="btn btn-view"><i class="fas fa-eye"></i> เปิดอ่านในเว็บ</a>
-          <a href="summaries/journal_0_2544.md" class="btn btn-summary"><i class="fas fa-book"></i> อ่านสรุป</a>
-          <a href="raw/0_Ch2_2544.pdf" class="btn btn-download" download><i class="fas fa-download"></i> โหลด PDF</a>
-        </div>
-      </div>
-
-      <!-- 1 -->
-      <div class="journal-card" data-title="วารสารปี 22 1 มิย 53 2553 ละเมิด เจ้าหน้าที่">
-        <div>
-          <span class="card-tag">ปีที่ 22 ฉบับที่ 1 (มิ.ย. 53)</span>
-          <h2>วารสารกฎหมาย ปี 22 ฉบับ 1 (2553)</h2>
-          <p>วิเคราะห์ความรับผิดทางละเมิดของเจ้าหน้าที่ (พ.ร.บ. 2539) สิทธิการไล่เบี้ย และอายุความการฟ้องคดี</p>
-        </div>
-        <div class="actions">
-          <a href="viewer.html?file=1_Journal_22_1_Jun53.pdf" class="btn btn-view"><i class="fas fa-eye"></i> เปิดอ่านในเว็บ</a>
-          <a href="summaries/journal_1_2553_1.md" class="btn btn-summary"><i class="fas fa-book"></i> อ่านสรุป</a>
-          <a href="raw/1_Journal_22_1_Jun53.pdf" class="btn btn-download" download><i class="fas fa-download"></i> โหลด PDF</a>
-        </div>
-      </div>
-
-      <!-- 2 -->
-      <div class="journal-card" data-title="วารสารปี 22 2 ธค 53 2553 สัญญาไม่เป็นธรรม จำนอง">
-        <div>
-          <span class="card-tag">ปีที่ 22 ฉบับที่ 2 (ธ.ค. 53)</span>
-          <h2>วารสารกฎหมาย ปี 22 ฉบับ 2 (2553)</h2>
-          <p>หลักข้อสัญญาไม่เป็นธรรม (พ.ร.บ. 2540) สัญญามาตรฐาน และการจำนองประกันหนี้บุคคลอื่น</p>
-        </div>
-        <div class="actions">
-          <a href="viewer.html?file=2_Journal_22_2_Dec53.pdf" class="btn btn-view"><i class="fas fa-eye"></i> เปิดอ่านในเว็บ</a>
-          <a href="summaries/journal_2_2553_2.md" class="btn btn-summary"><i class="fas fa-book"></i> อ่านสรุป</a>
-          <a href="raw/2_Journal_22_2_Dec53.pdf" class="btn btn-download" download><i class="fas fa-download"></i> โหลด PDF</a>
-        </div>
-      </div>
-
-      <!-- 3 -->
-      <div class="journal-card" data-title="วารสารปี 23 1 มิย 54 2554 อาญา เจตนา">
-        <div>
-          <span class="card-tag">ปีที่ 23 ฉบับที่ 1 (มิ.ย. 54)</span>
-          <h2>วารสารกฎหมาย ปี 23 ฉบับ 1 (2554)</h2>
-          <p>โครงสร้างความรับผิดทางอาญา: เจตนาประสงค์ต่อผล เจตนาเล็งเห็นผล และความประมาทเลินเล่อ</p>
-        </div>
-        <div class="actions">
-          <a href="viewer.html?file=3_Journal_23_1_Jun54.pdf" class="btn btn-view"><i class="fas fa-eye"></i> เปิดอ่านในเว็บ</a>
-          <a href="summaries/journal_3_2554_1.md" class="btn btn-summary"><i class="fas fa-book"></i> อ่านสรุป</a>
-          <a href="raw/3_Journal_23_1_Jun54.pdf" class="btn btn-download" download><i class="fas fa-download"></i> โหลด PDF</a>
-        </div>
-      </div>
-
-      <!-- 4 -->
-      <div class="journal-card" data-title="วารสารปี 23 2 ธค 54 2554 ทรัพย์สิน ครอบครอง">
-        <div>
-          <span class="card-tag">ปีที่ 23 ฉบับที่ 2 (ธ.ค. 54)</span>
-          <h2>วารสารกฎหมาย ปี 23 ฉบับ 2 (2554)</h2>
-          <p>สิทธิครอบครองและกรรมสิทธิ์ในอสังหาริมทรัพย์ ตาม ป.พ.พ. มาตรา 1299 และที่ดินมือเปล่า น.ส.3</p>
-        </div>
-        <div class="actions">
-          <a href="viewer.html?file=4_Journal_23_2_Dec54.pdf" class="btn btn-view"><i class="fas fa-eye"></i> เปิดอ่านในเว็บ</a>
-          <a href="summaries/journal_4_2554_2.md" class="btn btn-summary"><i class="fas fa-book"></i> อ่านสรุป</a>
-          <a href="raw/4_Journal_23_2_Dec54.pdf" class="btn btn-download" download><i class="fas fa-download"></i> โหลด PDF</a>
-        </div>
-      </div>
-
-      <!-- 5 -->
-      <div class="journal-card" data-title="วารสารปี 24 1 มิย 55 2555 ละเมิด ยานพาหนะ">
-        <div>
-          <span class="card-tag">ปีที่ 24 ฉบับที่ 1 (มิ.ย. 55)</span>
-          <h2>วารสารกฎหมาย ปี 24 ฉบับ 1 (2555)</h2>
-          <p>ความรับผิดอันเกิดจากยานพาหนะอันเดินด้วยกำลังเครื่องจักร (ป.พ.พ. ม. 437) และเหตุสุดวิสัย</p>
-        </div>
-        <div class="actions">
-          <a href="viewer.html?file=5_Journal_24_1_Jun55.pdf" class="btn btn-view"><i class="fas fa-eye"></i> เปิดอ่านในเว็บ</a>
-          <a href="summaries/journal_5_2555_1.md" class="btn btn-summary"><i class="fas fa-book"></i> อ่านสรุป</a>
-          <a href="raw/5_Journal_24_1_Jun55.pdf" class="btn btn-download" download><i class="fas fa-download"></i> โหลด PDF</a>
-        </div>
-      </div>
-
-      <!-- 6 -->
-      <div class="journal-card" data-title="วารสารปี 24 2 ธค 55 2555 เลิกสัญญา">
-        <div>
-          <span class="card-tag">ปีที่ 24 ฉบับที่ 2 (ธ.ค. 55)</span>
-          <h2>วารสารกฎหมาย ปี 24 ฉบับ 2 (2555)</h2>
-          <p>การเลิกสัญญาและผลของการกลับคืนสู่ฐานะเดิม ตาม ป.พ.พ. มาตรา 386 - 391</p>
-        </div>
-        <div class="actions">
-          <a href="viewer.html?file=6_Journal_24_2_Dec55.pdf" class="btn btn-view"><i class="fas fa-eye"></i> เปิดอ่านในเว็บ</a>
-          <a href="summaries/journal_6_2555_2.md" class="btn btn-summary"><i class="fas fa-book"></i> อ่านสรุป</a>
-          <a href="raw/6_Journal_24_2_Dec55.pdf" class="btn btn-download" download><i class="fas fa-download"></i> โหลด PDF</a>
-        </div>
-      </div>
-
-      <!-- 7 -->
-      <div class="journal-card" data-title="วารสารปี 25 1 มิย 56 2556 โมฆะ โมฆียะ">
-        <div>
-          <span class="card-tag">ปีที่ 25 ฉบับที่ 1 (มิ.ย. 56)</span>
-          <h2>วารสารกฎหมาย ปี 25 ฉบับ 1 (2556)</h2>
-          <p>ผลของโมฆะกรรมและโมฆียะกรรม สิทธิการบอกล้างนิติกรรมของผู้เยาว์และผู้ถูกกลฉ้อฉล</p>
-        </div>
-        <div class="actions">
-          <a href="viewer.html?file=7_Journal_25_1_Jun56.pdf" class="btn btn-view"><i class="fas fa-eye"></i> เปิดอ่านในเว็บ</a>
-          <a href="summaries/journal_7_2556_1.md" class="btn btn-summary"><i class="fas fa-book"></i> อ่านสรุป</a>
-          <a href="raw/7_Journal_25_1_Jun56.pdf" class="btn btn-download" download><i class="fas fa-download"></i> โหลด PDF</a>
-        </div>
-      </div>
-
-      <!-- 8 -->
-      <div class="journal-card" data-title="วารสารปี 25 2 ธค 56 2556 ป้องกัน จำเป็น">
-        <div>
-          <span class="card-tag">ปีที่ 25 ฉบับที่ 2 (ธ.ค. 56)</span>
-          <h2>วารสารกฎหมาย ปี 25 ฉบับ 2 (2556)</h2>
-          <p>เหตุพ้นผิดและเหตุยกเว้นโทษทางอาญา: การป้องกันโดยชอบด้วยกฎหมาย (ม. 68) และความจำเป็น (ม. 67)</p>
-        </div>
-        <div class="actions">
-          <a href="viewer.html?file=8_Journal_25_2_Dec56.pdf" class="btn btn-view"><i class="fas fa-eye"></i> เปิดอ่านในเว็บ</a>
-          <a href="summaries/journal_8_2556_2.md" class="btn btn-summary"><i class="fas fa-book"></i> อ่านสรุป</a>
-          <a href="raw/8_Journal_25_2_Dec56.pdf" class="btn btn-download" download><i class="fas fa-download"></i> โหลด PDF</a>
-        </div>
-      </div>
-
-      <!-- 9 -->
-      <div class="journal-card" data-title="วารสารปี 26 1 มิย 57 2557 โอนสิทธิเรียกร้อง">
-        <div>
-          <span class="card-tag">ปีที่ 26 ฉบับที่ 1 (มิ.ย. 57)</span>
-          <h2>วารสารกฎหมาย ปี 26 ฉบับ 1 (2557)</h2>
-          <p>การโอนสิทธิเรียกร้อง (ม. 306) และการรับช่วงสิทธิของบุคคลผู้มีส่วนได้เสีย (ม. 226)</p>
-        </div>
-        <div class="actions">
-          <a href="viewer.html?file=9_Journal_26_1_Jun57.pdf" class="btn btn-view"><i class="fas fa-eye"></i> เปิดอ่านในเว็บ</a>
-          <a href="summaries/journal_9_2557_1.md" class="btn btn-summary"><i class="fas fa-book"></i> อ่านสรุป</a>
-          <a href="raw/9_Journal_26_1_Jun57.pdf" class="btn btn-download" download><i class="fas fa-download"></i> โหลด PDF</a>
-        </div>
-      </div>
-
-      <!-- 10 -->
-      <div class="journal-card" data-title="วารสารปี 26 2 ธค 57 2557 กู้ยืมเงิน ดอกเบี้ย">
-        <div>
-          <span class="card-tag">ปีที่ 26 ฉบับที่ 2 (ธ.ค. 57)</span>
-          <h2>วารสารกฎหมาย ปี 26 ฉบับ 2 (2557)</h2>
-          <p>สัญญากู้ยืมเงิน หลักฐานเป็นหนังสือ การคิดดอกเบี้ยเกินอัตราและผลในทางกฎหมาย</p>
-        </div>
-        <div class="actions">
-          <a href="viewer.html?file=10_Journal_26_2_Dec57.pdf" class="btn btn-view"><i class="fas fa-eye"></i> เปิดอ่านในเว็บ</a>
-          <a href="summaries/journal_10_2557_2.md" class="btn btn-summary"><i class="fas fa-book"></i> อ่านสรุป</a>
-          <a href="raw/10_Journal_26_2_Dec57.pdf" class="btn btn-download" download><i class="fas fa-download"></i> โหลด PDF</a>
-        </div>
-      </div>
-
-      <!-- 11 -->
-      <div class="journal-card" data-title="วารสารปี 27 1 กย 58 2558 บันดาลโทสะ">
-        <div>
-          <span class="card-tag">ปีที่ 27 ฉบับที่ 1 (ก.ย. 58)</span>
-          <h2>วารสารกฎหมาย ปี 27 ฉบับ 1 (2558)</h2>
-          <p>เหตุบันดาลโทสะทางอาญา (ป.อ. มาตรา 72) การข่มเหงอย่างร้ายแรงด้วยเหตุอันไม่เป็นธรรม</p>
-        </div>
-        <div class="actions">
-          <a href="viewer.html?file=11_Journal_27_1_Sep58.pdf" class="btn btn-view"><i class="fas fa-eye"></i> เปิดอ่านในเว็บ</a>
-          <a href="summaries/journal_11_2558_1.md" class="btn btn-summary"><i class="fas fa-book"></i> อ่านสรุป</a>
-          <a href="raw/11_Journal_27_1_Sep58.pdf" class="btn btn-download" download><i class="fas fa-download"></i> โหลด PDF</a>
-        </div>
-      </div>
-
-      <!-- 12 -->
-      <div class="journal-card" data-title="วารสารปี 27 1 เมย 59 2559 ค้ำประกัน จำนอง">
-        <div>
-          <span class="card-tag">ปีที่ 27 ฉบับที่ 1 (เม.ย. 59)</span>
-          <h2>วารสารกฎหมาย ปี 27 ฉบับ 1 (2559)</h2>
-          <p>กฎหมายค้ำประกันและจำนองแก้ไขปรับปรุงใหม่ ข้อห้ามผู้ค้ำเป็นลูกหนี้ร่วมและการบอกกล่าว</p>
-        </div>
-        <div class="actions">
-          <a href="viewer.html?file=12_Journal_27_1_Apr59.pdf" class="btn btn-view"><i class="fas fa-eye"></i> เปิดอ่านในเว็บ</a>
-          <a href="summaries/journal_12_2559_1.md" class="btn btn-summary"><i class="fas fa-book"></i> อ่านสรุป</a>
-          <a href="raw/12_Journal_27_1_Apr59.pdf" class="btn btn-download" download><i class="fas fa-download"></i> โหลด PDF</a>
-        </div>
-      </div>
-
-      <!-- 13 -->
-      <div class="journal-card" data-title="วารสารปี 28 1 กย 59 2559 ตั๋วเงิน เช็ค">
-        <div>
-          <span class="card-tag">ปีที่ 28 ฉบับที่ 1 (ก.ย. 59)</span>
-          <h2>วารสารกฎหมาย ปี 28 ฉบับ 1 (2559)</h2>
-          <p>ตั๋วเงิน (ตั๋วแลกเงิน เช็ค) ความรับผิดของผู้สั่งจ่าย/ผู้สลักหลัง และความผิดเกี่ยวกับเช็ค</p>
-        </div>
-        <div class="actions">
-          <a href="viewer.html?file=13_Journal_28_1_Sep59.pdf" class="btn btn-view"><i class="fas fa-eye"></i> เปิดอ่านในเว็บ</a>
-          <a href="summaries/journal_13_2559_1.md" class="btn btn-summary"><i class="fas fa-book"></i> อ่านสรุป</a>
-          <a href="raw/13_Journal_28_1_Sep59.pdf" class="btn btn-download" download><i class="fas fa-download"></i> โหลด PDF</a>
-        </div>
-      </div>
-
-      <!-- 14 -->
-      <div class="journal-card" data-title="วารสารปี 28 1 เมย 60 2560 ลักทรัพย์ ชิงทรัพย์">
-        <div>
-          <span class="card-tag">ปีที่ 28 ฉบับที่ 1 (เม.ย. 60)</span>
-          <h2>วารสารกฎหมาย ปี 28 ฉบับ 1 (2560)</h2>
-          <p>ความผิดเกี่ยวกับทรัพย์: แยกแยะระหว่างลักทรัพย์ วิ่งพรวด ชิงทรัพย์ และปล้นทรัพย์</p>
-        </div>
-        <div class="actions">
-          <a href="viewer.html?file=14_Journal_28_1_Apr60.pdf" class="btn btn-view"><i class="fas fa-eye"></i> เปิดอ่านในเว็บ</a>
-          <a href="summaries/journal_14_2560_1.md" class="btn btn-summary"><i class="fas fa-book"></i> อ่านสรุป</a>
-          <a href="raw/14_Journal_28_1_Apr60.pdf" class="btn btn-download" download><i class="fas fa-download"></i> โหลด PDF</a>
-        </div>
-      </div>
-
-      <!-- 15 -->
-      <div class="journal-card" data-title="วารสารปี 29 1 กย 60 2560 ปรปักษ์ ภาระจำยอม">
-        <div>
-          <span class="card-tag">ปีที่ 29 ฉบับที่ 1 (ก.ย. 60)</span>
-          <h2>วารสารกฎหมาย ปี 29 ฉบับ 1 (2560)</h2>
-          <p>การครอบครองปรปักษ์อสังหาริมทรัพย์ 10 ปี (ม. 1382) และภาระจำยอมโดยอายุความ (ม. 1401)</p>
-        </div>
-        <div class="actions">
-          <a href="viewer.html?file=15_Journal_29_1_Sep60.pdf" class="btn btn-view"><i class="fas fa-eye"></i> เปิดอ่านในเว็บ</a>
-          <a href="summaries/journal_15_2560_1.md" class="btn btn-summary"><i class="fas fa-book"></i> อ่านสรุป</a>
-          <a href="raw/15_Journal_29_1_Sep60.pdf" class="btn btn-download" download><i class="fas fa-download"></i> โหลด PDF</a>
-        </div>
-      </div>
-
-      <!-- 16 -->
-      <div class="journal-card" data-title="วารสารปี 29 2 เมย 61 2561 หุ้นส่วน บริษัท">
-        <div>
-          <span class="card-tag">ปีที่ 29 ฉบับที่ 2 (เม.ย. 61)</span>
-          <h2>วารสารกฎหมาย ปี 29 ฉบับ 2 (2561)</h2>
-          <p>ห้างหุ้นส่วนและบริษัทจำกัด ความรับผิดของหุ้นส่วนผู้จัดการและกรรมการบริษัท</p>
-        </div>
-        <div class="actions">
-          <a href="viewer.html?file=16_Journal_29_2_Apr61.pdf" class="btn btn-view"><i class="fas fa-eye"></i> เปิดอ่านในเว็บ</a>
-          <a href="summaries/journal_16_2561_2.md" class="btn btn-summary"><i class="fas fa-book"></i> อ่านสรุป</a>
-          <a href="raw/16_Journal_29_2_Apr61.pdf" class="btn btn-download" download><i class="fas fa-download"></i> โหลด PDF</a>
-        </div>
-      </div>
-
-      <!-- 17 -->
-      <div class="journal-card" data-title="วารสารปี 30 1 กย 61 2561 วิแพ่ง ฟ้อง">
-        <div>
-          <span class="card-tag">ปีที่ 30 ฉบับที่ 1 (ก.ย. 61)</span>
-          <h2>วารสารกฎหมาย ปี 30 ฉบับ 1 (2561)</h2>
-          <p>กฎหมายวิธีพิจารณาความแพ่ง (วิ.แพ่ง) เขตอำนาจศาล คำฟ้อง คำให้การ การอุทธรณ์และฎีกา</p>
-        </div>
-        <div class="actions">
-          <a href="viewer.html?file=17_Journal_30_1_Sep61.pdf" class="btn btn-view"><i class="fas fa-eye"></i> เปิดอ่านในเว็บ</a>
-          <a href="summaries/journal_17_2561_1.md" class="btn btn-summary"><i class="fas fa-book"></i> อ่านสรุป</a>
-          <a href="raw/17_Journal_30_1_Sep61.pdf" class="btn btn-download" download><i class="fas fa-download"></i> โหลด PDF</a>
-        </div>
-      </div>
-
-      <!-- 18 -->
-      <div class="journal-card" data-title="วารสารปี 30 มย 62 2562 วิอาญา สอบสวน">
-        <div>
-          <span class="card-tag">ปีที่ 30 (มิ.ย. 62)</span>
-          <h2>วารสารกฎหมาย ปี 30 (2562)</h2>
-          <p>กฎหมายวิธีพิจารณาความอาญา (วิ.อาญา) อำนาจสอบสวน หมายจับหมายค้น การประกันตัว</p>
-        </div>
-        <div class="actions">
-          <a href="viewer.html?file=18_Journal_30_Jun62.pdf" class="btn btn-view"><i class="fas fa-eye"></i> เปิดอ่านในเว็บ</a>
-          <a href="summaries/journal_18_2562_jun.md" class="btn btn-summary"><i class="fas fa-book"></i> อ่านสรุป</a>
-          <a href="raw/18_Journal_30_Jun62.pdf" class="btn btn-download" download><i class="fas fa-download"></i> โหลด PDF</a>
-        </div>
-      </div>
-
-      <!-- 19 -->
-      <div class="journal-card" data-title="วารสารปี 31 กย 62 2562 พยานหลักฐาน">
-        <div>
-          <span class="card-tag">ปีที่ 31 (ก.ย. 62)</span>
-          <h2>วารสารกฎหมาย ปี 31 (2562)</h2>
-          <p>กฎหมายพยานหลักฐาน (Law of Evidence) ภาระการนำสืบ ข้อห้ามพยานบอกเล่า พยานเอกสาร</p>
-        </div>
-        <div class="actions">
-          <a href="viewer.html?file=19_Journal_31_Sep62.pdf" class="btn btn-view"><i class="fas fa-eye"></i> เปิดอ่านในเว็บ</a>
-          <a href="summaries/journal_19_2562_sep.md" class="btn btn-summary"><i class="fas fa-book"></i> อ่านสรุป</a>
-          <a href="raw/19_Journal_31_Sep62.pdf" class="btn btn-download" download><i class="fas fa-download"></i> โหลด PDF</a>
-        </div>
-      </div>
-
-      <!-- 20 -->
-      <div class="journal-card" data-title="วารสารปี 31 1 มค มิย 63 2563 ดิจิทัล">
-        <div>
-          <span class="card-tag">ปีที่ 31 ฉบับที่ 1 (ม.ค.-มิ.ย. 63)</span>
-          <h2>วารสารกฎหมาย ปี 31 ฉบับ 1 (2563)</h2>
-          <p>รวมบทความวิจัย วิเคราะห์ฎีกาเด่น กฎหมายดิจิทัลและพยานหลักฐานอิเล็กทรอนิกส์</p>
-        </div>
-        <div class="actions">
-          <a href="viewer.html?file=20_Journal_31_1_JanJun63.pdf" class="btn btn-view"><i class="fas fa-eye"></i> เปิดอ่านในเว็บ</a>
-          <a href="summaries/journal_20_2563_1.md" class="btn btn-summary"><i class="fas fa-book"></i> อ่านสรุป</a>
-          <a href="raw/20_Journal_31_1_JanJun63.pdf" class="btn btn-download" download><i class="fas fa-download"></i> โหลด PDF</a>
-        </div>
-      </div>
-
-      <!-- 21 -->
-      <div class="journal-card" data-title="วารสารอัต แพ่ง อาญา พา 1 รวมข้อสอบ อัตนัย">
-        <div>
-          <span class="card-tag" style="background: #fee2e2; color: #991b1b;"><i class="fas fa-pen-nib"></i> รวมข้อสอบอัตนัย</span>
-          <h2>วารสารอัต. แพ่ง อาญา พาณิชย์ 1</h2>
-          <p>รวมแนวข้อสอบอัตนัยตุ๊กตา แพ่ง อาญา พาณิชย์ พร้อมธงคำตอบ 3 สเต็ป มสธ.</p>
-        </div>
-        <div class="actions">
-          <a href="viewer.html?file=Journal_Subjective_Civil_Criminal_Commercial_1.pdf" class="btn btn-view"><i class="fas fa-eye"></i> เปิดอ่านในเว็บ</a>
-          <a href="summaries/journal_21_subjective.md" class="btn btn-summary"><i class="fas fa-book"></i> อ่านสรุป</a>
-          <a href="raw/Journal_Subjective_Civil_Criminal_Commercial_1.pdf" class="btn btn-download" download><i class="fas fa-download"></i> โหลด PDF</a>
-        </div>
-      </div>
-
+      <!-- Populated dynamically from JSON -->
     </div>
   </div>
 
   <footer>
-    <p>© มหาวิทยาลัยสุโขทัยธรรมาธิราช • คลังวารสารกฎหมายเพื่อประโยชน์ทางการศึกษา</p>
+    <p>คลังวารสารและวิเคราะห์ข้อสอบอัตนัย สาขาวิชานิติศาสตร์ มหาวิทยาลัยสุโขทัยธรรมาธิราช (STOU Law Journals)</p>
+    <p style="margin-top: 0.35rem; font-size: 0.8rem; color: var(--muted);">ออกแบบและจัดทำระบบเพื่อส่งเสริมการศึกษาและทบทวนเตรียมสอบอัตนัยของนักศึกษา มสธ.</p>
   </footer>
 
   <script>
-    function filterCards() {
-      const query = document.getElementById('searchInput').value.toLowerCase();
-      const cards = document.querySelectorAll('#journalGrid .journal-card');
-      
-      cards.forEach(card => {
-        const title = card.getAttribute('data-title') ? card.getAttribute('data-title').toLowerCase() : '';
-        const text = card.innerText.toLowerCase();
-        
-        if (title.includes(query) || text.includes(query)) {
-          card.style.display = 'flex';
-        } else {
-          card.style.display = 'none';
-        }
-      });
+    let allJournals = [];
+    let selectedSubject = 'all';
+
+    async function loadJournals() {
+      try {
+        const res = await fetch('data/journals_ocr.json');
+        allJournals = await res.json();
+        renderCards();
+      } catch (err) {
+        console.error('Error loading journals:', err);
+      }
     }
+
+    function renderCards() {
+      const grid = document.getElementById('journalGrid');
+      const searchTerm = document.getElementById('searchInput').value.trim().toLowerCase();
+
+      const filtered = allJournals.filter(j => {
+        // Subject Filter
+        if (selectedSubject !== 'all') {
+          const matchSubject = j.subjects.some(s => s.toLowerCase().includes(selectedSubject.toLowerCase()));
+          if (!matchSubject) return false;
+        }
+
+        // Search Term Filter
+        if (searchTerm) {
+          const titleMatch = j.title.toLowerCase().includes(searchTerm);
+          const periodMatch = j.period.toLowerCase().includes(searchTerm);
+          const highlightMatch = j.highlights.toLowerCase().includes(searchTerm);
+          const subjectsMatch = j.subjects.some(s => s.toLowerCase().includes(searchTerm));
+          const tagsMatch = j.tags.some(t => t.toLowerCase().includes(searchTerm));
+          const profMatch = j.sections.some(s => s.professor.toLowerCase().includes(searchTerm));
+          const qMatch = j.sections.some(s => s.question.toLowerCase().includes(searchTerm));
+
+          if (!titleMatch && !periodMatch && !highlightMatch && !subjectsMatch && !tagsMatch && !profMatch && !qMatch) {
+            return false;
+          }
+        }
+
+        return true;
+      });
+
+      if (filtered.length === 0) {
+        grid.innerHTML = `
+          <div style="grid-column: 1 / -1; text-align: center; padding: 4rem 1rem; color: var(--muted);">
+            <i class="fas fa-search" style="font-size: 2.5rem; margin-bottom: 1rem; opacity: 0.5;"></i>
+            <h3>ไม่พบวารสารที่ตรงกับคำค้นหา</h3>
+            <p>ลองพิมพ์คำค้นอื่น เช่น '156', 'ป้องกัน', 'แพ่ง 1' หรือเลือกหมวดหมู่อื่น</p>
+          </div>
+        `;
+        return;
+      }
+
+      grid.innerHTML = filtered.map(j => `
+        <article class="journal-card">
+          <div class="card-top">
+            <div class="meta-row">
+              <span class="period-badge">${j.period}</span>
+              <span class="file-badge">${j.filename}</span>
+            </div>
+            
+            <h2 class="card-title">${j.title}</h2>
+            
+            <div class="subject-badges">
+              ${j.subjects.map(s => `<span class="sub-badge" onclick="filterByBadge('${s}')"><i class="fas fa-balance-scale"></i> ${s}</span>`).join('')}
+            </div>
+
+            <p class="card-desc">${j.highlights}</p>
+
+            <div class="tag-chips">
+              ${j.tags.map(t => `<span class="tag-chip">${t}</span>`).join('')}
+            </div>
+          </div>
+
+          <div class="actions">
+            <a href="viewer.html?file=${j.filename}&view=split" class="btn btn-view" title="เปิดอ่าน Split View (PDF คู่ OCR)">
+              <i class="fas fa-columns"></i> เปิดอ่านคู่กัน
+            </a>
+            <a href="viewer.html?file=${j.filename}&view=ocr" class="btn btn-ocr" title="เปิดอ่านข้อสอบและถอดความ OCR เต็มจอ">
+              <i class="fas fa-book-open"></i> ถอดความ OCR
+            </a>
+            <a href="raw/${j.filename}" class="btn btn-download" download title="ดาวน์โหลด PDF ต้นฉบับ">
+              <i class="fas fa-download"></i> PDF
+            </a>
+          </div>
+        </article>
+      `).join('');
+    }
+
+    function setSubjectFilter(subject, btn) {
+      selectedSubject = subject;
+      document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
+      if (btn) btn.classList.add('active');
+      renderCards();
+    }
+
+    function filterByBadge(subject) {
+      selectedSubject = subject;
+      document.querySelectorAll('.filter-pill').forEach(p => {
+        p.classList.toggle('active', p.textContent.includes(subject));
+      });
+      renderCards();
+    }
+
+    function filterJournals() {
+      renderCards();
+    }
+
+    function toggleTheme() {
+      const root = document.documentElement;
+      const isDark = root.getAttribute('data-theme') === 'dark';
+      root.setAttribute('data-theme', isDark ? 'light' : 'dark');
+      document.getElementById('themeIcon').className = isDark ? 'fas fa-moon' : 'fas fa-sun';
+      localStorage.setItem('stou_theme', isDark ? 'light' : 'dark');
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      const savedTheme = localStorage.getItem('stou_theme');
+      if (savedTheme) {
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        document.getElementById('themeIcon').className = savedTheme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+      }
+      loadJournals();
+    });
   </script>
 </body>
 </html>

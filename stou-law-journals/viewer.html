@@ -3,424 +3,772 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>เปิดอ่านวารสารออนไลน์ - คลังวารสารกฎหมาย มสธ.</title>
+  <title>ระบบเปิดอ่านวารสารและวิเคราะห์ข้อสอบอัตนัย มสธ.</title>
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;600;700&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;500;600;700;800&family=Sarabun:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   
   <style>
     :root {
       --primary: #b45309;
+      --primary-hover: #92400e;
+      --primary-light: #fef3c7;
       --bg: #f8fafc;
       --card: #ffffff;
       --border: #cbd5e1;
       --text: #0f172a;
       --muted: #475569;
-      --font: 'Sarabun', sans-serif;
+      --success: #059669;
+      --warning: #d97706;
+      --danger: #dc2626;
+      --radius: 10px;
+      --font-base: 16px;
+      --font-body: 'Sarabun', sans-serif;
+      --font-heading: 'Prompt', sans-serif;
     }
+
     [data-theme="dark"] {
-      --bg: #0b0f19;
-      --card: #131b2e;
+      --bg: #0f172a;
+      --card: #1e293b;
       --border: #334155;
       --text: #f1f5f9;
       --muted: #94a3b8;
+      --primary-light: #78350f;
     }
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: var(--font); }
-    body, html { height: 100vh; overflow: hidden; background-color: var(--bg); color: var(--text); display: flex; flex-direction: column; }
-    
-    .top-bar { height: 60px; background-color: var(--card); border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; padding: 0 1.5rem; flex-shrink: 0; }
-    .nav-left { display: flex; align-items: center; gap: 1rem; }
-    .back-btn { display: inline-flex; align-items: center; gap: 0.5rem; color: var(--muted); text-decoration: none; font-weight: 600; padding: 0.4rem 0.8rem; border-radius: 6px; border: 1px solid var(--border); transition: all 0.2s; font-size: 0.9rem; }
-    .back-btn:hover { background-color: var(--bg); color: var(--text); }
-    .doc-title { font-weight: 700; font-size: 1.1rem; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 500px; }
-    
-    .nav-right { display: flex; align-items: center; gap: 0.75rem; }
-    .view-btn { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.4rem 0.8rem; border-radius: 6px; border: 1px solid var(--border); background-color: var(--bg); color: var(--text); text-decoration: none; font-weight: 600; font-size: 0.85rem; cursor: pointer; transition: all 0.2s; }
-    .view-btn:hover, .view-btn.active { background-color: var(--primary); color: #fff; border-color: var(--primary); }
-    
-    .content-area { flex: 1; display: flex; height: calc(100vh - 60px); overflow: hidden; }
-    .pdf-pane { flex: 1; height: 100%; border-right: 1px solid var(--border); background-color: #525659; }
-    .pdf-pane iframe, .pdf-pane object { width: 100%; height: 100%; border: none; }
-    
-    .summary-pane { width: 460px; height: 100%; background-color: var(--card); overflow-y: auto; padding: 1.75rem; display: flex; flex-direction: column; flex-shrink: 0; }
-    .summary-pane h2 { font-size: 1.25rem; font-weight: 700; margin-bottom: 1rem; color: var(--primary); border-bottom: 2px solid var(--primary); padding-bottom: 0.5rem; }
-    .summary-content { font-size: 0.95rem; line-height: 1.7; color: var(--text); }
-    .summary-content h3 { font-size: 1.05rem; margin-top: 1.25rem; margin-bottom: 0.5rem; font-weight: 700; }
-    .summary-content ul { padding-left: 1.2rem; margin-bottom: 1rem; }
-    .summary-content li { margin-bottom: 0.4rem; }
-    .badge-year { display: inline-block; padding: 0.2rem 0.6rem; border-radius: 6px; font-size: 0.8rem; font-weight: 700; background: #fef3c7; color: #92400e; margin-bottom: 0.75rem; }
-    .key-box { background: #f8fafc; border-left: 4px solid var(--primary); padding: 0.85rem; border-radius: 4px; margin-bottom: 1rem; }
-    
-    @media (max-width: 850px) {
-      .summary-pane { display: none; }
-      .doc-title { max-width: 250px; }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body, html {
+      height: 100vh;
+      overflow: hidden;
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      font-size: var(--font-base);
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Top Navigation Bar */
+    .top-bar {
+      height: 64px;
+      background-color: var(--card);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 1.25rem;
+      flex-shrink: 0;
+      gap: 1rem;
+      z-index: 10;
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      min-width: 0;
+    }
+
+    .btn-nav {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      color: var(--muted);
+      text-decoration: none;
+      font-weight: 600;
+      padding: 0.45rem 0.85rem;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background-color: var(--card);
+      transition: all 0.2s;
+      font-size: 0.88rem;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .btn-nav:hover { background-color: var(--bg); color: var(--text); border-color: var(--muted); }
+    .btn-nav.primary { background-color: var(--primary); color: #ffffff; border-color: var(--primary); }
+    .btn-nav.primary:hover { background-color: var(--primary-hover); }
+
+    .issue-selector {
+      background-color: var(--bg);
+      color: var(--text);
+      border: 1px solid var(--border);
+      padding: 0.45rem 0.85rem;
+      border-radius: 8px;
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      max-width: 320px;
+      outline: none;
+    }
+    .issue-selector:focus { border-color: var(--primary); }
+
+    .nav-center {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .mode-switch-group {
+      display: flex;
+      background-color: var(--bg);
+      padding: 3px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+    }
+    .mode-btn {
+      padding: 0.35rem 0.75rem;
+      border: none;
+      background: transparent;
+      color: var(--muted);
+      font-size: 0.82rem;
+      font-weight: 600;
+      border-radius: 6px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: all 0.15s ease;
+    }
+    .mode-btn.active {
+      background-color: var(--card);
+      color: var(--primary);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    /* Content Area */
+    .content-area {
+      flex: 1;
+      display: flex;
+      height: calc(100vh - 64px);
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Left: PDF Container */
+    .pdf-pane {
+      flex: 1;
+      height: 100%;
+      background-color: #525659;
+      position: relative;
+      transition: all 0.25s ease;
+    }
+    .pdf-pane object, .pdf-pane iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+    .pdf-fallback {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      color: #ffffff;
+      padding: 2rem;
+      text-align: center;
+    }
+    .pdf-fallback a {
+      color: #38bdf8;
+      margin-top: 1rem;
+      font-size: 1.1rem;
+      text-decoration: underline;
+    }
+
+    /* Right: OCR Reader Pane */
+    .ocr-pane {
+      width: 540px;
+      height: 100%;
+      background-color: var(--card);
+      border-left: 1px solid var(--border);
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      transition: all 0.25s ease;
+      flex-shrink: 0;
+    }
+
+    /* View Modes Layout */
+    .mode-split .pdf-pane { flex: 1; display: block; }
+    .mode-split .ocr-pane { width: 560px; display: flex; }
+
+    .mode-ocr .pdf-pane { display: none; }
+    .mode-ocr .ocr-pane { width: 100%; max-width: 900px; margin: 0 auto; border-left: none; border-right: none; }
+
+    .mode-pdf .pdf-pane { flex: 1; display: block; }
+    .mode-pdf .ocr-pane { display: none; }
+
+    /* OCR Pane Header & Tools */
+    .ocr-header {
+      padding: 1.25rem 1.5rem;
+      border-bottom: 1px solid var(--border);
+      background-color: var(--card);
+      position: sticky;
+      top: 0;
+      z-index: 5;
+    }
+    .ocr-title-bar {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 0.75rem;
+    }
+    .ocr-title {
+      font-family: var(--font-heading);
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.4;
+    }
+    .ocr-tools {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+    .search-box {
+      flex: 1;
+      position: relative;
+      min-width: 180px;
+    }
+    .search-box input {
+      width: 100%;
+      padding: 0.4rem 0.8rem 0.4rem 2rem;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background-color: var(--bg);
+      color: var(--text);
+      font-size: 0.85rem;
+      outline: none;
+    }
+    .search-box input:focus { border-color: var(--primary); }
+    .search-box i {
+      position: absolute;
+      left: 0.7rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--muted);
+      font-size: 0.8rem;
+    }
+
+    /* OCR Content Styles */
+    .ocr-body {
+      padding: 1.5rem;
+      overflow-y: auto;
+      flex: 1;
+      line-height: 1.75;
+    }
+
+    .issue-info-box {
+      background-color: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.25rem;
+      margin-bottom: 1.75rem;
+    }
+    .issue-meta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 0.75rem;
+    }
+    .badge-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 0.25rem 0.6rem;
+      border-radius: 6px;
+      background-color: var(--primary-light);
+      color: var(--primary);
+    }
+    .badge-gray {
+      background-color: var(--card);
+      border: 1px solid var(--border);
+      color: var(--muted);
+    }
+
+    .section-card {
+      background-color: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      margin-bottom: 1.75rem;
+      overflow: hidden;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+    }
+    .section-header {
+      background: linear-gradient(135deg, rgba(180, 83, 9, 0.08), rgba(180, 83, 9, 0.02));
+      border-bottom: 1px solid var(--border);
+      padding: 1.25rem 1.5rem;
+    }
+    .subject-title {
+      font-family: var(--font-heading);
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+      margin-bottom: 0.35rem;
+    }
+    .professor-name {
+      font-size: 0.88rem;
+      color: var(--muted);
+      font-weight: 500;
+    }
+
+    .section-content {
+      padding: 1.5rem;
+    }
+
+    .block-box {
+      margin-bottom: 1.5rem;
+    }
+    .block-label {
+      font-family: var(--font-heading);
+      font-size: 0.95rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      color: var(--text);
+    }
+
+    .question-box {
+      background-color: var(--bg);
+      border-left: 4px solid var(--primary);
+      padding: 1rem 1.25rem;
+      border-radius: 0 8px 8px 0;
+      font-size: 0.96rem;
+      line-height: 1.75;
+    }
+
+    .legal-box {
+      background-color: rgba(5, 150, 105, 0.06);
+      border-left: 4px solid var(--success);
+      padding: 1rem 1.25rem;
+      border-radius: 0 8px 8px 0;
+      font-size: 0.95rem;
+    }
+    .legal-box ul { padding-left: 1.25rem; margin-top: 0.4rem; }
+    .legal-box li { margin-bottom: 0.4rem; }
+
+    .analysis-box {
+      background-color: var(--card);
+      border: 1px solid var(--border);
+      padding: 1.25rem;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      line-height: 1.8;
+    }
+
+    .conclusion-box {
+      background-color: rgba(30, 58, 138, 0.05);
+      border-left: 4px solid #1e3a8a;
+      padding: 1rem 1.25rem;
+      border-radius: 0 8px 8px 0;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .pitfall-box {
+      background-color: rgba(220, 38, 38, 0.06);
+      border: 1px solid rgba(220, 38, 38, 0.3);
+      border-radius: 8px;
+      padding: 1rem 1.25rem;
+      font-size: 0.92rem;
+      color: var(--text);
+    }
+    .pitfall-box .block-label { color: var(--danger); }
+
+    .tip-box {
+      background-color: rgba(217, 119, 6, 0.06);
+      border: 1px solid rgba(217, 119, 6, 0.3);
+      border-radius: 8px;
+      padding: 1rem 1.25rem;
+      font-size: 0.92rem;
+      color: var(--text);
+    }
+    .tip-box .block-label { color: var(--warning); }
+
+    /* Toast Notification */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background-color: #0f172a;
+      color: #ffffff;
+      padding: 0.75rem 1.25rem;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      box-shadow: 0 10px 15px -3px rgba(0,0,0,0.2);
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      z-index: 100;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: all 0.25s ease;
+      pointer-events: none;
+    }
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 950px) {
+      .top-bar { flex-wrap: wrap; height: auto; padding: 0.75rem 1rem; }
+      .nav-center { order: 3; width: 100%; justify-content: center; }
+      .mode-split .ocr-pane { width: 50%; }
+    }
+    @media (max-width: 700px) {
+      .mode-split .pdf-pane { display: none; }
+      .mode-split .ocr-pane { width: 100%; border-left: none; }
     }
   </style>
 </head>
 <body>
 
-  <div class="top-bar">
+  <!-- Top Bar -->
+  <header class="top-bar">
     <div class="nav-left">
-      <a href="index.html" class="back-link back-btn">
-        <i class="fas fa-arrow-left"></i> กลับคลังวารสาร
+      <a href="index.html" class="btn-nav" title="กลับไปหน้ารวมวารสาร">
+        <i class="fas fa-arrow-left"></i> <span>คลังวารสาร</span>
       </a>
-      <span class="doc-title" id="docTitle">เปิดอ่านวารสารออนไลน์</span>
+      
+      <select id="issueSelector" class="issue-selector" onchange="switchIssue(this.value)" title="เลือกฉบับวารสาร">
+        <!-- Filled dynamically -->
+      </select>
     </div>
-    
-    <div class="nav-right">
-      <button class="view-btn" id="btnToggleSide" onclick="toggleSummaryPane()"><i class="fas fa-columns"></i> <span id="toggleText">ซ่อนแถบสรุป</span></button>
-      <a href="#" id="downloadLink" class="view-btn" download><i class="fas fa-download"></i> ดาวน์โหลด PDF</a>
-      <a href="#" id="openNewTabLink" class="view-btn" target="_blank"><i class="fas fa-external-link-alt"></i> เปิดแท็บใหม่</a>
-    </div>
-  </div>
 
-  <div class="content-area">
-    <div class="pdf-pane">
-      <object id="pdfObject" data="" type="application/pdf">
-        <p>เบราว์เซอร์ของคุณไม่รองรับการแสดงผล PDF แบบฝัง <a id="fallbackLink" href="#">คลิกที่นี่เพื่อเปิดอ่านไฟล์ PDF ในแท็บใหม่</a></p>
-      </object>
-    </div>
-    
-    <div class="summary-pane" id="summaryPane">
-      <h2><i class="fas fa-bookmark"></i> สรุปและไฮไลท์ประจำฉบับ</h2>
-      <div class="summary-content" id="summaryBox">
-        <p>กำลังโหลดข้อมูลสรุปประจำฉบับ...</p>
+    <div class="nav-center">
+      <div class="mode-switch-group">
+        <button class="mode-btn active" id="btnSplit" onclick="setMode('split')">
+          <i class="fas fa-columns"></i> <span>แสดงคู่กัน (PDF + OCR)</span>
+        </button>
+        <button class="mode-btn" id="btnOcr" onclick="setMode('ocr')">
+          <i class="fas fa-book-open"></i> <span>อ่านถอดความ OCR</span>
+        </button>
+        <button class="mode-btn" id="btnPdf" onclick="setMode('pdf')">
+          <i class="fas fa-file-pdf"></i> <span>PDF เต็มจอ</span>
+        </button>
       </div>
     </div>
+
+    <div class="nav-right">
+      <button class="btn-nav" onclick="copyAllOcr()" title="คัดลอกข้อสอบและธงคำตอบทั้งหมด">
+        <i class="fas fa-copy"></i> <span>คัดลอกข้อสอบ</span>
+      </button>
+      <button class="btn-nav" onclick="adjustFontSize(-1)" title="ลดขนาดตัวอักษร">A-</button>
+      <button class="btn-nav" onclick="adjustFontSize(1)" title="เพิ่มขนาดตัวอักษร">A+</button>
+      <button class="btn-nav" onclick="toggleTheme()" title="สลับโหมดกลางวัน/กลางคืน">
+        <i class="fas fa-moon" id="themeIcon"></i>
+      </button>
+      <a href="#" id="downloadBtn" class="btn-nav primary" download title="ดาวน์โหลดไฟล์ PDF ต้นฉบับ">
+        <i class="fas fa-download"></i> <span>PDF</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- Main Content Layout -->
+  <main class="content-area mode-split" id="mainContainer">
+    <!-- PDF Viewer Pane -->
+    <section class="pdf-pane" id="pdfPane">
+      <object id="pdfViewer" data="" type="application/pdf">
+        <div class="pdf-fallback">
+          <h3>เบราว์เซอร์หรืออุปกรณ์ของคุณไม่รองรับการแสดงตัวอย่าง PDF ในหน้านี้</h3>
+          <p>ท่านสามารถเปิดอ่านเนื้อหาถอดความ OCR ทางแถบขวา หรือคลิกปุ่มด้านล่างเพื่อเปิดอ่าน PDF ในแท็บใหม่</p>
+          <a id="fallbackLink" href="#" target="_blank"><i class="fas fa-external-link-alt"></i> เปิดไฟล์ PDF ในหน้าต่างใหม่</a>
+        </div>
+      </object>
+    </section>
+
+    <!-- OCR Reader Pane -->
+    <section class="ocr-pane" id="ocrPane">
+      <div class="ocr-header">
+        <div class="ocr-title-bar">
+          <h2 class="ocr-title" id="ocrIssueTitle">กำลังโหลดเนื้อหา...</h2>
+        </div>
+        <div class="ocr-tools">
+          <div class="search-box">
+            <i class="fas fa-search"></i>
+            <input type="text" id="ocrSearchInput" placeholder="ค้นหาข้อสอบ, มาตรา, หรือเนื้อหา..." oninput="filterOcrContent(this.value)">
+          </div>
+        </div>
+      </div>
+
+      <div class="ocr-body" id="ocrBody">
+        <!-- Populated dynamically -->
+      </div>
+    </section>
+  </main>
+
+  <!-- Toast Notification -->
+  <div class="toast" id="toastBox">
+    <i class="fas fa-check-circle" style="color: #10b981;"></i>
+    <span id="toastMsg">คัดลอกข้อความสำเร็จ</span>
   </div>
 
   <script>
-    const itemsMap = {
-      "0_Ch2_2544.pdf": {
-        name: "วารสารกฎหมาย ฉบับที่ 2 (2544)",
-        year: "พ.ศ. 2544",
-        summary: "journal_0_2544.md",
-        topic: "บทความวิเคราะห์กฎหมายมหาชน หลักการตีความกฎหมาย และการควบคุมการใช้อำนาจดุลพินิจทางปกครอง",
-        highlights: [
-          "หลักความชอบด้วยกฎหมายของการกระทำทางปกครอง (Principle of Legality)",
-          "การควบคุมดุลพินิจฝ่ายปกครองภายใต้หลักความได้สัดส่วนและความเสมอภาค",
-          "เงื่อนไขการฟ้องคดีต่อศาลปกครองกรณีเจ้าหน้าที่ละเว้นการปฏิบัติหน้าที่"
-        ],
-        examPoints: "วิเคราะห์ความชอบด้วยกฎหมายของคำสั่งทางปกครอง และลำดับศักดิ์ของกฎหมาย"
-      },
-      "1_Journal_22_1_Jun53.pdf": {
-        name: "วารสารกฎหมาย ปี 22 ฉบับ 1 (มิ.ย. 53)",
-        year: "พ.ศ. 2553 (มิ.ย.)",
-        summary: "journal_1_2553_1.md",
-        topic: "ความรับผิดทางละเมิดของเจ้าหน้าที่ (พ.ร.บ. 2539) สิทธิการไล่เบี้ย และอายุความการฟ้องคดี",
-        highlights: [
-          "ละเมิดในการปฏิบัติหน้าที่ (ม. 5) -> ผู้เสียหายต้องฟ้องหน่วยงานของรัฐ ห้ามฟ้องตัวเจ้าหน้าที่",
-          "ละเมิดส่วนตัว (ม. 6) -> ผู้เสียหายต้องฟ้องตัวเจ้าหน้าที่เป็นการส่วนตัว",
-          "สิทธิไล่เบี้ยของหน่วยงานรัฐ (ม. 8) -> ทำได้เฉพาะกรณีจงใจหรือประมาทเลินเล่ออย่างร้ายแรงเท่านั้น",
-          "อายุความไล่เบี้ย 1 ปีนับแต่วันที่หน่วยงานรัฐได้ชดใช้ค่าสินไหมทดแทน (ม. 10)"
-        ],
-        examPoints: "ออกสอบอัตนัยบ่อยมาก: วินิจฉัยขับรถหลวงไปทำงานแล้วชนคน vs นำรถหลวงไปใช้ส่วนตัว"
-      },
-      "2_Journal_22_2_Dec53.pdf": {
-        name: "วารสารกฎหมาย ปี 22 ฉบับ 2 (ธ.ค. 53)",
-        year: "พ.ศ. 2553 (ธ.ค.)",
-        summary: "journal_2_2553_2.md",
-        topic: "พ.ร.บ. ข้อสัญญาไม่เป็นธรรม พ.ศ. 2540 สัญญาสำเร็จรูป และการจำนองประกันหนี้บุคคลอื่น",
-        highlights: [
-          "สัญญามาตรฐาน: ข้อสัญญายกเว้นหรือจำกัดความรับผิดบังคับได้เท่าที่เป็นธรรมและพอสมควร",
-          "อำนาจศาลในการปรับลดเบี้ยปรับหรือเงินมัดจำที่กำหนดไว้สูงเกินส่วน",
-          "การจำนองประกันหนี้บุคคลอื่น: ผู้จำนองรับผิดจำกัดเฉพาะทรัพย์ที่จำนอง"
-        ],
-        examPoints: "การวินิจฉัยข้อสัญญาสำเร็จรูปในธุรกิจเช่าซื้อและสินเชื่อธนาคาร"
-      },
-      "3_Journal_23_1_Jun54.pdf": {
-        name: "วารสารกฎหมาย ปี 23 ฉบับ 1 (มิ.ย. 54)",
-        year: "พ.ศ. 2554 (มิ.ย.)",
-        summary: "journal_3_2554_1.md",
-        topic: "โครงสร้างความรับผิดทางอาญา: เจตนาประสงค์ต่อผล เจตนาเล็งเห็นผล และความประมาทเลินเล่อ",
-        highlights: [
-          "โครงสร้าง 3 สเต็ป: ครบองค์ประกอบ -> ไม่มีกฎหมายยกเว้นความผิด -> ไม่มีกฎหมายยกเว้นโทษ",
-          "เจตนาประสงค์ต่อผล vs เจตนาเล็งเห็นผลตาม ป.อ. มาตรา 59 วรรคสอง",
-          "ความสัมพันธ์ระหว่างการกระทำและผล (ทฤษฎีเงื่อนไขและทฤษฎีผลอันสมควร)"
-        ],
-        examPoints: "ชุดวิชา 41516 อาญา 1: วินิจฉัยการใช้อาวุธปืนยิงเข้าไปในกลุ่มคน หรือการงดเว้นการปฏิบัติหน้าที่"
-      },
-      "4_Journal_23_2_Dec54.pdf": {
-        name: "วารสารกฎหมาย ปี 23 ฉบับ 2 (ธ.ค. 54)",
-        year: "พ.ศ. 2554 (ธ.ค.)",
-        summary: "journal_4_2554_2.md",
-        topic: "สิทธิครอบครองและกรรมสิทธิ์ในอสังหาริมทรัพย์ ตาม ป.พ.พ. มาตรา 1299 และที่ดินมือเปล่า น.ส.3",
-        highlights: [
-          "การได้มาทางนิติกรรม (ม. 1299 วรรคหนึ่ง) ไม่จดทะเบียน -> เป็นบุคคลสิทธิ ไม่บริบูรณ์เป็นทรัพยสิทธิ",
-          "การได้มาโดยทางอื่น (ม. 1299 วรรคสอง) -> บริบูรณ์ แต่สู้บุคคลภายนอกผู้สุจริต เสียค่าตอบแทน และจดทะเบียนแล้วไม่ได้",
-          "ที่ดินมือเปล่าโอนกันได้โดยการส่งมอบ และการแย่งการครอบครองต้องฟ้องภายใน 1 ปี (ม. 1375)"
-        ],
-        examPoints: "ข้อสอบอัตนัยกฎหมายทรัพย์สิน: แย่งการครอบครอง และการคุ้มครองบุคคลภายนอกตาม ม. 1299"
-      },
-      "5_Journal_24_1_Jun55.pdf": {
-        name: "วารสารกฎหมาย ปี 24 ฉบับ 1 (มิ.ย. 55)",
-        year: "พ.ศ. 2555 (มิ.ย.)",
-        summary: "journal_5_2555_1.md",
-        topic: "ความรับผิดอันเกิดจากยานพาหนะอันเดินด้วยกำลังเครื่องจักร (ป.พ.พ. ม. 437) และเหตุสุดวิสัย",
-        highlights: [
-          "ความรับผิดเด็ดขาด (Strict Liability): ผู้ควบคุมดูแลยานพาหนะต้องรับผิดโดยไม่ต้องพิสูจน์ความประมาท",
-          "ข้อแก้ตัวพ้นผิด: มีเพียง 2 กรณีคือ เหตุสุดวิสัย หรือ ความผิดของผู้เสียหายเอง",
-          "ความรับผิดร่วมกันของผู้ร่วมกระทำละเมิดตามมาตรา 432"
-        ],
-        examPoints: "วินิจฉัยข้ออ้างเหตุสุดวิสัย (ยางระเบิด พวงมาลัยล็อก) ไม่ถือเป็นเหตุสุดวิสัย"
-      },
-      "6_Journal_24_2_Dec55.pdf": {
-        name: "วารสารกฎหมาย ปี 24 ฉบับ 2 (ธ.ค. 55)",
-        year: "พ.ศ. 2555 (ธ.ค.)",
-        summary: "journal_6_2555_2.md",
-        topic: "การเลิกสัญญาและผลของการกลับคืนสู่ฐานะเดิม ตาม ป.พ.พ. มาตรา 386 - 391",
-        highlights: [
-          "การบอกเลิกสัญญาเมื่อลูกหนี้ผิดนัด (ม. 387) ต้องบอกกล่าวให้ชำระหนี้ภายในเวลาอันสมควรก่อน",
-          "ผลของการเลิกสัญญา (ม. 391): ให้อีกฝ่ายกลับคืนสู่ฐานะเดิม คืนเงินพร้อมดอกเบี้ยนับแต่วันรับเงิน",
-          "การบอกเลิกสัญญาไม่กระทบสิทธิเรียกร้องค่าเสียหายเพิ่มเติม (ม. 391 วรรคสี่)"
-        ],
-        examPoints: "สัญญาก่อสร้างหรือซื้อขายบ้านจัดสรรล่าช้า การบอกเลิกสัญญาและการเรียกเงินคืนพร้อมค่าเสียหาย"
-      },
-      "7_Journal_25_1_Jun56.pdf": {
-        name: "วารสารกฎหมาย ปี 25 ฉบับ 1 (มิ.ย. 56)",
-        year: "พ.ศ. 2556 (มิ.ย.)",
-        summary: "journal_7_2556_1.md",
-        topic: "ผลของโมฆะกรรมและโมฆียะกรรม สิทธิการบอกล้างนิติกรรมของผู้เยาว์และผู้ถูกกลฉ้อฉล",
-        highlights: [
-          "โมฆะ (ม. 150-156): เสียเปล่ามาแต่แรก ไม่อาจให้สัตยาบันได้",
-          "โมฆียะ (ม. 157, 159, 164): สมบูรณ์จนกว่าจะถูกบอกล้าง เมื่อบอกล้างแล้วเป็นโมฆะแต่เริ่มแรก (ม. 176)",
-          "สิทธิบอกล้างของผู้แทนโดยชอบธรรม (ม. 175) ภายใน 1 ปี หรือไม่เกิน 10 ปี (ม. 181)"
-        ],
-        examPoints: "ชุดวิชา 41211 แพ่ง 1: นิติกรรมของผู้เยาว์ นิติกรรมอำพราง และการบอกล้างโมฆียะกรรม"
-      },
-      "8_Journal_25_2_Dec56.pdf": {
-        name: "วารสารกฎหมาย ปี 25 ฉบับ 2 (ธ.ค. 56)",
-        year: "พ.ศ. 2556 (ธ.ค.)",
-        summary: "journal_8_2556_2.md",
-        topic: "เหตุพ้นผิดและเหตุยกเว้นโทษทางอาญา: การป้องกันโดยชอบด้วยกฎหมาย (ม. 68) และความจำเป็น (ม. 67)",
-        highlights: [
-          "การป้องกัน (ม. 68): ภยันตรายใกล้จะถึง จำต้องกระทำ พอสมควรแก่เหตุ -> ไม่มีความผิด",
-          "ความจำเป็น (ม. 67): อยู่ภายใต้อำนาจบังคับหรือเพื่อให้พ้นภัย -> มีความผิดแต่ไม่ต้องรับโทษ",
-          "การป้องกันเกินสมควรแก่เหตุ (ม. 69): ศาลลงโทษน้อยกว่าที่กฎหมายกำหนด หรือไม่ลงโทษเลยก็ได้"
-        ],
-        examPoints: "ข้อสอบอัตนัยอาญา 1: วินิจฉัยคนร้ายบุกรุกเข้าบ้านยามวิกาล หรือการวิวาทที่ไม่สามารถอ้างป้องกันได้"
-      },
-      "9_Journal_26_1_Jun57.pdf": {
-        name: "วารสารกฎหมาย ปี 26 ฉบับ 1 (มิ.ย. 57)",
-        year: "พ.ศ. 2557 (มิ.ย.)",
-        summary: "journal_9_2557_1.md",
-        topic: "การโอนสิทธิเรียกร้อง (ม. 306) และการรับช่วงสิทธิของบุคคลผู้มีส่วนได้เสีย (ม. 226)",
-        highlights: [
-          "แบบการโอนสิทธิเรียกร้อง: ต้องทำเป็นหนังสือระหว่างผู้โอนและผู้รับโอน",
-          "การยกขึ้นต่อสู้ลูกหนี้: ต้องบอกกล่าวเป็นหนังสือ หรือลูกหนี้ยินยอมเป็นหนังสือ (ม. 306)",
-          "ข้อต่อสู้ของลูกหนี้ที่มีต่อผู้โอนสามารถนำมาต่อสู้ผู้รับโอนได้ (ม. 308)"
-        ],
-        examPoints: "ลูกหนี้ชำระหนี้ให้เจ้าหนี้เดิมก่อนได้รับคำบอกกล่าว หนี้ระงับ ผู้รับโอนฟ้องซ้ำไม่ได้"
-      },
-      "10_Journal_26_2_Dec57.pdf": {
-        name: "วารสารกฎหมาย ปี 26 ฉบับ 2 (ธ.ค. 57)",
-        year: "พ.ศ. 2557 (ธ.ค.)",
-        summary: "journal_10_2557_2.md",
-        topic: "สัญญากู้ยืมเงิน หลักฐานเป็นหนังสือ การคิดดอกเบี้ยเกินอัตราและผลในทางกฎหมาย",
-        highlights: [
-          "การกู้ยืมเงินกว่า 2,000 บาท ต้องมีหลักฐานเป็นหนังสือลงลายมือชื่อผู้ยืม (ม. 653 วรรคหนึ่ง)",
-          "การนำสืบการชำระเงินกู้คืน 3 วิธีตามมาตรา 653 วรรคสอง",
-          "ดอกเบี้ยเกินอัตรา (เกินร้อยละ 15 ต่อปี): ข้อตกลงดอกเบี้ยเป็นโมฆะทั้งหมด ฟ้องเรียกได้เฉพาะเงินต้น"
-        ],
-        examPoints: "ข้อสอบอัตนัยเอกเทศสัญญา 1: ดอกเบี้ยเกินอัตรา และการนำเงินดอกเบี้ยที่จ่ายไปแล้วมาหักเงินต้น"
-      },
-      "11_Journal_27_1_Sep58.pdf": {
-        name: "วารสารกฎหมาย ปี 27 ฉบับ 1 (ก.ย. 58)",
-        year: "พ.ศ. 2558 (ก.ย.)",
-        summary: "journal_11_2558_1.md",
-        topic: "เหตุบันดาลโทสะทางอาญา (ป.อ. มาตรา 72) การข่มเหงอย่างร้ายแรงด้วยเหตุอันไม่เป็นธรรม",
-        highlights: [
-          "องค์ประกอบ 3 ข้อ: ถูกข่มเหงร้ายแรงด้วยเหตุไม่เป็นธรรม + กระทำต่อผู้ข่มเหง + ในทันทีทันใด",
-          "ผลทางกฎหมาย: มีความผิด แต่เป็นเหตุลดโทษตามดุลพินิจของศาล",
-          "ข้อแตกต่างจากป้องกัน: บันดาลโทสะเกิดขึ้นหลังจากภยันตรายหรือการข่มเหงได้ผ่านพ้นไปแล้ว"
-        ],
-        examPoints: "ข้อสอบอัตนัยอาญา 1: การตอบโต้หลังถูกด่าทอบุพการีอย่างร้ายแรง และการทิ้งช่วงเวลาจนหมดบันดาลโทสะ"
-      },
-      "12_Journal_27_1_Apr59.pdf": {
-        name: "วารสารกฎหมาย ปี 27 ฉบับ 1 (เม.ย. 59)",
-        year: "พ.ศ. 2559 (เม.ย.)",
-        summary: "journal_12_2559_1.md",
-        topic: "กฎหมายค้ำประกันและจำนองแก้ไขปรับปรุงใหม่ ข้อห้ามผู้ค้ำเป็นลูกหนี้ร่วมและการบอกกล่าว",
-        highlights: [
-          "ห้ามผู้ค้ำประกันบุคคลธรรมดาตกลงรับผิดอย่างลูกหนี้ร่วม ข้อตกลงนั้นเป็นโมฆะ (ม. 681/1)",
-          "เจ้าหนี้ต้องส่งหนังสือบอกกล่าวแก่ผู้ค้ำประกันภายใน 60 วันนับแต่ลูกหนี้ผิดนัด (ม. 686)",
-          "หากพ้น 60 วัน ผู้ค้ำประกันหลุดพ้นจากดอกเบี้ยและค่าอุปกรณ์ที่เกิดขึ้นภายหลัง"
-        ],
-        examPoints: "ข้อสอบอัตนัยค้ำประกัน: การหลุดพ้นจากดอกเบี้ยของผู้ค้ำประกันเมื่อเจ้าหนี้ไม่แจ้งภายใน 60 วัน"
-      },
-      "13_Journal_28_1_Sep59.pdf": {
-        name: "วารสารกฎหมาย ปี 28 ฉบับ 1 (ก.ย. 59)",
-        year: "พ.ศ. 2559 (ก.ย.)",
-        summary: "journal_13_2559_1.md",
-        topic: "ตั๋วเงิน (ตั๋วแลกเงิน เช็ค) ความรับผิดของผู้สั่งจ่าย/ผู้สลักหลัง และความผิดเกี่ยวกับเช็ค",
-        highlights: [
-          "ความรับผิดของผู้สั่งจ่ายและผู้สลักหลังในตั๋วเงินเมื่อตั๋วขาดความเชื่อถือ",
-          "การยื่นเช็คให้ธนาคารจ่ายเงินภายในกำหนดเวลา (1 เดือน หรือ 3 เดือน)",
-          "พ.ร.บ. เช็คฯ: การออกเช็คประกันหนี้หรือไม่มีหนี้จริง ไม่เป็นความผิดทางอาญา"
-        ],
-        examPoints: "การไล่เบี้ยตามตั๋วเงิน การสลักหลังเฉพาะ vs สลักหลังลอย และอายุความฟ้องไล่เบี้ย"
-      },
-      "14_Journal_28_1_Apr60.pdf": {
-        name: "วารสารกฎหมาย ปี 28 ฉบับ 1 (เม.ย. 60)",
-        year: "พ.ศ. 2560 (เม.ย.)",
-        summary: "journal_14_2560_1.md",
-        topic: "ความผิดเกี่ยวกับทรัพย์: แยกแยะระหว่างลักทรัพย์ วิ่งพรวด ชิงทรัพย์ และปล้นทรัพย์",
-        highlights: [
-          "ลักทรัพย์ (ม. 334): เอาไปโดยทุจริต + วิ่งราวทรัพย์ (ม. 336): ฉกฉวยเอาซึ่งหน้า",
-          "ชิงทรัพย์ (ม. 339): ลักทรัพย์ + ใช้กำลังประทุษร้ายหรือขู่เข็ญในทันใดนั้นเพื่อความสะดวกหรือหลบหนี",
-          "ปล้นทรัพย์ (ม. 340): ชิงทรัพย์ร่วมกันตั้งแต่ 3 คนขึ้นไป"
-        ],
-        examPoints: "ข้อสอบอัตนัยอาญา ภาคความผิด: ชกต่อยเจ้าของทรัพย์เพื่อเอาทรัพย์วิ่งหนี จัดเป็นชิงทรัพย์"
-      },
-      "15_Journal_29_1_Sep60.pdf": {
-        name: "วารสารกฎหมาย ปี 29 ฉบับ 1 (ก.ย. 60)",
-        year: "พ.ศ. 2560 (ก.ย.)",
-        summary: "journal_15_2560_1.md",
-        topic: "การครอบครองปรปักษ์อสังหาริมทรัพย์ 10 ปี (ม. 1382) และภาระจำยอมโดยอายุความ (ม. 1401)",
-        highlights: [
-          "ครอบครองปรปักษ์: อสังหาริมทรัพย์มีโฉนด + โดยสงบ + เปิดเผย + เจตนาเป็นเจ้าของ + ติดต่อกัน 10 ปี",
-          "การครอบครองแทน (เช่น ผู้เช่า ญาติอาศัย) อยู่นานเพียงใดก็ไม่ได้กรรมสิทธิ์",
-          "ภาระจำยอมโดยอายุความ: ใช้ประโยชน์ในที่ดินผู้อื่นโดยสงบเปิดเผยครบ 10 ปี ได้ทรัพยสิทธิภาระจำยอม"
-        ],
-        examPoints: "ข้อสอบอัตนัยทรัพย์สิน: การสืบสิทธิครอบครองปรปักษ์ และข้อต่อสู้เรื่องการครอบครองโดยอาศัยสิทธิ"
-      },
-      "16_Journal_29_2_Apr61.pdf": {
-        name: "วารสารกฎหมาย ปี 29 ฉบับ 2 (เม.ย. 61)",
-        year: "พ.ศ. 2561 (เม.ย.)",
-        summary: "journal_16_2561_2.md",
-        topic: "ห้างหุ้นส่วนและบริษัทจำกัด ความรับผิดของหุ้นส่วนผู้จัดการและกรรมการบริษัท",
-        highlights: [
-          "ห้างหุ้นส่วนสามัญ: หุ้นส่วนรับผิดไม่จำกัดจำนวน แม้จดทะเบียนนิติบุคคลแล้ว",
-          "ห้างหุ้นส่วนจำกัด: หุ้นส่วนจำกัดความรับผิดห้ามเข้าจัดการงานห้าง มิฉะนั้นรับผิดไม่จำกัด",
-          "บริษัทจำกัด: ผู้ถือหุ้นรับผิดจำกัดไม่เกินค่าหุ้นที่ยังค้างส่ง, กรรมการต้องใช้ความรอบคอบเยี่ยงผู้ค้าขาย"
-        ],
-        examPoints: "หุ้นส่วนจำกัดความรับผิดไปลงชื่อสั่งซื้อของให้ห้าง ต้องร่วมรับผิดในหนี้นั้นโดยไม่จำกัดจำนวน"
-      },
-      "17_Journal_30_1_Sep61.pdf": {
-        name: "วารสารกฎหมาย ปี 30 ฉบับ 1 (ก.ย. 61)",
-        year: "พ.ศ. 2561 (ก.ย.)",
-        summary: "journal_17_2561_1.md",
-        topic: "กฎหมายวิธีพิจารณาความแพ่ง (วิ.แพ่ง) เขตอำนาจศาล คำฟ้อง คำให้การ การอุทธรณ์และฎีกา",
-        highlights: [
-          "เขตอำนาจศาล: มูลคดีเกิด หรือภูมิลำเนาจำเลย (ม. 4) / คดีอสังหาริมทรัพย์ (ม. 4 ทวิ)",
-          "คำให้การปฏิเสธต้องมีเหตุแห่งการปฏิเสธชัดแจ้ง (ม. 177 วรรคสอง) ปฏิเสธลอยๆ เท่ากับยอมรับ",
-          "การฟ้องซ้อน (ม. 173 วรรคสอง (1)) และผลของการทิ้งฟ้อง/ถอนฟ้อง (ม. 176)"
-        ],
-        examPoints: "ข้อสอบอัตนัย วิ.แพ่ง: วินิจฉัยคำให้การว่าเกิดประเด็นข้อพิพาทหรือไม่ และการฟ้องซ้อน"
-      },
-      "18_Journal_30_Jun62.pdf": {
-        name: "วารสารกฎหมาย ปี 30 (มิ.ย. 2562)",
-        year: "พ.ศ. 2562 (มิ.ย.)",
-        summary: "journal_18_2562_jun.md",
-        topic: "กฎหมายวิธีพิจารณาความอาญา (วิ.อาญา) อำนาจสอบสวน หมายจับหมายค้น การประกันตัว",
-        highlights: [
-          "ผู้เสียหายโดยนิตินัย: ต้องไม่มีส่วนร่วมหรือรู้เห็นเป็นใจในการทำความผิด",
-          "อำนาจการสอบสวน (ม. 120): ถ้าการสอบสวนไม่ชอบ พนักงานอัยการไม่มีอำนาจฟ้อง ศาลต้องยกฟ้อง",
-          "การจับและตรวจค้นโดยไม่มีหมายของศาล กระทำไม่ได้เว้นแต่ความผิดซึ่งหน้าตาม ม. 78, 92"
-        ],
-        examPoints: "ข้อสอบอัตนัย วิ.อาญา: คุณสมบัติผู้เสียหายในการร้องทุกข์ และผลของการไม่แจ้งข้อกล่าวหา"
-      },
-      "19_Journal_31_Sep62.pdf": {
-        name: "วารสารกฎหมาย ปี 31 (ก.ย. 2562)",
-        year: "พ.ศ. 2562 (ก.ย.)",
-        summary: "journal_19_2562_sep.md",
-        topic: "กฎหมายพยานหลักฐาน (Law of Evidence) ภาระการนำสืบ ข้อห้ามพยานบอกเล่า พยานเอกสาร",
-        highlights: [
-          "ภาระการพิสูจน์: คดีแพ่ง (ม. 84 - ฝ่ายอ้างมีหน้าที่สืบ) / คดีอาญา (ม. 227 - พิสูจน์จนสิ้นสงสัย)",
-          "ข้อห้ามพยานบอกเล่า (Hearsay Rule) ตาม ป.วิ.พ. ม. 95/1 และ ป.วิ.อ. ม. 226/3",
-          "กฎการนำสืบต้นฉบับเอกสาร (Best Evidence) และข้อยกเว้นการใช้สำเนา"
-        ],
-        examPoints: "การจัดสรรภาระการพิสูจน์ตามประเด็นข้อพิพาท และการคัดค้านพยานบอกเล่าในศาล"
-      },
-      "20_Journal_31_1_JanJun63.pdf": {
-        name: "วารสารกฎหมาย ปี 31 ฉบับ 1 (ม.ค.-มิ.ย. 2563)",
-        year: "พ.ศ. 2563 (ม.ค.-มิ.ย.)",
-        summary: "journal_20_2563_1.md",
-        topic: "รวมบทความวิจัย วิเคราะห์ฎีกาเด่น กฎหมายดิจิทัลและพยานหลักฐานอิเล็กทรอนิกส์",
-        highlights: [
-          "พ.ร.บ. ธุรกรรมทางอิเล็กทรอนิกส์: การรับรองข้อมูลอิเล็กทรอนิกส์และลายมือชื่อดิจิทัล (ม. 7, 8, 9)",
-          "แชทไลน์และสลิปโอนเงินผ่านโมบายแบงก์กิ้ง ใช้เป็นหลักฐานเป็นหนังสือแห่งการกู้ยืมเงินได้",
-          "กฎหมายคุ้มครองข้อมูลส่วนบุคคล (PDPA) สิทธิของเจ้าของข้อมูล และหน้าที่ของผู้ควบคุมข้อมูล"
-        ],
-        examPoints: "การปรับบทกฎหมายกับสัญญาและหลักฐานออนไลน์ในยุคดิจิทัล"
-      },
-      "Journal_Subjective_Civil_Criminal_Commercial_1.pdf": {
-        name: "วารสารรวมข้อสอบอัตนัย (แพ่ง อาญา พาณิชย์ 1)",
-        year: "รวมแนวข้อสอบอัตนัย",
-        summary: "journal_21_subjective.md",
-        topic: "รวมแนวข้อสอบอัตนัยตุ๊กตา แพ่ง อาญา พาณิชย์ พร้อมธงคำตอบ 3 สเต็ป มสธ.",
-        highlights: [
-          "สูตร 3 สเต็ป: 1. วางหลักกฎหมาย/มาตรา -> 2. วินิจฉัยปรับบท -> 3. สรุปคำตอบตรงประเด็น",
-          "ตัวอย่างโจทย์ 41211 แพ่ง 1: นิติกรรมของผู้เยาว์ และผลเมื่อมีการบอกล้างสัญญา",
-          "ตัวอย่างโจทย์ 41516 อาญา 1: เจตนาโอน (การกระทำโดยพลาดตาม ม. 60) และพยายามฆ่า (ม. 80)",
-          "เทคนิคการจัดสรรเวลา 180 นาที และการเขียนให้ได้คะแนนเต็มในแต่ละสเต็ป"
-        ],
-        examPoints: "คู่มือสำคัญที่สุดสำหรับการฝึกเขียนตอบข้อสอบอัตนัย มสธ. ให้ได้เกรด H"
-      }
-    };
+    let allJournals = [];
+    let currentJournal = null;
+    let currentFontSize = 16;
 
-    const urlParams = new URLSearchParams(window.location.search);
-    const fileName = urlParams.get('file') || "0_Ch2_2544.pdf";
-    const rawUrl = "raw/" + fileName;
+    // Fetch and initialize OCR database
+    async function initViewer() {
+      try {
+        const res = await fetch('data/journals_ocr.json');
+        allJournals = await res.json();
+        
+        populateSelector();
 
-    document.getElementById('pdfObject').data = rawUrl;
-    document.getElementById('downloadLink').href = rawUrl;
-    document.getElementById('openNewTabLink').href = rawUrl;
-    document.getElementById('fallbackLink').href = rawUrl;
+        // Get file parameter from URL
+        const params = new URLSearchParams(window.location.search);
+        let requestedFile = params.get('file');
+        let requestedMode = params.get('view') || 'split';
 
-    const item = itemsMap[fileName] || {
-      name: fileName,
-      year: "-",
-      summary: "README.md",
-      topic: "สรุปสาระสำคัญประจำฉบับ",
-      highlights: ["วิเคราะห์โครงสร้างกฎหมายสำคัญ", "แนวคำพิพากษาศาลฎีกาและบรรทัดฐานการตีความ"],
-      examPoints: "ทบทวนประเด็นสำคัญสำหรับเตรียมตัวสอบ"
-    };
+        if (requestedFile) {
+          const found = allJournals.find(j => j.filename === requestedFile);
+          if (found) {
+            currentJournal = found;
+          }
+        }
 
-    document.getElementById('docTitle').innerText = item.name;
+        if (!currentJournal && allJournals.length > 0) {
+          currentJournal = allJournals[0];
+        }
 
-    // Render detailed summary
-    let highlightsHtml = "";
-    if (item.highlights && item.highlights.length) {
-      highlightsHtml = "<ul>" + item.highlights.map(h => `<li>${h}</li>`).join("") + "</ul>";
-    }
-
-    document.getElementById('summaryBox').innerHTML = `
-      <span class="badge-year"><i class="fas fa-calendar-alt"></i> ${item.year}</span>
-      <h3 style="margin-top:0; color:var(--text);">${item.name}</h3>
-      <div class="key-box">
-        <strong><i class="fas fa-bullseye"></i> ประเด็นหลักประจำฉบับ:</strong><br>
-        ${item.topic}
-      </div>
-
-      <h3><i class="fas fa-balance-scale"></i> สาระสำคัญ & ไฮไลท์ฎีกา</h3>
-      ${highlightsHtml}
-
-      <h3><i class="fas fa-graduation-cap"></i> จุดเน้นสำหรับเตรียมสอบ มสธ.</h3>
-      <p style="background:#f1f5f9; padding:0.75rem; border-radius:6px; font-size:0.9rem; line-height:1.6;">
-        ${item.examPoints}
-      </p>
-
-      <div style="margin-top:1.5rem; padding-top:1rem; border-top:1px solid var(--border);">
-        <a href="summaries/${item.summary}" target="_blank" class="view-btn active" style="display:inline-flex; width:100%; justify-content:center; padding:0.6rem;">
-          <i class="fas fa-file-alt"></i> อ่านเอกสารสรุป Markdown ฉบับเต็ม
-        </a>
-      </div>
-    `;
-
-    function toggleSummaryPane() {
-      const pane = document.getElementById('summaryPane');
-      const text = document.getElementById('toggleText');
-      if (pane.style.display === 'none') {
-        pane.style.display = 'flex';
-        text.innerText = 'ซ่อนแถบสรุป';
-      } else {
-        pane.style.display = 'none';
-        text.innerText = 'แสดงแถบสรุป';
+        renderCurrentJournal();
+        setMode(requestedMode);
+      } catch (err) {
+        console.error('Error loading journals OCR data:', err);
+        document.getElementById('ocrBody').innerHTML = `
+          <div style="padding: 2rem; color: #dc2626; text-align: center;">
+            <i class="fas fa-exclamation-triangle" style="font-size: 2rem; margin-bottom: 1rem;"></i>
+            <p>ไม่สามารถโหลดฐานข้อมูล OCR ได้ กรุณาลองใหม่อีกครั้ง</p>
+          </div>
+        `;
       }
     }
+
+    function populateSelector() {
+      const sel = document.getElementById('issueSelector');
+      sel.innerHTML = allJournals.map(j => `
+        <option value="${j.filename}">${j.title} (${j.period})</option>
+      `).join('');
+    }
+
+    function switchIssue(filename) {
+      const found = allJournals.find(j => j.filename === filename);
+      if (found) {
+        currentJournal = found;
+        renderCurrentJournal();
+        // Update URL query without reloading
+        const url = new URL(window.location);
+        url.searchParams.set('file', filename);
+        window.history.replaceState({}, '', url);
+      }
+    }
+
+    function renderCurrentJournal() {
+      if (!currentJournal) return;
+
+      document.title = `${currentJournal.title} - วิเคราะห์ข้อสอบอัตนัย มสธ.`;
+      document.getElementById('issueSelector').value = currentJournal.filename;
+      document.getElementById('ocrIssueTitle').textContent = currentJournal.title;
+      
+      // Update PDF Viewer object
+      const pdfPath = `raw/${currentJournal.filename}#toolbar=1&navpanes=0`;
+      document.getElementById('pdfViewer').setAttribute('data', pdfPath);
+      document.getElementById('fallbackLink').href = `raw/${currentJournal.filename}`;
+      document.getElementById('downloadBtn').href = `raw/${currentJournal.filename}`;
+      document.getElementById('downloadBtn').setAttribute('download', currentJournal.filename);
+
+      // Render OCR content
+      const ocrBody = document.getElementById('ocrBody');
+      let html = `
+        <div class="issue-info-box">
+          <div class="issue-meta-row">
+            <span class="badge-tag"><i class="fas fa-calendar-alt"></i> ${currentJournal.period}</span>
+            <span class="badge-tag badge-gray"><i class="fas fa-file"></i> ${currentJournal.filename}</span>
+          </div>
+          <div class="issue-meta-row">
+            ${currentJournal.subjects.map(s => `<span class="badge-tag"><i class="fas fa-balance-scale"></i> ${s}</span>`).join('')}
+            ${currentJournal.tags.map(t => `<span class="badge-tag badge-gray">${t}</span>`).join('')}
+          </div>
+          <p style="margin-top: 0.75rem; font-size: 0.94rem; color: var(--muted);">${currentJournal.highlights}</p>
+        </div>
+      `;
+
+      let secIdx = 1;
+      currentJournal.sections.forEach((sec, idx) => {
+        html += `
+          <article class="section-card" id="section-${idx}">
+            <div class="section-header">
+              <div class="subject-title">
+                <span>ข้อที่ ${secIdx}: ${sec.subject}</span>
+                <button class="btn-nav" style="padding: 0.25rem 0.6rem; font-size: 0.78rem;" onclick="copySection(${idx})" title="คัดลอกเฉพาะข้อนี้">
+                  <i class="fas fa-copy"></i> คัดลอก
+                </button>
+              </div>
+              <div class="professor-name"><i class="fas fa-user-graduate"></i> อาจารย์ผู้วิเคราะห์: ${sec.professor} | <strong>หัวข้อ:</strong> ${sec.topic}</div>
+            </div>
+            
+            <div class="section-content">
+              <!-- Question -->
+              <div class="block-box">
+                <div class="block-label"><i class="fas fa-question-circle" style="color: var(--primary);"></i> คำถามข้อสอบอัตนัย (Exam Problem)</div>
+                <div class="question-box">${escapeHtml(sec.question)}</div>
+              </div>
+
+              <!-- Legal Principles -->
+              <div class="block-box">
+                <div class="block-label"><i class="fas fa-gavel" style="color: var(--success);"></i> หลักกฎหมายและมาตราสำคัญ (Legal Provisions)</div>
+                <div class="legal-box">
+                  <ul>
+                    ${sec.articles.map(a => `<li>${escapeHtml(a)}</li>`).join('')}
+                  </ul>
+                  ${sec.legal_principles ? `<p style="margin-top: 0.6rem; white-space: pre-line;">${escapeHtml(sec.legal_principles)}</p>` : ''}
+                </div>
+              </div>
+
+              <!-- Application -->
+              <div class="block-box">
+                <div class="block-label"><i class="fas fa-search-plus" style="color: #0284c7;"></i> การวินิจฉัยและปรับบทกฎหมาย (Application & Reasoning)</div>
+                <div class="analysis-box" style="white-space: pre-line;">${escapeHtml(sec.application)}</div>
+              </div>
+
+              <!-- Conclusion -->
+              <div class="block-box">
+                <div class="block-label"><i class="fas fa-flag-checkered" style="color: #1e3a8a;"></i> ข้อสรุปและธงคำตอบ (Conclusion)</div>
+                <div class="conclusion-box">${escapeHtml(sec.conclusion)}</div>
+              </div>
+
+              <!-- Pitfalls -->
+              <div class="block-box">
+                <div class="pitfall-box">
+                  <div class="block-label"><i class="fas fa-exclamation-triangle"></i> จุดบกพร่องและหลุมพรางยอดฮิตของนักศึกษา</div>
+                  <p>${escapeHtml(sec.pitfalls)}</p>
+                </div>
+              </div>
+
+              <!-- Tips -->
+              <div class="block-box" style="margin-bottom: 0;">
+                <div class="tip-box">
+                  <div class="block-label"><i class="fas fa-lightbulb"></i> เทคนิคและคำแนะนำการทำข้อสอบจากอาจารย์</div>
+                  <p>${escapeHtml(sec.tips)}</p>
+                </div>
+              </div>
+            </div>
+          </article>
+        `;
+        secIdx++;
+      });
+
+      ocrBody.innerHTML = html;
+    }
+
+    function setMode(mode) {
+      const container = document.getElementById('mainContainer');
+      container.className = `content-area mode-${mode}`;
+
+      document.getElementById('btnSplit').classList.toggle('active', mode === 'split');
+      document.getElementById('btnOcr').classList.toggle('active', mode === 'ocr');
+      document.getElementById('btnPdf').classList.toggle('active', mode === 'pdf');
+
+      const url = new URL(window.location);
+      url.searchParams.set('view', mode);
+      window.history.replaceState({}, '', url);
+    }
+
+    function adjustFontSize(delta) {
+      currentFontSize = Math.min(Math.max(13, currentFontSize + delta), 24);
+      document.getElementById('ocrBody').style.fontSize = `${currentFontSize}px`;
+      showToast(`ขนาดตัวอักษร: ${currentFontSize}px`);
+    }
+
+    function toggleTheme() {
+      const root = document.documentElement;
+      const isDark = root.getAttribute('data-theme') === 'dark';
+      root.setAttribute('data-theme', isDark ? 'light' : 'dark');
+      document.getElementById('themeIcon').className = isDark ? 'fas fa-moon' : 'fas fa-sun';
+      localStorage.setItem('stou_theme', isDark ? 'light' : 'dark');
+    }
+
+    function filterOcrContent(term) {
+      const cleanTerm = term.trim().toLowerCase();
+      const cards = document.querySelectorAll('.section-card');
+      
+      cards.forEach(card => {
+        const text = card.textContent.toLowerCase();
+        if (!cleanTerm || text.includes(cleanTerm)) {
+          card.style.display = 'block';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+
+    function copySection(idx) {
+      if (!currentJournal || !currentJournal.sections[idx]) return;
+      const s = currentJournal.sections[idx];
+      const text = `ชุดวิชา: ${s.subject} (${s.subject_code})\nอาจารย์ผู้วิเคราะห์: ${s.professor}\n\n[โจทย์ข้อสอบ]\n${s.question}\n\n[หลักกฎหมาย]\n${s.articles.join('\n')}\n\n[การวินิจฉัย]\n${s.application}\n\n[ข้อสรุป]\n${s.conclusion}\n\n[จุดบกพร่อง/หลุมพราง]\n${s.pitfalls}\n\n[เทคนิคการตอบ]\n${s.tips}`;
+      navigator.clipboard.writeText(text).then(() => {
+        showToast('คัดลอกข้อสอบและธงคำตอบข้อนี้แล้ว');
+      });
+    }
+
+    function copyAllOcr() {
+      if (!currentJournal) return;
+      let text = `วารสาร: ${currentJournal.title} (${currentJournal.period})\n\n`;
+      currentJournal.sections.forEach((s, idx) => {
+        text += `=====================================\nข้อที่ ${idx+1}: ${s.subject} (${s.subject_code})\nอาจารย์: ${s.professor}\n\n[คำถาม]\n${s.question}\n\n[หลักกฎหมาย]\n${s.articles.join('\n')}\n\n[การวินิจฉัย]\n${s.application}\n\n[ข้อสรุป]\n${s.conclusion}\n\n`;
+      });
+      navigator.clipboard.writeText(text).then(() => {
+        showToast('คัดลอกเนื้อหาข้อสอบทั้งฉบับแล้ว');
+      });
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toastBox');
+      document.getElementById('toastMsg').textContent = msg;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 2500);
+    }
+
+    function escapeHtml(text) {
+      if (!text) return '';
+      return text
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    // Initialize on load
+    window.addEventListener('DOMContentLoaded', () => {
+      const savedTheme = localStorage.getItem('stou_theme');
+      if (savedTheme) {
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        document.getElementById('themeIcon').className = savedTheme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+      }
+      initViewer();
+    });
   </script>
 </body>
 </html>
